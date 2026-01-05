@@ -157,7 +157,6 @@
 <body class="h-screen overflow-hidden flex flex-col">
     <header class="h-16 glass-nav flex items-center justify-between px-6 z-30 shrink-0">
         <div class="flex items-center gap-8">
-            <!-- 클릭 시 '모든 파일' 화면으로 전환되도록 수정됨 -->
             <div onclick="switchView('files')" class="flex items-center gap-3 cursor-pointer group">
                 <div class="w-10 h-10 bg-[#f07d18] rounded-xl flex items-center justify-center text-white shadow-lg group-hover:scale-105 transition-transform">
                     <i class="fa-solid fa-cloud-bolt text-lg"></i>
@@ -197,28 +196,12 @@
                         <p class="text-sm font-black mt-1">imran_khan@cloudflow.com</p>
                     </div>
                     <div class="py-2">
-                        <div class="dropdown-item">
-                            <i class="fa-solid fa-user-gear text-[var(--text-muted)]"></i>
-                            <span>개인 프로필 설정</span>
-                        </div>
-                        <div class="dropdown-item">
-                            <i class="fa-solid fa-shield-halved text-[var(--text-muted)]"></i>
-                            <span>보안 및 비밀번호</span>
-                        </div>
-                        <div class="dropdown-item">
-                            <i class="fa-solid fa-language text-[var(--text-muted)]"></i>
-                            <span>언어 설정 (KO)</span>
-                        </div>
-                        <div class="dropdown-item">
-                            <i class="fa-solid fa-circle-question text-[var(--text-muted)]"></i>
-                            <span>고객지원 센터</span>
-                        </div>
+                        <div class="dropdown-item"><i class="fa-solid fa-user-gear text-[var(--text-muted)]"></i><span>개인 프로필 설정</span></div>
+                        <div class="dropdown-item"><i class="fa-solid fa-shield-halved text-[var(--text-muted)]"></i><span>보안 및 비밀번호</span></div>
+                        <div class="dropdown-item"><i class="fa-solid fa-language text-[var(--text-muted)]"></i><span>언어 설정 (KO)</span></div>
                     </div>
                     <div class="py-2 border-t border-[var(--border-color)] bg-[var(--bg-input)]/20">
-                        <div onclick="handleLogout()" class="dropdown-item text-red-500 font-bold">
-                            <i class="fa-solid fa-right-from-bracket"></i>
-                            <span>로그아웃</span>
-                        </div>
+                        <div onclick="handleLogout()" class="dropdown-item text-red-500 font-bold"><i class="fa-solid fa-right-from-bracket"></i><span>로그아웃</span></div>
                     </div>
                 </div>
             </div>
@@ -239,41 +222,20 @@
 
                 <div class="space-y-4">
                     <details class="group" open>
-                        <summary class="nav-section-title">
-                            <span>MY CLOUD</span>
-                            <i class="fa-solid fa-chevron-down transition-transform group-open:rotate-180"></i>
-                        </summary>
+                        <summary class="nav-section-title"><span>MY CLOUD</span><i class="fa-solid fa-chevron-down transition-transform group-open:rotate-180"></i></summary>
                         <nav class="mt-2 space-y-1">
-                            <div onclick="switchView('files')" class="nav-link active" id="nav-files">
-                                <i class="fa-solid fa-folder-tree"></i> 모든 파일
-                            </div>
-                            <div onclick="switchView('recent')" class="nav-link" id="nav-recent">
-                                <i class="fa-solid fa-clock-rotate-left"></i> 최근 사용 문서
-                            </div>
-                            <div onclick="switchView('favorites')" class="nav-link" id="nav-favorites">
-                                <i class="fa-solid fa-star"></i> 즐겨찾기
-                            </div>
-                            <div onclick="switchView('shared')" class="nav-link" id="nav-shared">
-                                <i class="fa-solid fa-share-nodes"></i> 공유된 항목
-                            </div>
-                            <div onclick="switchView('trash')" class="nav-link" id="nav-trash">
-                                <i class="fa-solid fa-trash-can"></i> 휴지통
-                            </div>
+                            <div onclick="switchView('files')" class="nav-link active" id="nav-files"><i class="fa-solid fa-folder-tree"></i> 모든 파일</div>
+                            <div onclick="switchView('recent')" class="nav-link" id="nav-recent"><i class="fa-solid fa-clock-rotate-left"></i> 최근 사용 문서</div>
+                            <div onclick="switchView('favorites')" class="nav-link" id="nav-favorites"><i class="fa-solid fa-star"></i> 즐겨찾기</div>
+                            <div onclick="switchView('shared')" class="nav-link" id="nav-shared"><i class="fa-solid fa-share-nodes"></i> 공유된 항목</div>
+                            <div onclick="switchView('trash')" class="nav-link" id="nav-trash"><i class="fa-solid fa-trash-can"></i> 휴지통</div>
                         </nav>
                     </details>
-
                     <details class="group" open>
-                        <summary class="nav-section-title">
-                            <span>공유된 워크스페이스</span>
-                            <i class="fa-solid fa-chevron-down transition-transform group-open:rotate-180"></i>
-                        </summary>
+                        <summary class="nav-section-title"><span>공유된 워크스페이스</span><i class="fa-solid fa-chevron-down transition-transform group-open:rotate-180"></i></summary>
                         <nav class="mt-2 space-y-1">
-                            <div onclick="switchView('ws-design')" class="nav-link" id="nav-ws-design">
-                                <i class="fa-solid fa-layer-group"></i> 디자인 팀
-                            </div>
-                            <div onclick="switchView('ws-dev')" class="nav-link" id="nav-ws-dev">
-                                <i class="fa-solid fa-layer-group"></i> 개발 프로젝트
-                            </div>
+                            <div onclick="switchView('ws-design')" class="nav-link" id="nav-ws-design"><i class="fa-solid fa-layer-group"></i> 디자인 팀</div>
+                            <div onclick="switchView('ws-dev')" class="nav-link" id="nav-ws-dev"><i class="fa-solid fa-layer-group"></i> 개발 프로젝트</div>
                         </nav>
                     </details>
                 </div>
@@ -296,41 +258,134 @@
         <main class="flex-1 overflow-y-auto p-8 bg-[var(--bg-deep)]">
             <div class="max-w-6xl mx-auto">
                 
-                <div class="flex flex-wrap gap-4 mb-8">
-                    <select class="bg-[var(--bg-sidebar)] text-[var(--text-main)] border border-[var(--border-color)] rounded-lg px-4 py-2 text-xs outline-none focus:border-[#f07d18]">
-                        <option value="">파일 형식</option>
-                        <option value="pdf">PDF 문서</option>
-                        <option value="image">이미지</option>
-                        <option value="zip">압축파일</option>
-                    </select>
-                    <select class="bg-[var(--bg-sidebar)] text-[var(--text-main)] border border-[var(--border-color)] rounded-lg px-4 py-2 text-xs outline-none focus:border-[#f07d18]">
-                        <option value="">수정 날짜</option>
-                        <option value="today">오늘</option>
-                        <option value="week">이번 주</option>
-                        <option value="month">이번 달</option>
-                    </select>
-                </div>
-
                 <div id="view-dashboard" class="content-view">
-                    <h2 class="text-2xl font-black text-[var(--text-main)] mb-6">대시보드 요약</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <h2 class="text-2xl font-black text-[var(--text-main)] mb-6">대시보드 분석</h2>
+                    
+                    <!-- Top Stats Summary -->
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
                         <div class="p-6 rounded-2xl bg-[var(--bg-sidebar)] border border-[var(--border-color)]">
-                            <div class="w-10 h-10 rounded-lg bg-blue-500/10 text-blue-500 flex items-center justify-center mb-4">
-                                <i class="fa-solid fa-file"></i>
-                            </div>
-                            <p class="text-[11px] font-bold text-[var(--text-muted)]">전체 파일</p>
-                            <h4 class="text-2xl font-black">1,769 개</h4>
+                            <p class="text-[11px] font-bold text-[var(--text-muted)] uppercase tracking-wider">전체 파일</p>
+                            <h4 class="text-2xl font-black mt-1">1,769 <span class="text-sm font-normal text-[var(--text-muted)]">개</span></h4>
                         </div>
                         <div class="p-6 rounded-2xl bg-[var(--bg-sidebar)] border border-[var(--border-color)]">
-                            <div class="w-10 h-10 rounded-lg bg-orange-500/10 text-orange-500 flex items-center justify-center mb-4">
-                                <i class="fa-solid fa-database"></i>
+                            <p class="text-[11px] font-bold text-[var(--text-muted)] uppercase tracking-wider">총 사용 용량</p>
+                            <h4 class="text-2xl font-black mt-1">46.1 <span class="text-sm font-normal text-[var(--text-muted)]">GB</span></h4>
+                        </div>
+                        <div class="p-6 rounded-2xl bg-[var(--bg-sidebar)] border border-[var(--border-color)]">
+                            <p class="text-[11px] font-bold text-[var(--text-muted)] uppercase tracking-wider">최근 업로드 (24h)</p>
+                            <h4 class="text-2xl font-black mt-1">42 <span class="text-sm font-normal text-[var(--text-muted)]">개</span></h4>
+                        </div>
+                        <div class="p-6 rounded-2xl bg-[var(--bg-sidebar)] border border-[var(--border-color)]">
+                            <p class="text-[11px] font-bold text-[var(--text-muted)] uppercase tracking-wider">공유된 문서</p>
+                            <h4 class="text-2xl font-black mt-1">158 <span class="text-sm font-normal text-[var(--text-muted)]">개</span></h4>
+                        </div>
+                    </div>
+
+                    <!-- Main Analysis Section -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                        <!-- File Type Ratio Donut Chart -->
+                        <div class="md:col-span-1 p-8 rounded-3xl bg-[var(--bg-sidebar)] border border-[var(--border-color)] flex flex-col items-center">
+                            <h3 class="text-sm font-bold self-start mb-6">파일 형식 분포 (%)</h3>
+                            <div class="relative w-48 h-48">
+                                <svg viewBox="0 0 36 36" class="w-full h-full transform -rotate-90">
+                                    <circle cx="18" cy="18" r="16" fill="none" stroke="var(--bg-input)" stroke-width="4"></circle>
+                                    <!-- 45% Video (Cyan) -->
+                                    <circle cx="18" cy="18" r="16" fill="none" stroke="#2dd4bf" stroke-width="4" stroke-dasharray="45 100"></circle>
+                                    <!-- 25% Image (Yellow) -->
+                                    <circle cx="18" cy="18" r="16" fill="none" stroke="#fbbf24" stroke-width="4" stroke-dasharray="25 100" stroke-dashoffset="-45"></circle>
+                                    <!-- 20% Docs (Rose) -->
+                                    <circle cx="18" cy="18" r="16" fill="none" stroke="#fb7185" stroke-width="4" stroke-dasharray="20 100" stroke-dashoffset="-70"></circle>
+                                    <!-- 10% Other (Indigo) -->
+                                    <circle cx="18" cy="18" r="16" fill="none" stroke="#818cf8" stroke-width="4" stroke-dasharray="10 100" stroke-dashoffset="-90"></circle>
+                                </svg>
+                                <div class="absolute inset-0 flex flex-col items-center justify-center">
+                                    <span class="text-3xl font-black">1.7k</span>
+                                    <span class="text-[9px] text-[var(--text-muted)] font-bold tracking-widest uppercase">Files</span>
+                                </div>
                             </div>
-                            <p class="text-[11px] font-bold text-[var(--text-muted)]">총 사용 용량</p>
-                            <h4 class="text-2xl font-black">46.1 GB <span class="text-sm text-[var(--text-muted)] font-normal">/ 80GB</span></h4>
+                            <div class="mt-8 w-full space-y-2">
+                                <div class="flex justify-between items-center text-xs"><div class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-[#2dd4bf]"></div>Video</div><span>45%</span></div>
+                                <div class="flex justify-between items-center text-xs"><div class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-[#fbbf24]"></div>Images</div><span>25%</span></div>
+                                <div class="flex justify-between items-center text-xs"><div class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-[#fb7185]"></div>Documents</div><span>20%</span></div>
+                                <div class="flex justify-between items-center text-xs"><div class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-[#818cf8]"></div>Others</div><span>10%</span></div>
+                            </div>
+                        </div>
+
+                        <!-- Usage Analysis & Automation Tools -->
+                        <div class="md:col-span-2 flex flex-col gap-6">
+                            <!-- Detailed Usage Percentage Card -->
+                            <div class="p-6 rounded-3xl bg-[var(--bg-sidebar)] border border-[var(--border-color)]">
+                                <div class="flex justify-between items-end mb-4">
+                                    <div>
+                                        <h3 class="text-sm font-bold">스토리지 사용 분석</h3>
+                                        <p class="text-xs text-[var(--text-muted)] mt-1">총 80GB 중 46.1GB를 사용하고 있습니다.</p>
+                                    </div>
+                                    <span class="text-3xl font-black text-[#f07d18]">57.6%</span>
+                                </div>
+                                <div class="w-full bg-[var(--bg-input)] h-4 rounded-full overflow-hidden flex">
+                                    <div class="bg-[#2dd4bf] h-full" style="width: 45%"></div>
+                                    <div class="bg-[#fbbf24] h-full" style="width: 7%"></div>
+                                    <div class="bg-[#fb7185] h-full" style="width: 4%"></div>
+                                    <div class="bg-[#818cf8] h-full" style="width: 1.6%"></div>
+                                </div>
+                                <div class="mt-6 grid grid-cols-2 gap-4">
+                                    <button class="py-3 bg-[var(--bg-input)] rounded-xl text-xs font-bold hover:bg-[var(--border-color)] transition-colors flex items-center justify-center gap-2">
+                                        <i class="fa-solid fa-broom"></i> 불필요한 파일 정리
+                                    </button>
+                                    <button class="py-3 bg-[var(--bg-input)] rounded-xl text-xs font-bold hover:bg-[var(--border-color)] transition-colors flex items-center justify-center gap-2">
+                                        <i class="fa-solid fa-gem text-orange-400"></i> 프리미엄 용량 확장
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Dashboard Automations -->
+                            <div class="p-6 rounded-3xl bg-[var(--bg-sidebar)] border border-[var(--border-color)] flex-1">
+                                <h3 class="text-sm font-bold mb-4 tracking-tight">CloudFlow 스마트 기능</h3>
+                                <div class="space-y-4">
+                                    <div class="flex items-center justify-between p-4 bg-[var(--bg-input)] rounded-2xl border border-[var(--border-color)]">
+                                        <div class="flex items-center gap-4">
+                                            <div class="w-10 h-10 rounded-xl bg-orange-500/10 text-orange-500 flex items-center justify-center"><i class="fa-solid fa-magic-wand-sparkles"></i></div>
+                                            <div><p class="text-xs font-bold">파일 자동 분류 정리</p><p class="text-[10px] text-[var(--text-muted)]">업로드 즉시 확장자별 폴더 이동</p></div>
+                                        </div>
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" checked class="sr-only peer">
+                                            <div class="w-10 h-5 bg-slate-700 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2.5px] after:left-[2.5px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#f07d18]"></div>
+                                        </label>
+                                    </div>
+                                    <div class="flex items-center justify-between p-4 bg-[var(--bg-input)] rounded-2xl border border-[var(--border-color)]">
+                                        <div class="flex items-center gap-4">
+                                            <div class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-500 flex items-center justify-center"><i class="fa-solid fa-clone"></i></div>
+                                            <div><p class="text-xs font-bold">중복 파일 자동 탐지</p><p class="text-[10px] text-[var(--text-muted)]">공간 확보를 위한 중복 데이터 검사</p></div>
+                                        </div>
+                                        <button class="px-3 py-1.5 bg-blue-500/20 text-blue-400 text-[10px] font-bold rounded-lg hover:bg-blue-500 hover:text-white transition-all">검사 실행</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Usage Trend Chart (Visual Representation Only) -->
+                    <div class="p-6 rounded-3xl bg-[var(--bg-sidebar)] border border-[var(--border-color)]">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="text-sm font-bold">스토리지 사용 추이 (7일)</h3>
+                            <span class="text-[10px] font-bold text-green-500">+2.4GB 증가</span>
+                        </div>
+                        <div class="h-32 flex items-end justify-between gap-1 px-2">
+                            <div class="w-full bg-[var(--bg-input)] rounded-t-lg h-[40%]"></div>
+                            <div class="w-full bg-[var(--bg-input)] rounded-t-lg h-[45%]"></div>
+                            <div class="w-full bg-[var(--bg-input)] rounded-t-lg h-[42%]"></div>
+                            <div class="w-full bg-[var(--bg-input)] rounded-t-lg h-[55%]"></div>
+                            <div class="w-full bg-[var(--bg-input)] rounded-t-lg h-[68%]"></div>
+                            <div class="w-full bg-[var(--bg-input)] rounded-t-lg h-[62%]"></div>
+                            <div class="w-full bg-[#f07d18] rounded-t-lg h-[75%]"></div>
+                        </div>
+                        <div class="flex justify-between mt-3 text-[9px] text-[var(--text-muted)] font-bold px-2">
+                            <span>MON</span><span>TUE</span><span>WED</span><span>THU</span><span>FRI</span><span>SAT</span><span class="text-[#f07d18]">SUN</span>
                         </div>
                     </div>
                 </div>
 
+                <!-- VIEW: All Files -->
                 <div id="view-files" class="content-view active">
                     <h2 class="text-2xl font-black text-[var(--text-main)] mb-6">모든 파일</h2>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -357,7 +412,7 @@
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-[var(--border-color)]">
-                                <tr class="hover:bg-[var(--bg-input)] cursor-pointer">
+                                <tr class="hover:bg-[var(--bg-input)] cursor-pointer transition-colors">
                                     <td class="px-6 py-4 flex items-center gap-3"><i class="fa-solid fa-file-lines text-orange-500"></i> Meeting_Notes.docx</td>
                                     <td class="px-6 py-4">방금 전</td>
                                     <td class="px-6 py-4">120 KB</td>
@@ -396,9 +451,7 @@
                             <tbody class="divide-y divide-[var(--border-color)]">
                                 <tr class="hover:bg-[var(--bg-input)] transition-colors">
                                     <td class="px-6 py-4 flex items-center gap-3"><i class="fa-solid fa-folder text-blue-400"></i> Marketing_Assets</td>
-                                    <td class="px-6 py-4 flex items-center gap-2">
-                                        <img src="https://ui-avatars.com/api/?name=SJ" class="w-6 h-6 rounded-full"> Sarah J.
-                                    </td>
+                                    <td class="px-6 py-4 flex items-center gap-2"><img src="https://ui-avatars.com/api/?name=SJ" class="w-6 h-6 rounded-full"> Sarah J.</td>
                                     <td class="px-6 py-4"><span class="px-2 py-1 bg-green-500/10 text-green-500 text-[10px] font-bold rounded">편집 가능</span></td>
                                     <td class="px-6 py-4"><button class="text-[var(--text-muted)] hover:text-red-500 text-xs">공유 중단</button></td>
                                 </tr>
@@ -409,20 +462,14 @@
 
                 <div id="view-trash" class="content-view">
                     <div class="flex justify-between items-center mb-6">
-                        <div>
-                            <h2 class="text-2xl font-black text-[var(--text-main)]">휴지통</h2>
-                            <p class="text-xs text-[var(--text-muted)] mt-1">파일은 휴지통에 들어온 지 30일 후에 영구적으로 삭제됩니다.</p>
-                        </div>
+                        <div><h2 class="text-2xl font-black text-[var(--text-main)]">휴지통</h2><p class="text-xs text-[var(--text-muted)] mt-1">파일은 휴지통에 들어온 지 30일 후에 영구적으로 삭제됩니다.</p></div>
                         <button class="px-4 py-2 bg-red-500/10 text-red-500 rounded-xl text-xs font-bold hover:bg-red-500 hover:text-white transition-all">전체 비우기</button>
                     </div>
                     <div class="space-y-3">
                         <div class="p-4 bg-[var(--bg-sidebar)] border border-[var(--border-color)] rounded-2xl flex items-center justify-between group">
                             <div class="flex items-center gap-4">
                                 <div class="w-10 h-10 bg-gray-500/10 text-gray-500 rounded-lg flex items-center justify-center"><i class="fa-solid fa-file-circle-xmark"></i></div>
-                                <div>
-                                    <p class="text-sm font-bold">Old_Draft_Backup.docx</p>
-                                    <p class="text-[10px] text-red-500 font-bold">24일 후 영구 삭제</p>
-                                </div>
+                                <div><p class="text-sm font-bold">Old_Draft_Backup.docx</p><p class="text-[10px] text-red-500 font-bold">24일 후 영구 삭제</p></div>
                             </div>
                             <div class="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                                 <button class="px-3 py-1.5 bg-[var(--bg-input)] rounded-lg text-[10px] font-bold hover:text-green-500">복구</button>
@@ -459,10 +506,7 @@
                 <div class="text-center"><span class="text-[10px] bg-[var(--bg-input)] px-3 py-1 rounded-full text-gray-400">오후 2:20 - 세션 시작</span></div>
                 <div class="flex gap-3">
                     <img src="https://ui-avatars.com/api/?name=SJ&background=3b82f6&color=fff" class="w-8 h-8 rounded-lg">
-                    <div class="space-y-1">
-                        <p class="text-[10px] font-bold">Sarah Jenkins</p>
-                        <div class="bg-[var(--bg-input)] p-3 rounded-2xl rounded-tl-none text-xs leading-relaxed">안녕하세요! 새로운 기획서 업로드 확인 부탁드립니다.</div>
-                    </div>
+                    <div class="space-y-1"><p class="text-[10px] font-bold">Sarah Jenkins</p><div class="bg-[var(--bg-input)] p-3 rounded-2xl rounded-tl-none text-xs leading-relaxed">안녕하세요! 새로운 기획서 업로드 확인 부탁드립니다.</div></div>
                 </div>
             </div>
             <div class="p-4 border-t border-[var(--border-color)]">
