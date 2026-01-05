@@ -7,7 +7,12 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        :root { --accent-glow: rgba(240, 125, 24, 0.4); }
+        :root { 
+            --accent-glow: rgba(240, 125, 24, 0.4); 
+            --modal-overlay: rgba(0, 0, 0, 0.85);
+            --bg-input: rgba(255, 255, 255, 0.05);
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
         .plan-card { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.05); transition: all 0.3s ease; }
         .plan-card.active { border-color: #f07d18; background: rgba(240, 125, 24, 0.02); }
         .check-icon { color: #f07d18; }
@@ -18,6 +23,34 @@
         .annual .toggle-dot { transform: translateX(1.75rem); }
         .custom-scrollbar::-webkit-scrollbar { width: 6px; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+
+        /* Modal Specific Styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: var(--modal-overlay);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease-out;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal-content {
+            background-color: #111827;
+            border: 1px solid var(--border-color);
+            width: 100%;
+            max-width: 480px;
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body class="h-screen overflow-hidden flex flex-col text-left">
@@ -32,14 +65,14 @@
                     <span class="text-lg font-extrabold tracking-tighter text-white">CLOUDFLOW</span>
                 </div>
                 <nav class="hidden lg:flex items-center gap-6 text-sm font-medium text-gray-400">
-                    <a href="introduce/faq.html" class="hover:text-white transition-colors">자주 묻는 질문 / 문의하기</a>
-                    <a href="introduce/sales.html" class="hover:text-white transition-colors">영업팀에 문의하기</a>
-                    <a href="payment.html" class="hover:text-white transition-colors">요금제</a>
+                    <a href="#" class="hover:text-white transition-colors">자주 묻는 질문 / 문의하기</a>
+                    <a href="#" class="hover:text-white transition-colors">영업팀에 문의하기</a>
+                    <a href="#" class="hover:text-white transition-colors text-white">요금제</a>
                 </nav>
             </div>
             <div class="flex items-center gap-4">
-                <button class="text-sm font-medium text-gray-400 hover:text-white"><a href="user/login.html">로그인</a></button>
-                <button class="btn-orange px-4 py-1.5 rounded-md text-sm font-bold shadow-lg shadow-[#f07d18]/20"><a href="user/signup.html">무료로 시작하기</a></button>
+                <button class="text-sm font-medium text-gray-400 hover:text-white">로그인</button>
+                <button class="btn-orange px-4 py-1.5 rounded-md text-sm font-bold shadow-lg shadow-[#f07d18]/20">무료로 시작하기</button>
             </div>
         </div>
     </header>
@@ -65,8 +98,9 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
                 
+                <!-- Starter Plan -->
                 <div class="plan-card p-8 rounded-3xl flex flex-col">
                     <div class="mb-8">
                         <h4 class="text-gray-400 font-bold text-sm uppercase tracking-widest mb-2">Starter</h4>
@@ -87,9 +121,10 @@
                             <i class="fa-solid fa-check check-icon"></i> 기본적인 보안 기능
                         </li>
                     </ul>
-                    <button class="w-full py-4 rounded-xl border border-white/10 text-white font-bold hover:bg-white/5 transition-all">현재 플랜</button>
+                    <button class="w-full py-4 rounded-xl border border-white/10 text-white font-bold hover:bg-white/5 transition-all cursor-default">현재 플랜</button>
                 </div>
 
+                <!-- Professional Plan -->
                 <div class="plan-card active p-8 rounded-3xl flex flex-col relative overflow-hidden">
                     <div class="absolute top-0 right-0 bg-[#f07d18] text-white text-[10px] font-black px-4 py-1.5 rounded-bl-xl uppercase tracking-tighter">
                         Most Popular
@@ -116,9 +151,10 @@
                             <i class="fa-solid fa-circle-check check-icon"></i> 24/7 우선 기술 지원
                         </li>
                     </ul>
-                    <button class="w-full btn-orange py-4 rounded-xl font-bold active:scale-95 shadow-lg shadow-[#f07d18]/20">플랜 업그레이드</button>
+                    <button onclick="openPaymentModal('Professional')" class="w-full btn-orange py-4 rounded-xl font-bold active:scale-95 shadow-lg shadow-[#f07d18]/20">플랜 업그레이드</button>
                 </div>
 
+                <!-- Enterprise Plan -->
                 <div class="plan-card p-8 rounded-3xl flex flex-col">
                     <div class="mb-8">
                         <h4 class="text-gray-400 font-bold text-sm uppercase tracking-widest mb-2">Enterprise</h4>
@@ -142,70 +178,177 @@
                             <i class="fa-solid fa-check check-icon"></i> 커스텀 API 통합 지원
                         </li>
                     </ul>
-                    <button class="w-full py-4 rounded-xl border border-white/10 text-white font-bold hover:bg-white/5 transition-all">플랜 업그레이드</button>
+                    <button onclick="openPaymentModal('Enterprise')" class="w-full py-4 rounded-xl border border-white/10 text-white font-bold hover:bg-white/5 transition-all">플랜 업그레이드</button>
                 </div>
             </div>
 
-            </main>
+        </main>
+    </div>
+
+    <!-- PAYMENT MODAL (ADDITION) -->
+    <div id="payment-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="p-6 border-b border-white/5 flex justify-between items-center bg-white/5">
+                <h3 class="text-white font-black tracking-tight flex items-center gap-2">
+                    <i class="fa-solid fa-credit-card text-[#f07d18]"></i> 안전 결제
+                </h3>
+                <button onclick="closePaymentModal()" class="text-gray-500 hover:text-white transition-colors">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            
+            <div class="p-8 space-y-6 overflow-y-auto max-h-[70vh] custom-scrollbar">
+                <!-- Order Summary Area -->
+                <div class="p-5 bg-white/5 rounded-2xl border border-white/5">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <p id="modal-plan-name" class="text-[#f07d18] text-xs font-black uppercase tracking-widest mb-1">Professional Plan</p>
+                            <p id="modal-billing-cycle" class="text-white text-sm font-bold">월간 구독 서비스</p>
+                        </div>
+                        <div class="text-right">
+                            <span id="modal-price-display" class="text-2xl font-black text-white">$29</span>
+                            <p id="modal-unit-display" class="text-[10px] text-gray-500">per month</p>
+                        </div>
+                    </div>
+                    <div class="pt-4 border-t border-white/5 flex justify-between items-center">
+                        <span class="text-xs text-gray-400">총 결제 금액 (VAT 포함)</span>
+                        <span id="modal-total-price" class="text-lg font-black text-white">$29.00</span>
+                    </div>
+                </div>
+
+                <!-- Payment Form -->
+                <div class="space-y-4">
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest ml-1">카드 번호</label>
+                        <div class="relative">
+                            <input type="text" placeholder="0000 0000 0000 0000" class="w-full bg-white/5 border border-white/10 rounded-xl py-3 px-4 outline-none text-white text-sm focus:border-[#f07d18] transition-all">
+                            <i class="fa-brands fa-cc-visa absolute right-4 top-1/2 -translate-y-1/2 text-gray-600"></i>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="space-y-2">
+                            <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest ml-1">만료일 (MM/YY)</label>
+                            <input type="text" placeholder="12 / 26" class="w-full bg-white/5 border border-white/10 rounded-xl py-3 px-4 outline-none text-white text-sm focus:border-[#f07d18] transition-all text-center">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest ml-1">CVC / CVV</label>
+                            <input type="password" placeholder="•••" class="w-full bg-white/5 border border-white/10 rounded-xl py-3 px-4 outline-none text-white text-sm focus:border-[#f07d18] transition-all text-center">
+                        </div>
+                    </div>
+                    <div class="pt-4">
+                        <label class="flex items-center gap-3 cursor-pointer group">
+                            <input type="checkbox" checked class="hidden peer">
+                            <div class="w-5 h-5 rounded border border-white/10 flex items-center justify-center peer-checked:bg-[#f07d18] peer-checked:border-[#f07d18] transition-all">
+                                <i class="fa-solid fa-check text-[10px] text-white"></i>
+                            </div>
+                            <span class="text-[11px] text-gray-400 group-hover:text-gray-200 transition-colors">다음 결제 수단으로 저장 및 자동 갱신 동의</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-6 bg-white/5 border-t border-white/5">
+                <button onclick="processPayment()" class="w-full btn-orange py-4 rounded-xl font-black text-sm active:scale-95 shadow-lg shadow-[#f07d18]/20 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-shield-check"></i> <span id="payment-btn-text">결제 완료하기</span>
+                </button>
+                <p class="text-[9px] text-center text-gray-600 mt-4 leading-relaxed">
+                    결제 시 CloudFlow의 <span class="underline">이용약관</span> 및 <span class="underline">개인정보처리방침</span>에 동의하게 됩니다. 모든 결제는 256비트 SSL 암호화로 보호됩니다.
+                </p>
+            </div>
+        </div>
     </div>
 
     <script>
         const toggleBtn = document.getElementById('billing-toggle');
-const toggleDot = document.getElementById('toggle-dot');
-const proPrice = document.getElementById('pro-price');
-const entPrice = document.getElementById('ent-price');
-const monthlyLabel = document.getElementById('monthly-label');
-const yearlyLabel = document.getElementById('yearly-label');
+        const toggleDot = document.getElementById('toggle-dot');
+        const proPrice = document.getElementById('pro-price');
+        const entPrice = document.getElementById('ent-price');
+        const monthlyLabel = document.getElementById('monthly-label');
+        const yearlyLabel = document.getElementById('yearly-label');
 
-// 기본 월간 가격 설정
-const prices = {
-    pro: 29,
-    enterprise: 99
-};
+        const prices = {
+            pro: 29,
+            enterprise: 99
+        };
 
-let isAnnual = false;
+        let isAnnual = false;
 
-toggleBtn.addEventListener('click', () => {
-    isAnnual = !isAnnual;
-    
-    // 가격 표시 단위 요소 선택 ( /month 부분 )
-    const proUnit = proPrice.nextElementSibling;
-    const entUnit = entPrice.nextElementSibling;
+        // Billing Toggle Logic
+        toggleBtn.addEventListener('click', () => {
+            isAnnual = !isAnnual;
+            const proUnit = proPrice.nextElementSibling;
+            const entUnit = entPrice.nextElementSibling;
 
-    if (isAnnual) {
-        // 연간 결제 모드 활성화
-        toggleDot.style.transform = 'translateX(1.75rem)';
-        
-        // 계산 로직: (월간 * 12) * 0.9 (10% 할인)
-        const annualPro = Math.floor((prices.pro * 12) * 0.7);
-        const annualEnt = Math.floor((prices.enterprise * 12) * 0.7);
+            if (isAnnual) {
+                toggleDot.style.transform = 'translateX(1.75rem)';
+                const annualPro = Math.floor((prices.pro * 12) * 0.7);
+                const annualEnt = Math.floor((prices.enterprise * 12) * 0.7);
 
-        proPrice.innerText = `$${annualPro}`;
-        entPrice.innerText = `$${annualEnt}`;
-        
-        // 단위 변경
-        proUnit.innerText = '/year';
-        entUnit.innerText = '/year';
+                proPrice.innerText = `$${annualPro}`;
+                entPrice.innerText = `$${annualEnt}`;
+                proUnit.innerText = '/year';
+                entUnit.innerText = '/year';
+                yearlyLabel.classList.replace('text-gray-400', 'text-white');
+                monthlyLabel.classList.replace('text-white', 'text-gray-400');
+            } else {
+                toggleDot.style.transform = 'translateX(0)';
+                proPrice.innerText = `$${prices.pro}`;
+                entPrice.innerText = `$${prices.enterprise}`;
+                proUnit.innerText = '/month';
+                entUnit.innerText = '/month';
+                monthlyLabel.classList.replace('text-gray-400', 'text-white');
+                yearlyLabel.classList.replace('text-white', 'text-gray-400');
+            }
+        });
 
-        // 라벨 강조 변경
-        yearlyLabel.classList.replace('text-gray-400', 'text-white');
-        monthlyLabel.classList.replace('text-white', 'text-gray-400');
-    } else {
-        // 월간 결제 모드 활성화
-        toggleDot.style.transform = 'translateX(0)';
-        
-        proPrice.innerText = `$${prices.pro}`;
-        entPrice.innerText = `$${prices.enterprise}`;
-        
-        // 단위 변경
-        proUnit.innerText = '/month';
-        entUnit.innerText = '/month';
+        // Payment Modal Functions
+        function openPaymentModal(planName) {
+            const modal = document.getElementById('payment-modal');
+            const modalPlanName = document.getElementById('modal-plan-name');
+            const modalCycle = document.getElementById('modal-billing-cycle');
+            const modalPrice = document.getElementById('modal-price-display');
+            const modalUnit = document.getElementById('modal-unit-display');
+            const modalTotal = document.getElementById('modal-total-price');
 
-        // 라벨 강조 변경
-        monthlyLabel.classList.replace('text-gray-400', 'text-white');
-        yearlyLabel.classList.replace('text-white', 'text-gray-400');
-    }
-});
+            // Set Plan Data based on current state
+            modalPlanName.innerText = planName + " Plan";
+            modalCycle.innerText = isAnnual ? "연간 구독 서비스 (2개월 무료)" : "월간 구독 서비스";
+            
+            let currentPriceValue = planName === 'Professional' ? prices.pro : prices.enterprise;
+            if (isAnnual) {
+                currentPriceValue = Math.floor((currentPriceValue * 12) * 0.7);
+            }
+
+            modalPrice.innerText = `$${currentPriceValue}`;
+            modalUnit.innerText = isAnnual ? "per year" : "per month";
+            modalTotal.innerText = `$${currentPriceValue}.00`;
+
+            modal.classList.add('active');
+        }
+
+        function closePaymentModal() {
+            document.getElementById('payment-modal').classList.remove('active');
+        }
+
+        function processPayment() {
+            const btn = document.getElementById('payment-btn-text');
+            const icon = btn.previousElementSibling;
+            
+            btn.innerText = "처리 중...";
+            setTimeout(() => {
+                alert("결제가 완료되었습니다. 프리미엄 기능을 시작하세요!");
+                closePaymentModal();
+                btn.innerText = "결제 완료하기";
+            }, 1500);
+        }
+
+        // Close modal on outside click
+        window.onclick = function(event) {
+            const modal = document.getElementById('payment-modal');
+            if (event.target === modal) {
+                closePaymentModal();
+            }
+        }
     </script>
 </body>
 </html>
