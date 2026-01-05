@@ -6,10 +6,22 @@
     <title>CloudFlow Premium - Billing</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root { --accent-glow: rgba(240, 125, 24, 0.4); }
+        .plan-card { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.05); transition: all 0.3s ease; }
+        .plan-card.active { border-color: #f07d18; background: rgba(240, 125, 24, 0.02); }
+        .check-icon { color: #f07d18; }
+        .btn-orange { background: #f07d18; color: white; transition: all 0.2s ease; }
+        .btn-orange:hover { background: #d96a0f; transform: translateY(-1px); }
+        /* 토글 애니메이션 */
+        .toggle-dot { transition: transform 0.3s ease; }
+        .annual .toggle-dot { transform: translateX(1.75rem); }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+    </style>
 </head>
 <body class="h-screen overflow-hidden flex flex-col text-left">
 
-    <!-- 상단 헤더 -->
     <header class="fixed w-full z-50 bg-black/80 backdrop-blur-md border-b border-white/5">
         <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
             <div class="flex items-center gap-8">
@@ -17,7 +29,7 @@
                     <div class="w-7 h-7 bg-[#f07d18] rounded flex items-center justify-center text-white">
                         <i class="fa-solid fa-cloud-bolt text-sm"></i>
                     </div>
-                    <span class="text-lg font-extrabold tracking-tighter">CLOUDFLOW</span>
+                    <span class="text-lg font-extrabold tracking-tighter text-white">CLOUDFLOW</span>
                 </div>
                 <nav class="hidden lg:flex items-center gap-6 text-sm font-medium text-gray-400">
                     <a href="introduce/faq.html" class="hover:text-white transition-colors">자주 묻는 질문 / 문의하기</a>
@@ -27,37 +39,34 @@
             </div>
             <div class="flex items-center gap-4">
                 <button class="text-sm font-medium text-gray-400 hover:text-white"><a href="user/login.html">로그인</a></button>
-                <button class="notion-btn notion-btn-primary px-4 py-1.5 rounded-md text-sm"><a href="user/signup.html">무료로 시작하기</a></button>
+                <button class="btn-orange px-4 py-1.5 rounded-md text-sm font-bold shadow-lg shadow-[#f07d18]/20"><a href="user/signup.html">무료로 시작하기</a></button>
             </div>
         </div>
     </header>
 
     <div class="flex-1 overflow-y-auto custom-scrollbar bg-gradient-to-br from-[#0f1423] to-[#0b0f1a]">
-        <main class="max-w-6xl mx-auto py-16 px-6">
+        <main class="max-w-6xl mx-auto py-16 px-6 pt-32">
             
-            <!-- 타이틀 섹션 -->
             <div class="text-center mb-16">
                 <h2 class="text-[10px] font-black text-[#f07d18] uppercase tracking-[0.3em] mb-4">Pricing Plans</h2>
                 <h3 class="text-4xl md:text-5xl font-black text-white tracking-tight mb-6">성장을 위한 최적의 플랜을 선택하세요</h3>
                 
-                <!-- 연간/월간 토글 -->
-                <div class="flex items-center justify-center gap-4 mt-8">
-                    <span class="text-sm font-bold text-gray-400">월간 결제</span>
-                    <button class="w-14 h-7 toggle-bg rounded-full p-1 relative flex items-center">
-                        <div class="w-5 h-5 bg-[#f07d18] rounded-full shadow-[0_0_10px_var(--accent-glow)]"></div>
-                        <!-- 연간 할인 뱃지 -->
-                        <div class="absolute -right-24 top-1/2 -translate-y-1/2 bg-[#f07d18]/10 text-[#f07d18] text-[10px] font-black py-1 px-2 rounded-lg border border-[#f07d18]/30">
+                <div class="flex items-center justify-center gap-6 mt-12 relative">
+                    <span id="monthly-label" class="text-sm font-bold text-white transition-colors">월간 결제</span>
+                    <button id="billing-toggle" class="w-14 h-7 bg-white/10 rounded-full p-1 relative flex items-center transition-all">
+                        <div id="toggle-dot" class="toggle-dot w-5 h-5 bg-[#f07d18] rounded-full shadow-[0_0_10px_var(--accent-glow)]"></div>
+                    </button>
+                    <div class="flex items-center gap-3">
+                        <span id="yearly-label" class="text-sm font-bold text-gray-400 transition-colors">연간 결제</span>
+                        <div class="bg-[#f07d18]/10 text-[#f07d18] text-[10px] font-black py-1 px-2 rounded-lg border border-[#f07d18]/30">
                             2개월 무료 혜택
                         </div>
-                    </button>
-                    <span class="text-sm font-bold text-white">연간 결제</span>
+                    </div>
                 </div>
             </div>
 
-            <!-- 플랜 그리드 -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 
-                <!-- Basic 플랜 -->
                 <div class="plan-card p-8 rounded-3xl flex flex-col">
                     <div class="mb-8">
                         <h4 class="text-gray-400 font-bold text-sm uppercase tracking-widest mb-2">Starter</h4>
@@ -81,16 +90,14 @@
                     <button class="w-full py-4 rounded-xl border border-white/10 text-white font-bold hover:bg-white/5 transition-all">현재 플랜</button>
                 </div>
 
-                <!-- Pro 플랜 (추천) -->
                 <div class="plan-card active p-8 rounded-3xl flex flex-col relative overflow-hidden">
-                    <!-- 인기 뱃지 -->
                     <div class="absolute top-0 right-0 bg-[#f07d18] text-white text-[10px] font-black px-4 py-1.5 rounded-bl-xl uppercase tracking-tighter">
                         Most Popular
                     </div>
                     <div class="mb-8">
                         <h4 class="text-[#f07d18] font-black text-sm uppercase tracking-widest mb-2">Professional</h4>
                         <div class="flex items-baseline gap-1">
-                            <span class="text-4xl font-black text-white">$29</span>
+                            <span id="pro-price" class="text-4xl font-black text-white">$29</span>
                             <span class="text-gray-500 text-sm font-medium">/month</span>
                         </div>
                         <p class="text-gray-400 text-xs mt-4 leading-relaxed">성장하는 팀과 프리랜서를 위한 강력한 도구</p>
@@ -109,15 +116,14 @@
                             <i class="fa-solid fa-circle-check check-icon"></i> 24/7 우선 기술 지원
                         </li>
                     </ul>
-                    <button class="w-full btn-orange py-4 rounded-xl font-bold active:scale-95 shadow-lg">플랜 업그레이드</button>
+                    <button class="w-full btn-orange py-4 rounded-xl font-bold active:scale-95 shadow-lg shadow-[#f07d18]/20">플랜 업그레이드</button>
                 </div>
 
-                <!-- Enterprise 플랜 -->
                 <div class="plan-card p-8 rounded-3xl flex flex-col">
                     <div class="mb-8">
                         <h4 class="text-gray-400 font-bold text-sm uppercase tracking-widest mb-2">Enterprise</h4>
                         <div class="flex items-baseline gap-1">
-                            <span class="text-4xl font-black text-white">$99</span>
+                            <span id="ent-price" class="text-4xl font-black text-white">$99</span>
                             <span class="text-gray-500 text-sm font-medium">/month</span>
                         </div>
                         <p class="text-gray-500 text-xs mt-4 leading-relaxed">대규모 조직을 위한 커스텀 보안 및 관리</p>
@@ -136,36 +142,70 @@
                             <i class="fa-solid fa-check check-icon"></i> 커스텀 API 통합 지원
                         </li>
                     </ul>
-                    <button class="w-full py-4 rounded-xl border border-white/10 text-white font-bold hover:bg-white/5 transition-all">영업팀 문의</button>
+                    <button class="w-full py-4 rounded-xl border border-white/10 text-white font-bold hover:bg-white/5 transition-all">플랜 업그레이드</button>
                 </div>
             </div>
 
-            <!-- 하단 푸터 정보 -->
-            <div class="mt-20 flex flex-col md:flex-row items-center justify-between p-8 rounded-3xl bg-white/[0.02] border border-white/5">
-                <div class="flex items-center gap-6 mb-6 md:mb-0">
-                    <div class="flex -space-x-3">
-                        <img src="https://i.pravatar.cc/150?u=1" class="w-10 h-10 rounded-full border-2 border-[#161b2c]">
-                        <img src="https://i.pravatar.cc/150?u=2" class="w-10 h-10 rounded-full border-2 border-[#161b2c]">
-                        <img src="https://i.pravatar.cc/150?u=3" class="w-10 h-10 rounded-full border-2 border-[#161b2c]">
-                    </div>
-                    <div>
-                        <p class="text-sm font-bold text-white">전 세계 10,000+ 기업이 선택했습니다</p>
-                        <p class="text-xs text-gray-500 mt-1">지금 바로 CloudFlow의 일원이 되어 보세요.</p>
-                    </div>
-                </div>
-                <div class="flex gap-8">
-                    <div class="text-center">
-                        <p class="text-xl font-black text-white">99.9%</p>
-                        <p class="text-[10px] font-bold text-gray-600 uppercase tracking-widest mt-1">Uptime</p>
-                    </div>
-                    <div class="text-center">
-                        <p class="text-xl font-black text-white">AES-256</p>
-                        <p class="text-[10px] font-bold text-gray-600 uppercase tracking-widest mt-1">Security</p>
-                    </div>
-                </div>
-            </div>
-        </main>
+            </main>
     </div>
 
+    <script>
+        const toggleBtn = document.getElementById('billing-toggle');
+const toggleDot = document.getElementById('toggle-dot');
+const proPrice = document.getElementById('pro-price');
+const entPrice = document.getElementById('ent-price');
+const monthlyLabel = document.getElementById('monthly-label');
+const yearlyLabel = document.getElementById('yearly-label');
+
+// 기본 월간 가격 설정
+const prices = {
+    pro: 29,
+    enterprise: 99
+};
+
+let isAnnual = false;
+
+toggleBtn.addEventListener('click', () => {
+    isAnnual = !isAnnual;
+    
+    // 가격 표시 단위 요소 선택 ( /month 부분 )
+    const proUnit = proPrice.nextElementSibling;
+    const entUnit = entPrice.nextElementSibling;
+
+    if (isAnnual) {
+        // 연간 결제 모드 활성화
+        toggleDot.style.transform = 'translateX(1.75rem)';
+        
+        // 계산 로직: (월간 * 12) * 0.9 (10% 할인)
+        const annualPro = Math.floor((prices.pro * 12) * 0.7);
+        const annualEnt = Math.floor((prices.enterprise * 12) * 0.7);
+
+        proPrice.innerText = `$${annualPro}`;
+        entPrice.innerText = `$${annualEnt}`;
+        
+        // 단위 변경
+        proUnit.innerText = '/year';
+        entUnit.innerText = '/year';
+
+        // 라벨 강조 변경
+        yearlyLabel.classList.replace('text-gray-400', 'text-white');
+        monthlyLabel.classList.replace('text-white', 'text-gray-400');
+    } else {
+        // 월간 결제 모드 활성화
+        toggleDot.style.transform = 'translateX(0)';
+        
+        proPrice.innerText = `$${prices.pro}`;
+        entPrice.innerText = `$${prices.enterprise}`;
+        
+        // 단위 변경
+        proUnit.innerText = '/month';
+        entUnit.innerText = '/month';
+
+        // 라벨 강조 변경
+        monthlyLabel.classList.replace('text-gray-400', 'text-white');
+        yearlyLabel.classList.replace('text-white', 'text-gray-400');
+    }
+});
+    </script>
 </body>
 </html>
