@@ -217,6 +217,15 @@
             color: white;
         }
 
+        /* Modal Tab Content Visibility */
+        .modal-tab-pane {
+            display: none;
+            animation: fadeIn 0.3s ease-out;
+        }
+        .modal-tab-pane.active {
+            display: block;
+        }
+
         /* Toggle Switch Style */
         .switch {
             position: relative;
@@ -651,17 +660,17 @@
             <div class="flex flex-1 overflow-hidden">
                 <!-- Modal Sidebar -->
                 <aside class="w-56 border-r border-[var(--border-color)] p-4 space-y-1 shrink-0 bg-[var(--bg-input)]/5">
-                    <div class="modal-sidebar-btn active"><i class="fa-solid fa-circle-user"></i> 기본 프로필</div>
-                    <div class="modal-sidebar-btn"><i class="fa-solid fa-shield-halved"></i> 계정 및 보안</div>
-                    <div class="modal-sidebar-btn"><i class="fa-solid fa-bell"></i> 알림 설정</div>
-                    <div class="modal-sidebar-btn"><i class="fa-solid fa-globe"></i> 언어 및 지역</div>
-                    <div class="modal-sidebar-btn"><i class="fa-solid fa-wallet"></i> 구독 및 결제</div>
+                    <div onclick="switchModalTab('profile')" id="modal-nav-profile" class="modal-sidebar-btn active"><i class="fa-solid fa-circle-user"></i> 기본 프로필</div>
+                    <div onclick="switchModalTab('security')" id="modal-nav-security" class="modal-sidebar-btn"><i class="fa-solid fa-shield-halved"></i> 계정 및 보안</div>
+                    <div onclick="switchModalTab('notif')" id="modal-nav-notif" class="modal-sidebar-btn"><i class="fa-solid fa-bell"></i> 알림 설정</div>
+                    <div onclick="switchModalTab('region')" id="modal-nav-region" class="modal-sidebar-btn"><i class="fa-solid fa-globe"></i> 언어 및 지역</div>
+                    <div onclick="switchModalTab('billing')" id="modal-nav-billing" class="modal-sidebar-btn"><i class="fa-solid fa-wallet"></i> 구독 및 결제</div>
                 </aside>
 
                 <!-- Modal Content Area -->
                 <div class="flex-1 overflow-y-auto custom-scrollbar p-8">
-                    <div class="max-w-2xl mx-auto space-y-10">
-                        
+                    <!-- Tab: Basic Profile -->
+                    <div id="modal-tab-profile" class="modal-tab-pane active max-w-2xl mx-auto space-y-10">
                         <!-- Section: Profile Image & Status -->
                         <section>
                             <h3 class="text-sm font-black text-[var(--text-muted)] uppercase tracking-widest mb-6">프로필 이미지</h3>
@@ -712,7 +721,7 @@
 
                         <hr class="border-[var(--border-color)]">
 
-                        <!-- Section: Preference Toggles (New UI Component) -->
+                        <!-- Section: Preference Toggles -->
                         <section class="space-y-4">
                             <h3 class="text-sm font-black text-[var(--text-muted)] uppercase tracking-widest mb-4">선호 설정</h3>
                             <div class="space-y-4 bg-[var(--bg-input)]/20 p-5 rounded-2xl border border-[var(--border-color)]">
@@ -732,7 +741,126 @@
                                 </div>
                             </div>
                         </section>
-                        
+                    </div>
+
+                    <!-- Tab: Subscription & Billing -->
+                    <div id="modal-tab-billing" class="modal-tab-pane max-w-2xl mx-auto space-y-10">
+                        <!-- Current Plan Summary -->
+                        <section>
+                            <h3 class="text-sm font-black text-[var(--text-muted)] uppercase tracking-widest mb-6">현재 플랜 정보</h3>
+                            <div class="bg-gradient-to-br from-orange-500 to-orange-700 rounded-3xl p-8 text-white shadow-xl">
+                                <div class="flex justify-between items-start mb-6">
+                                    <div>
+                                        <p class="text-xs font-bold opacity-80 uppercase tracking-widest">Active Plan</p>
+                                        <h4 class="text-3xl font-black mt-1">Professional</h4>
+                                    </div>
+                                    <span class="px-3 py-1 bg-white/20 rounded-full text-[10px] font-bold">Annual Billing</span>
+                                </div>
+                                <p class="text-sm opacity-90 leading-relaxed mb-6">귀하의 플랜은 2024년 10월 15일에 갱신됩니다. 연간 구독으로 20% 할인 혜택을 받고 계십니다.</p>
+                                <div class="flex gap-3">
+                                    <button class="bg-white text-orange-600 px-6 py-2.5 rounded-xl text-xs font-black hover:bg-orange-50 transition-colors">플랜 업그레이드</button>
+                                    <button class="bg-orange-400/30 text-white px-6 py-2.5 rounded-xl text-xs font-bold hover:bg-orange-400/50 transition-colors">구독 취소</button>
+                                </div>
+                            </div>
+                        </section>
+
+                        <hr class="border-[var(--border-color)]">
+
+                        <!-- Usage Stats -->
+                        <section class="space-y-4">
+                            <h3 class="text-sm font-black text-[var(--text-muted)] uppercase tracking-widest mb-4">리소스 사용량</h3>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="p-5 bg-[var(--bg-input)]/20 border border-[var(--border-color)] rounded-2xl">
+                                    <div class="flex justify-between items-center mb-3">
+                                        <span class="text-xs font-bold">Cloud Storage</span>
+                                        <span class="text-xs text-[var(--accent)] font-bold">75%</span>
+                                    </div>
+                                    <div class="w-full bg-gray-700/30 h-1.5 rounded-full overflow-hidden">
+                                        <div class="bg-[var(--accent)] h-full" style="width: 75%"></div>
+                                    </div>
+                                    <p class="text-[10px] text-[var(--text-muted)] mt-2">37.5 GB / 50 GB 사용 중</p>
+                                </div>
+                                <div class="p-5 bg-[var(--bg-input)]/20 border border-[var(--border-color)] rounded-2xl">
+                                    <div class="flex justify-between items-center mb-3">
+                                        <span class="text-xs font-bold">API Requests</span>
+                                        <span class="text-xs text-blue-400 font-bold">12%</span>
+                                    </div>
+                                    <div class="w-full bg-gray-700/30 h-1.5 rounded-full overflow-hidden">
+                                        <div class="bg-blue-400 h-full" style="width: 12%"></div>
+                                    </div>
+                                    <p class="text-[10px] text-[var(--text-muted)] mt-2">1,200 / 10,000 요청</p>
+                                </div>
+                            </div>
+                        </section>
+
+                        <hr class="border-[var(--border-color)]">
+
+                        <!-- Payment Methods -->
+                        <section class="space-y-4">
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-sm font-black text-[var(--text-muted)] uppercase tracking-widest">결제 수단</h3>
+                                <button class="text-xs text-[var(--accent)] font-bold hover:underline">+ 카드 추가</button>
+                            </div>
+                            <div class="p-4 bg-[var(--bg-input)]/20 border border-[var(--border-color)] rounded-2xl flex items-center justify-between">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-8 bg-white/5 rounded flex items-center justify-center border border-white/10">
+                                        <i class="fa-brands fa-cc-visa text-blue-500 text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-bold">Visa •••• 4242</p>
+                                        <p class="text-[10px] text-[var(--text-muted)] uppercase tracking-wider">Expires 12/26</p>
+                                    </div>
+                                </div>
+                                <span class="px-2 py-1 bg-green-500/10 text-green-500 text-[9px] font-black rounded uppercase">Default</span>
+                            </div>
+                        </section>
+
+                        <hr class="border-[var(--border-color)]">
+
+                        <!-- Billing History -->
+                        <section class="space-y-4">
+                            <h3 class="text-sm font-black text-[var(--text-muted)] uppercase tracking-widest mb-4">최근 결제 내역</h3>
+                            <div class="overflow-hidden border border-[var(--border-color)] rounded-2xl">
+                                <table class="w-full text-left text-xs">
+                                    <thead class="bg-[var(--bg-input)]/40 text-[var(--text-muted)] font-bold">
+                                        <tr>
+                                            <th class="px-5 py-3">Date</th>
+                                            <th class="px-5 py-3">Description</th>
+                                            <th class="px-5 py-3 text-right">Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-[var(--border-color)]">
+                                        <tr class="hover:bg-[var(--bg-input)]/10 transition-colors">
+                                            <td class="px-5 py-3 text-[var(--text-muted)]">Oct 15, 2023</td>
+                                            <td class="px-5 py-3 font-bold">Professional Plan - Annual</td>
+                                            <td class="px-5 py-3 text-right font-black">$288.00</td>
+                                        </tr>
+                                        <tr class="hover:bg-[var(--bg-input)]/10 transition-colors">
+                                            <td class="px-5 py-3 text-[var(--text-muted)]">Sep 15, 2022</td>
+                                            <td class="px-5 py-3 font-bold">Professional Plan - Annual</td>
+                                            <td class="px-5 py-3 text-right font-black">$288.00</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </section>
+                    </div>
+                    
+                    <!-- Other Taps Placeholder -->
+                    <div id="modal-tab-security" class="modal-tab-pane max-w-2xl mx-auto py-20 text-center">
+                        <i class="fa-solid fa-shield-halved text-4xl text-[var(--text-muted)] mb-4"></i>
+                        <h4 class="text-lg font-bold">보안 설정 준비 중</h4>
+                        <p class="text-sm text-[var(--text-muted)]">이 기능은 다음 업데이트에 포함될 예정입니다.</p>
+                    </div>
+                    <div id="modal-tab-notif" class="modal-tab-pane max-w-2xl mx-auto py-20 text-center">
+                        <i class="fa-solid fa-bell text-4xl text-[var(--text-muted)] mb-4"></i>
+                        <h4 class="text-lg font-bold">알림 설정 준비 중</h4>
+                        <p class="text-sm text-[var(--text-muted)]">이 기능은 다음 업데이트에 포함될 예정입니다.</p>
+                    </div>
+                    <div id="modal-tab-region" class="modal-tab-pane max-w-2xl mx-auto py-20 text-center">
+                        <i class="fa-solid fa-globe text-4xl text-[var(--text-muted)] mb-4"></i>
+                        <h4 class="text-lg font-bold">언어 및 지역 준비 중</h4>
+                        <p class="text-sm text-[var(--text-muted)]">이 기능은 다음 업데이트에 포함될 예정입니다.</p>
                     </div>
                 </div>
             </div>
@@ -799,6 +927,21 @@
             dropdown.classList.toggle('active');
         }
 
+        // Modal Tab Switching Function
+        function switchModalTab(tabId) {
+            // Update Sidebar UI
+            document.querySelectorAll('.modal-sidebar-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById('modal-nav-' + tabId).classList.add('active');
+
+            // Update Content UI
+            document.querySelectorAll('.modal-tab-pane').forEach(pane => {
+                pane.classList.remove('active');
+            });
+            document.getElementById('modal-tab-' + tabId).classList.add('active');
+        }
+
         // Modal Functions
         function openProfileModal() {
             document.getElementById('profile-dropdown').classList.remove('active');
@@ -810,7 +953,6 @@
         }
 
         function saveProfile() {
-            // 저장 프로세스 시뮬레이션
             const btn = event.currentTarget;
             const originalText = btn.innerHTML;
             btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> 저장 중...';
