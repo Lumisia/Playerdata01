@@ -15,6 +15,10 @@
             --text-muted: #94a3b8;
             --border-color: #334155;
             --accent: #f07d18;
+            --pdf-color: #ef4444;
+            --img-color: #3b82f6;
+            --vid-color: #a855f7;
+            --etc-color: #10b981;
         }
 
         body.light-theme {
@@ -94,7 +98,6 @@
             border-radius: 10px;
         }
 
-        /* View transition */
         .content-view {
             display: none;
             animation: fadeIn 0.3s ease-out;
@@ -108,7 +111,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Chat Sidebar Styling */
         #chat-sidebar {
             transition: transform 0.3s ease, width 0.3s ease;
             width: 0;
@@ -118,10 +120,60 @@
             width: 320px;
             border-left: 1px solid var(--border-color);
         }
+
+        /* Donut Chart Styling */
+        .donut-chart {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: conic-gradient(
+                var(--pdf-color) 0% 40%,
+                var(--img-color) 40% 70%,
+                var(--vid-color) 70% 90%,
+                var(--etc-color) 90% 100%
+            );
+        }
+        .donut-chart::before {
+            content: "";
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: var(--bg-sidebar);
+            border-radius: 50%;
+        }
+
+        /* Usage Gauge Styling */
+        .usage-gauge {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 12px solid var(--border-color);
+            border-top-color: var(--accent);
+            transform: rotate(-45deg);
+        }
+        .usage-content {
+            transform: rotate(45deg);
+        }
+
+        select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2394a3b8'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0 center;
+            background-size: 12px;
+            padding-right: 20px;
+        }
     </style>
 </head>
 <body class="h-screen overflow-hidden flex flex-col">
-    <!-- Header -->
     <header class="h-16 glass-nav flex items-center justify-between px-6 z-30 shrink-0">
         <div class="flex items-center gap-8">
             <div class="flex items-center gap-3">
@@ -158,7 +210,6 @@
     </header>
 
     <div class="flex flex-1 overflow-hidden">
-        <!-- Left Sidebar -->
         <aside class="w-64 bg-[var(--bg-sidebar)] border-r border-[var(--border-color)] flex flex-col shrink-0 h-full">
             <div class="p-5 overflow-y-auto custom-scrollbar">
                 <div class="space-y-3 mb-8">
@@ -194,6 +245,24 @@
                             </div>
                         </nav>
                     </details>
+
+                    <details class="group" open>
+                        <summary class="nav-section-title">
+                            <span>WORKSPACES</span>
+                            <i class="fa-solid fa-chevron-down transition-transform group-open:rotate-180"></i>
+                        </summary>
+                        <nav class="mt-2 space-y-1">
+                            <div onclick="switchView('ws-design')" class="nav-link" id="nav-ws-design">
+                                <i class="fa-solid fa-users-rectangle"></i> Design Unit
+                            </div>
+                            <div onclick="switchView('ws-marketing')" class="nav-link" id="nav-ws-marketing">
+                                <i class="fa-solid fa-users-rectangle"></i> Marketing Team
+                            </div>
+                            <div onclick="switchView('ws-dev')" class="nav-link" id="nav-ws-dev">
+                                <i class="fa-solid fa-users-rectangle"></i> Development Group
+                            </div>
+                        </nav>
+                    </details>
                 </div>
             </div>
 
@@ -211,35 +280,167 @@
             </div>
         </aside>
 
-        <!-- Main Content Area -->
         <main class="flex-1 overflow-y-auto p-8 bg-[var(--bg-deep)]">
             <div class="max-w-6xl mx-auto">
                 
                 <!-- VIEW: Dashboard -->
                 <div id="view-dashboard" class="content-view">
-                    <h2 class="text-2xl font-black text-[var(--text-main)] mb-6">대시보드 요약</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-                        <div class="p-6 rounded-2xl bg-[var(--bg-sidebar)] border border-[var(--border-color)]">
-                            <div class="w-10 h-10 rounded-lg bg-blue-500/10 text-blue-500 flex items-center justify-center mb-4"><i class="fa-solid fa-file"></i></div>
-                            <p class="text-[11px] font-bold text-[var(--text-muted)]">전체 파일</p>
-                            <h4 class="text-2xl font-black">1,284</h4>
+                    <h2 class="text-2xl font-black text-[var(--text-main)] mb-6">대시보드 분석</h2>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                        <!-- Storage Usage Gauge -->
+                        <div class="lg:col-span-1 p-6 rounded-3xl bg-[var(--bg-sidebar)] border border-[var(--border-color)] flex flex-col items-center">
+                            <h3 class="text-xs font-black text-[var(--text-muted)] uppercase mb-6 self-start tracking-widest">실시간 스토리지 점유율</h3>
+                            <div class="usage-gauge">
+                                <div class="usage-content text-center">
+                                    <span class="block text-4xl font-black text-[var(--accent)]">75%</span>
+                                    <span class="text-[10px] text-[var(--text-muted)] font-bold">USED</span>
+                                </div>
+                            </div>
+                            <div class="mt-6 text-center">
+                                <p class="text-sm font-bold">총 50GB 중 37.5GB 사용</p>
+                                <p class="text-[10px] text-red-500 mt-1 font-bold">사용 가능한 용량이 12.5GB 남았습니다.</p>
+                            </div>
                         </div>
-                        <div class="p-6 rounded-2xl bg-[var(--bg-sidebar)] border border-[var(--border-color)]">
-                            <div class="w-10 h-10 rounded-lg bg-orange-500/10 text-orange-500 flex items-center justify-center mb-4"><i class="fa-solid fa-database"></i></div>
-                            <p class="text-[11px] font-bold text-[var(--text-muted)]">사용량</p>
-                            <h4 class="text-2xl font-black">37.5 GB</h4>
+
+                        <!-- File Extension Distribution (Circular) -->
+                        <div class="lg:col-span-2 p-6 rounded-3xl bg-[var(--bg-sidebar)] border border-[var(--border-color)] flex flex-col md:flex-row items-center gap-10">
+                            <div class="flex flex-col self-start">
+                                <h3 class="text-xs font-black text-[var(--text-muted)] uppercase mb-2 tracking-widest">파일 형식 분포</h3>
+                                <p class="text-[10px] text-[var(--text-muted)] mb-6">가장 큰 비중을 차지하는 형식은 PDF 문서입니다.</p>
+                                
+                                <div class="space-y-3">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-2 h-2 rounded-full bg-[var(--pdf-color)]"></div>
+                                        <span class="text-xs font-bold w-16">DOCS</span>
+                                        <span class="text-xs text-[var(--text-muted)]">40%</span>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-2 h-2 rounded-full bg-[var(--img-color)]"></div>
+                                        <span class="text-xs font-bold w-16">IMAGES</span>
+                                        <span class="text-xs text-[var(--text-muted)]">30%</span>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-2 h-2 rounded-full bg-[var(--vid-color)]"></div>
+                                        <span class="text-xs font-bold w-16">VIDEOS</span>
+                                        <span class="text-xs text-[var(--text-muted)]">20%</span>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-2 h-2 rounded-full bg-[var(--etc-color)]"></div>
+                                        <span class="text-xs font-bold w-16">OTHERS</span>
+                                        <span class="text-xs text-[var(--text-muted)]">10%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="donut-chart">
+                                <div class="z-10 text-center">
+                                    <span class="block text-2xl font-black">1.2k</span>
+                                    <span class="text-[9px] text-[var(--text-muted)] font-bold">TOTAL FILES</span>
+                                </div>
+                            </div>
                         </div>
-                        <!-- ... (Dashboard content same as before) -->
+                    </div>
+
+                    <!-- Cloud Flow Automations -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                        <div class="p-6 rounded-3xl bg-[var(--bg-sidebar)] border border-[var(--border-color)]">
+                            <div class="flex justify-between items-start mb-4">
+                                <div>
+                                    <h3 class="font-black text-sm mb-1">파일 자동 분류 정리</h3>
+                                    <p class="text-[10px] text-[var(--text-muted)]">업로드 시 파일명과 형식을 분석하여 지정 폴더로 자동 이동합니다.</p>
+                                </div>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" checked class="sr-only peer">
+                                    <div class="w-10 h-5 bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[var(--accent)]"></div>
+                                </label>
+                            </div>
+                            <div class="flex gap-2 mt-4">
+                                <span class="px-2 py-1 bg-[var(--bg-input)] rounded-md text-[9px] font-bold text-blue-400">#이미지_전용</span>
+                                <span class="px-2 py-1 bg-[var(--bg-input)] rounded-md text-[9px] font-bold text-red-400">#PDF_보고서</span>
+                                <button class="ml-auto text-[10px] text-[var(--accent)] font-bold">규칙 수정</button>
+                            </div>
+                        </div>
+
+                        <div class="p-6 rounded-3xl bg-[var(--bg-sidebar)] border border-[var(--border-color)]">
+                            <div class="flex justify-between items-start mb-4">
+                                <div>
+                                    <h3 class="font-black text-sm mb-1">중복 파일 탐지 및 삭제</h3>
+                                    <p class="text-[10px] text-[var(--text-muted)]">AI가 동일한 내용의 파일을 찾아내어 용량을 확보합니다.</p>
+                                </div>
+                                <button class="px-4 py-1.5 bg-[var(--bg-input)] hover:bg-[var(--accent)] text-white text-[10px] font-bold rounded-lg transition-colors">지금 검사</button>
+                            </div>
+                            <div class="mt-4 flex items-center justify-between text-[10px]">
+                                <span class="text-green-500 font-bold">최근 검사 결과: 깨끗함 (24시간 전)</span>
+                                <span class="text-gray-500 italic">2.1 GB 절약됨</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Insights -->
+                    <div class="p-6 rounded-3xl bg-[var(--bg-sidebar)] border border-[var(--border-color)]">
+                        <h3 class="text-xs font-black text-[var(--text-muted)] uppercase mb-6 tracking-widest">리소스 사용 추이</h3>
+                        <div class="h-32 w-full flex items-end justify-between gap-1">
+                            <!-- Mock Bars -->
+                            <div class="w-full bg-[var(--bg-input)] rounded-t-lg h-[30%]"></div>
+                            <div class="w-full bg-[var(--bg-input)] rounded-t-lg h-[45%]"></div>
+                            <div class="w-full bg-[var(--bg-input)] rounded-t-lg h-[20%]"></div>
+                            <div class="w-full bg-[var(--bg-input)] rounded-t-lg h-[65%]"></div>
+                            <div class="w-full bg-[var(--bg-input)] rounded-t-lg h-[80%]"></div>
+                            <div class="w-full bg-[var(--bg-input)] rounded-t-lg h-[55%]"></div>
+                            <div class="w-full bg-[var(--accent)] rounded-t-lg h-[75%]"></div>
+                        </div>
+                        <div class="flex justify-between mt-3 text-[9px] text-[var(--text-muted)] font-bold">
+                            <span>MON</span><span>TUE</span><span>WED</span><span>THU</span><span>FRI</span><span>SAT</span><span class="text-[var(--accent)]">SUN (NOW)</span>
+                        </div>
                     </div>
                 </div>
 
                 <!-- VIEW: All Files -->
                 <div id="view-files" class="content-view active">
-                    <h2 class="text-2xl font-black text-[var(--text-main)] mb-6">모든 파일</h2>
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="text-2xl font-black text-[var(--text-main)]">내 프로젝트 파일</h2>
+                        <div class="flex gap-2">
+                            <button class="p-2 text-[#f07d18] bg-[#f07d18]/10 rounded-lg shadow-sm"><i class="fa-solid fa-table-cells-large"></i></button>
+                            <button class="p-2 text-gray-500 hover:text-white transition-colors"><i class="fa-solid fa-list"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-6 p-5 bg-[var(--bg-sidebar)] rounded-2xl border border-[var(--border-color)] mb-8 shadow-sm">
+                        <div class="flex flex-col gap-1.5 min-w-[120px]">
+                            <span class="text-[10px] text-gray-500 font-extrabold uppercase tracking-wider">파일 형식</span>
+                            <select class="bg-transparent text-sm font-semibold outline-none cursor-pointer text-[var(--text-main)]">
+                                <option>전체 형식</option>
+                                <option>PDF 문서</option>
+                                <option>이미지</option>
+                                <option>비디오</option>
+                            </select>
+                        </div>
+                        <div class="w-[1px] bg-[var(--border-color)]"></div>
+                        <div class="flex flex-col gap-1.5 min-w-[120px]">
+                            <span class="text-[10px] text-gray-500 font-extrabold uppercase tracking-wider">수정 날짜</span>
+                            <select class="bg-transparent text-sm font-semibold outline-none cursor-pointer text-[var(--text-main)]">
+                                <option>전체 기간</option>
+                                <option>최근 7일</option>
+                                <option>이번 달</option>
+                            </select>
+                        </div>
+                        <div class="w-[1px] bg-[var(--border-color)]"></div>
+                        <div class="flex flex-col gap-1.5 min-w-[120px]">
+                            <span class="text-[10px] text-gray-500 font-extrabold uppercase tracking-wider">출처</span>
+                            <select class="bg-transparent text-sm font-semibold outline-none cursor-pointer text-[var(--text-main)]">
+                                <option>모든 출처</option>
+                                <option>내 파일</option>
+                                <option>공유 파일</option>
+                            </select>
+                        </div>
+                    </div>
+
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div class="p-6 rounded-2xl border border-[var(--border-color)] bg-[var(--bg-sidebar)] group cursor-pointer hover:border-[#f07d18] transition-all">
+                        <div class="p-6 rounded-2xl border border-[var(--border-color)] bg-[var(--bg-sidebar)] group cursor-pointer hover:border-[#f07d18] transition-all shadow-sm">
                             <div class="flex justify-between items-start mb-4">
                                 <div class="w-12 h-12 bg-[#f07d18]/10 text-[#f07d18] rounded-xl flex items-center justify-center text-2xl"><i class="fa-solid fa-file-pdf"></i></div>
+                                <button class="text-gray-500 opacity-0 group-hover:opacity-100"><i class="fa-solid fa-ellipsis-vertical"></i></button>
                             </div>
                             <h3 class="font-bold text-[var(--text-main)] truncate">Project_Proposal.pdf</h3>
                             <p class="text-[11px] text-gray-500 mt-1">2시간 전 수정 · 4.2 MB</p>
@@ -247,10 +448,10 @@
                     </div>
                 </div>
 
-                <!-- VIEW: Recent -->
+                <!-- (Other Views: Recent, Favorites, Shared, Trash, WS... remain unchanged for brevity) -->
                 <div id="view-recent" class="content-view">
                     <h2 class="text-2xl font-black text-[var(--text-main)] mb-6">최근 사용 문서</h2>
-                    <div class="bg-[var(--bg-sidebar)] rounded-2xl border border-[var(--border-color)] overflow-hidden">
+                    <div class="bg-[var(--bg-sidebar)] rounded-2xl border border-[var(--border-color)] overflow-hidden shadow-sm">
                         <table class="w-full text-left text-sm">
                             <thead class="bg-[var(--bg-input)] text-[var(--text-muted)] font-bold">
                                 <tr>
@@ -260,7 +461,7 @@
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-[var(--border-color)]">
-                                <tr class="hover:bg-[var(--bg-input)] cursor-pointer">
+                                <tr class="hover:bg-[var(--bg-input)] cursor-pointer transition-colors">
                                     <td class="px-6 py-4 flex items-center gap-3"><i class="fa-solid fa-file-lines text-orange-500"></i> Meeting_Notes.docx</td>
                                     <td class="px-6 py-4">방금 전</td>
                                     <td class="px-6 py-4">120 KB</td>
@@ -269,12 +470,11 @@
                         </table>
                     </div>
                 </div>
-
-                <!-- VIEW: Favorites -->
+                
                 <div id="view-favorites" class="content-view">
                     <h2 class="text-2xl font-black text-[var(--text-main)] mb-6">즐겨찾기</h2>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div class="p-6 rounded-2xl border border-[var(--accent)] bg-[var(--bg-sidebar)] group cursor-pointer transition-all">
+                        <div class="p-6 rounded-2xl border border-[var(--accent)] bg-[var(--bg-sidebar)] group cursor-pointer transition-all shadow-sm">
                             <div class="flex justify-between items-start mb-4">
                                 <div class="w-12 h-12 bg-yellow-500/10 text-yellow-500 rounded-xl flex items-center justify-center text-2xl"><i class="fa-solid fa-star"></i></div>
                             </div>
@@ -284,131 +484,91 @@
                     </div>
                 </div>
 
-                <!-- VIEW: Shared -->
                 <div id="view-shared" class="content-view">
                     <h2 class="text-2xl font-black text-[var(--text-main)] mb-6">공유된 항목</h2>
                     <div class="space-y-4">
-                        <div class="p-4 bg-[var(--bg-sidebar)] border border-[var(--border-color)] rounded-2xl flex items-center justify-between">
+                        <div class="p-4 bg-[var(--bg-sidebar)] border border-[var(--border-color)] rounded-2xl flex items-center justify-between shadow-sm">
                             <div class="flex items-center gap-4">
                                 <div class="w-10 h-10 bg-blue-500/10 text-blue-500 rounded-lg flex items-center justify-center"><i class="fa-solid fa-users"></i></div>
-                                <div>
-                                    <p class="font-bold text-sm">Marketing_Campaign_v2</p>
-                                    <p class="text-[10px] text-gray-500">공유자: Sarah Jenkins</p>
-                                </div>
+                                <div><p class="font-bold text-sm">Marketing_Campaign_v2</p><p class="text-[10px] text-gray-500">공유자: Sarah Jenkins</p></div>
                             </div>
-                            <button class="px-4 py-2 bg-[var(--bg-input)] rounded-lg text-xs font-bold">열기</button>
+                            <button class="px-4 py-2 bg-[var(--bg-input)] rounded-lg text-xs font-bold hover:bg-[var(--accent)] hover:text-white transition-all">열기</button>
                         </div>
                     </div>
                 </div>
 
-                <!-- VIEW: Trash -->
                 <div id="view-trash" class="content-view">
                     <div class="flex justify-between items-center mb-6">
                         <h2 class="text-2xl font-black text-[var(--text-main)]">휴지통</h2>
                         <button class="text-xs text-red-500 font-bold hover:underline">휴지통 비우기</button>
                     </div>
                     <div class="opacity-50">
-                        <div class="p-4 bg-[var(--bg-sidebar)] border border-dashed border-[var(--border-color)] rounded-2xl flex items-center gap-4">
+                        <div class="p-4 bg-[var(--bg-sidebar)] border border-dashed border-[var(--border-color)] rounded-2xl flex items-center gap-4 shadow-sm">
                             <i class="fa-solid fa-file-circle-xmark text-xl"></i>
                             <span class="text-sm">Deleted_Draft_01.txt (30일 후 영구 삭제)</span>
                         </div>
                     </div>
                 </div>
 
+                <div id="view-ws-design" class="content-view">
+                    <h2 class="text-2xl font-black text-[var(--text-main)] mb-2">Design Unit</h2>
+                    <p class="text-sm text-[var(--text-muted)] mb-6">디자인 팀 전용 공유 워크스페이스입니다.</p>
+                </div>
             </div>
         </main>
 
         <!-- Right Sidebar: Collaboration Chat -->
-        <aside id="chat-sidebar" class="bg-[var(--bg-sidebar)] flex flex-col h-full shrink-0">
+        <aside id="chat-sidebar" class="bg-[var(--bg-sidebar)] flex flex-col h-full shrink-0 shadow-2xl">
             <div class="h-16 border-b border-[var(--border-color)] flex items-center justify-between px-5 shrink-0">
                 <span class="font-black text-sm uppercase tracking-wider">협업 채팅</span>
-                <button onclick="toggleChat()" class="text-gray-500 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+                <button onclick="toggleChat()" class="text-gray-500 hover:text-white transition-colors"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            
             <div class="flex-1 overflow-y-auto p-5 space-y-4 custom-scrollbar">
-                <!-- System Msg -->
-                <div class="text-center"><span class="text-[10px] bg-[var(--bg-input)] px-3 py-1 rounded-full text-gray-400">오후 2:20 - 세션 시작</span></div>
-                
-                <!-- Received Msg -->
+                <div class="text-center"><span class="text-[10px] bg-[var(--bg-input)] px-3 py-1 rounded-full text-gray-400 font-bold">오후 2:20 - 세션 시작</span></div>
                 <div class="flex gap-3">
                     <img src="https://ui-avatars.com/api/?name=SJ&background=3b82f6&color=fff" class="w-8 h-8 rounded-lg">
                     <div class="space-y-1">
                         <p class="text-[10px] font-bold">Sarah Jenkins</p>
-                        <div class="bg-[var(--bg-input)] p-3 rounded-2xl rounded-tl-none text-xs leading-relaxed">
-                            안녕하세요! 새로운 기획서 업로드 확인 부탁드립니다.
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Sent Msg -->
-                <div class="flex gap-3 flex-row-reverse">
-                    <div class="space-y-1 text-right">
-                        <p class="text-[10px] font-bold text-[#f07d18]">나</p>
-                        <div class="bg-[#f07d18] text-white p-3 rounded-2xl rounded-tr-none text-xs leading-relaxed shadow-lg shadow-orange-900/20">
-                            네, 지금 확인 중입니다.
-                        </div>
+                        <div class="bg-[var(--bg-input)] p-3 rounded-2xl rounded-tl-none text-xs leading-relaxed shadow-sm">안녕하세요! 새로운 기획서 업로드 확인 부탁드립니다.</div>
                     </div>
                 </div>
             </div>
-
-            <!-- Chat Input -->
             <div class="p-4 border-t border-[var(--border-color)]">
                 <div class="relative">
-                    <input type="text" placeholder="메시지를 입력하세요..." 
-                        class="w-full bg-[var(--bg-input)] border border-[var(--border-color)] rounded-xl py-3 pl-4 pr-12 outline-none text-xs">
-                    <button class="absolute right-3 top-1/2 -translate-y-1/2 text-[#f07d18]"><i class="fa-solid fa-paper-plane"></i></button>
+                    <input type="text" placeholder="메시지를 입력하세요..." class="w-full bg-[var(--bg-input)] border border-[var(--border-color)] rounded-xl py-3 pl-4 pr-12 outline-none text-xs focus:border-[var(--accent)] transition-all">
+                    <button class="absolute right-3 top-1/2 -translate-y-1/2 text-[#f07d18] hover:scale-110 transition-transform"><i class="fa-solid fa-paper-plane"></i></button>
                 </div>
             </div>
         </aside>
     </div>
 
     <script>
-        // 화면 전환 함수
         function switchView(viewId) {
-            // 모든 뷰 숨기기
-            document.querySelectorAll('.content-view').forEach(view => {
-                view.classList.remove('active');
-            });
-            
-            // 선택한 뷰 보이기
+            document.querySelectorAll('.content-view').forEach(view => view.classList.remove('active'));
             const targetView = document.getElementById('view-' + viewId);
-            if (targetView) {
-                targetView.classList.add('active');
-            }
+            if (targetView) targetView.classList.add('active');
 
-            // 사이드바 활성화 상태 변경
             document.querySelectorAll('.nav-link, #nav-dashboard').forEach(link => {
                 link.classList.remove('active');
-                // 대시보드 버튼 특수 처리 (배경색)
-                if(link.id === 'nav-dashboard') {
-                    link.classList.remove('bg-orange-500/10', 'text-[#f07d18]');
-                }
+                if(link.id === 'nav-dashboard') link.classList.remove('bg-orange-500/10', 'text-[#f07d18]');
             });
 
             const activeNav = document.getElementById('nav-' + viewId);
             if (activeNav) {
                 activeNav.classList.add('active');
-                if(viewId === 'dashboard') {
-                    activeNav.classList.add('bg-orange-500/10', 'text-[#f07d18]');
-                }
+                if(viewId === 'dashboard') activeNav.classList.add('bg-orange-500/10', 'text-[#f07d18]');
             }
         }
 
-        // 채팅 사이드바 토글 함수
         function toggleChat() {
-            const sidebar = document.getElementById('chat-sidebar');
-            sidebar.classList.toggle('open');
+            document.getElementById('chat-sidebar').classList.toggle('open');
         }
 
-        // 테마 토글 함수
         function toggleTheme() {
             document.body.classList.toggle('light-theme');
             const icon = document.getElementById('themeIcon');
-            if (document.body.classList.contains('light-theme')) {
-                icon.classList.replace('fa-moon', 'fa-sun');
-            } else {
-                icon.classList.replace('fa-sun', 'fa-moon');
-            }
+            icon.classList.toggle('fa-moon');
+            icon.classList.toggle('fa-sun');
         }
     </script>
 </body>
