@@ -6,66 +6,6 @@
     <title>CloudFlow Premium - Billing</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap');
-        
-        :root {
-            --bg-deep: #0b0f1a;
-            --bg-sidebar: #0d121f;
-            --bg-card: #161b2c;
-            --accent-orange: #f07d18;
-            --accent-glow: rgba(240, 125, 24, 0.3);
-            --border-color: rgba(255, 255, 255, 0.08);
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-deep);
-            color: #e2e8f0;
-        }
-
-        .glass-nav { background: rgba(13, 18, 31, 0.8); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border-color); }
-        
-        .btn-orange {
-            background-color: var(--accent-orange);
-            color: white;
-            transition: all 0.3s ease;
-        }
-        .btn-orange:hover {
-            background-color: #d66a12;
-            box-shadow: 0 0 20px var(--accent-glow);
-            transform: translateY(-2px);
-        }
-
-        .plan-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .plan-card.active {
-            border-color: var(--accent-orange);
-            box-shadow: 0 0 30px var(--accent-glow);
-            transform: translateY(-8px);
-        }
-
-        .plan-card:hover:not(.active) {
-            border-color: rgba(240, 125, 24, 0.5);
-            transform: translateY(-4px);
-        }
-
-        .custom-scrollbar::-webkit-scrollbar { width: 5px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #30363d; border-radius: 10px; }
-
-        .toggle-bg {
-            background-color: #1e2536;
-            border: 1px solid var(--border-color);
-        }
-
-        .check-icon {
-            color: var(--accent-orange);
-        }
-    </style>
 </head>
 <body class="h-screen overflow-hidden flex flex-col text-left">
 
@@ -86,8 +26,8 @@
                 </nav>
             </div>
             <div class="flex items-center gap-4">
-                <button class="text-sm font-medium text-gray-400 hover:text-white"><a href="login.html">로그인</a></button>
-                <button class="notion-btn notion-btn-primary px-4 py-1.5 rounded-md text-sm"><a href="signup.html">무료로 시작하기</a></button>
+                <button class="text-sm font-medium text-gray-400 hover:text-white"><a href="user/login.html">로그인</a></button>
+                <button class="notion-btn notion-btn-primary px-4 py-1.5 rounded-md text-sm"><a href="user/signup.html">무료로 시작하기</a></button>
             </div>
         </div>
     </header>

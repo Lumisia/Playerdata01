@@ -6,25 +6,29 @@
     <title>CLOUDFLOW - 영업팀에 문의하기</title>
     <link rel="stylesheet" href="../assets/style_sales.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
-
-    <header class="main-header">
-        <div class="header-inner">
-            <div class="header-left">
-                <a href = "introd.html"><div class="logo-group">
-                    <span class="logo-icon">⚡</span>
-                    <span class="logo-text">CLOUDFLOW</span>
-                </div></a>
-                <nav class="main-nav">
-                    <a href="faq.html">자주 묻는 질문 / 문의하기 </a>
-                    <a href="sales.html">영업팀에 문의하기</a>
-                    <a href="../payment.html">요금제</a>
+    
+    <header class="fixed w-full z-50 bg-black/80 backdrop-blur-md border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-8">
+                <div class="flex items-center gap-2">
+                    <div class="w-7 h-7 bg-[#f07d18] rounded flex items-center justify-center text-white">
+                        <i class="fa-solid fa-cloud-bolt text-sm"></i>
+                    </div>
+                    <span class="text-lg font-extrabold tracking-tighter">CLOUDFLOW</span>
+                </div>
+                <nav class="hidden lg:flex items-center gap-6 text-sm font-medium text-gray-400">
+                    <a href="faq.html" class="hover:text-white transition-colors">자주 묻는 질문 / 문의하기</a>
+                    <a href="sales.html" class="hover:text-white transition-colors">영업팀에 문의하기</a>
+                    <a href="../payment.html" class="hover:text-white transition-colors">요금제</a>
                 </nav>
             </div>
-            <div class="header-right">
-                <a href="../user/login.html" class="btn-login">로그인</a>
-                <a href="../user/signup.html" class="btn-cta-header">무료로 시작하기</a>
+            <div class="flex items-center gap-4">
+                <button class="text-sm font-medium text-gray-400 hover:text-white"><a href="../user/login.html">로그인</a></button>
+                <button class="notion-btn notion-btn-primary px-4 py-1.5 rounded-md text-sm"><a href="../user/signup.html">무료로 시작하기</a></button>
             </div>
         </div>
     </header>
