@@ -4,25 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CloudFlow Premium - Billing</title>
+    <link rel="stylesheet" href="assets/payment.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <style>
-        :root { --accent-glow: rgba(240, 125, 24, 0.4); }
-        .plan-card { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.05); transition: all 0.3s ease; }
-        .plan-card.active { border-color: #f07d18; background: rgba(240, 125, 24, 0.02); }
-        .check-icon { color: #f07d18; }
-        .btn-orange { background: #f07d18; color: white; transition: all 0.2s ease; }
-        .btn-orange:hover { background: #d96a0f; transform: translateY(-1px); }
-        /* 토글 애니메이션 */
-        .toggle-dot { transition: transform 0.3s ease; }
-        .annual .toggle-dot { transform: translateX(1.75rem); }
-        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
-    </style>
 </head>
 <body class="h-screen overflow-hidden flex flex-col text-left">
 
-    <header class="fixed w-full z-50 bg-black/80 backdrop-blur-md border-b border-white/5">
+    <header class="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-md border-b border-white/5">
         <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
             <div class="flex items-center gap-8">
                 <div class="flex items-center gap-2">
@@ -38,8 +26,8 @@
                 </nav>
             </div>
             <div class="flex items-center gap-4">
-                <button class="text-sm font-medium text-gray-400 hover:text-white"><a href="user/login.html">로그인</a></button>
-                <button class="btn-orange px-4 py-1.5 rounded-md text-sm font-bold shadow-lg shadow-[#f07d18]/20"><a href="user/signup.html">무료로 시작하기</a></button>
+                <button class="text-sm font-medium text-gray-400 hover:text-white"><a href="../user/login.html">로그인</a></button>
+                <button class="bg-[#f07d18] px-4 py-1.5 rounded-md text-sm text-white font-bold"><a href="../user/signup.html">무료로 시작하기</a></button>
             </div>
         </div>
     </header>
