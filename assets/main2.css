@@ -1,0 +1,112 @@
+:root {
+    --bg-deep: #0f172a;
+    --bg-sidebar: #1e293b;
+    --bg-input: #334155;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --border-color: #334155;
+    --accent: #f07d18;
+}
+
+body.light-theme {
+    --bg-deep: #f1f5f9;
+    --bg-sidebar: #ffffff;
+    --bg-input: #f8fafc;
+    --text-main: #0f172a;
+    --text-muted: #64748b;
+    --border-color: #e2e8f0;
+}
+
+body {
+    background-color: var(--bg-deep);
+    color: var(--text-main);
+    transition: all 0.3s ease;
+}
+
+.glass-nav {
+    background: rgba(30, 41, 59, 0.7);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.light-theme .glass-nav {
+    background: rgba(255, 255, 255, 0.7);
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    border-radius: 12px;
+    font-size: 14px;
+    color: var(--text-muted);
+    transition: all 0.2s;
+    cursor: pointer;
+}
+
+.nav-link:hover, .nav-link.active {
+    background: var(--bg-input);
+    color: var(--text-main);
+}
+
+.nav-link.active {
+    color: var(--accent);
+    font-weight: bold;
+}
+
+.btn-orange {
+    background-color: var(--accent);
+    color: white;
+    transition: filter 0.2s;
+}
+
+.btn-orange:hover {
+    filter: brightness(1.1);
+}
+
+.nav-section-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 16px;
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 10px;
+}
+
+/* View transition */
+.content-view {
+    display: none;
+    animation: fadeIn 0.3s ease-out;
+}
+.content-view.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Chat Sidebar Styling */
+#chat-sidebar {
+    transition: transform 0.3s ease, width 0.3s ease;
+    width: 0;
+    overflow: hidden;
+}
+#chat-sidebar.open {
+    width: 320px;
+    border-left: 1px solid var(--border-color);
+}
