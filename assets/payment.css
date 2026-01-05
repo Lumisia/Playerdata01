@@ -56,14 +56,47 @@ body {
 .check-icon {
     color: var(--accent-orange);
 }
-:root { --accent-glow: rgba(240, 125, 24, 0.4); }
-        .plan-card { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.05); transition: all 0.3s ease; }
-        .plan-card.active { border-color: #f07d18; background: rgba(240, 125, 24, 0.02); }
-        .check-icon { color: #f07d18; }
-        .btn-orange { background: #f07d18; color: white; transition: all 0.2s ease; }
-        .btn-orange:hover { background: #d96a0f; transform: translateY(-1px); }
-        /* 토글 애니메이션 */
-        .toggle-dot { transition: transform 0.3s ease; }
-        .annual .toggle-dot { transform: translateX(1.75rem); }
-        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+:root { 
+        --accent-glow: rgba(240, 125, 24, 0.4); 
+        --modal-overlay: rgba(0, 0, 0, 0.85);
+        --bg-input: rgba(255, 255, 255, 0.05);
+        --border-color: rgba(255, 255, 255, 0.1);
+    }
+    .plan-card { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.05); transition: all 0.3s ease; }
+    .plan-card.active { border-color: #f07d18; background: rgba(240, 125, 24, 0.02); }
+    .check-icon { color: #f07d18; }
+    .btn-orange { background: #f07d18; color: white; transition: all 0.2s ease; }
+    .btn-orange:hover { background: #d96a0f; transform: translateY(-1px); }
+    /* 토글 애니메이션 */
+    .toggle-dot { transition: transform 0.3s ease; }
+    .annual .toggle-dot { transform: translateX(1.75rem); }
+    .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+
+    /* Modal Specific Styles */
+    .modal-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: var(--modal-overlay);
+        backdrop-filter: blur(10px);
+        z-index: 100;
+        align-items: center;
+        justify-content: center;
+        animation: fadeIn 0.3s ease-out;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal-content {
+        background-color: #111827;
+        border: 1px solid var(--border-color);
+        width: 100%;
+        max-width: 480px;
+        border-radius: 28px;
+        overflow: hidden;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
