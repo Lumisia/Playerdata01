@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CloudFlow Premium - Trash</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap');
+        
+        :root {
+            --accent-orange: #f07d18;
+            --accent-glow: rgba(240, 125, 24, 0.3);
+            --bg-deep: #0b0f1a;
+            --bg-sidebar: #0d121f;
+            --bg-card: #161b2c;
+            --bg-input: #1e2536;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --glass-bg: rgba(13, 18, 31, 0.8);
+            --chat-me-bg: var(--accent-orange);
+            --chat-other-bg: #161b2c;
+        }
+
+        body.light-mode {
+            --bg-deep: #f8fafc;
+            --bg-sidebar: #ffffff;
+            --bg-card: #ffffff;
+            --bg-input: #f1f5f9;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: rgba(0, 0, 0, 0.08);
+            --glass-bg: rgba(255, 255, 255, 0.8);
+            --chat-me-bg: var(--accent-orange);
+            --chat-other-bg: #f1f5f9;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .glass-nav { 
+            background: var(--glass-bg); 
+            backdrop-filter: blur(12px); 
+            border-bottom: 1px solid var(--border-color); 
+        }
+        
+        .btn-orange {
+            background-color: var(--accent-orange);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        .btn-orange:hover {
+            background-color: #d66a12;
+            box-shadow: 0 0 20px var(--accent-glow);
+            transform: translateY(-2px);
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 16px;
+            border-radius: 10px;
+            font-size: 14px;
+            color: var(--text-muted);
+            transition: all 0.2s;
+        }
+        .nav-link:hover {
+            background: rgba(240, 125, 24, 0.05);
+            color: var(--text-main);
+        }
+        .nav-link.active {
+            background: rgba(240, 125, 24, 0.1);
+            color: var(--accent-orange);
+            font-weight: 600;
+        }
+
+        /* Trash Content Styles */
+        .trash-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .trash-row {
+            border-bottom: 1px solid var(--border-color);
+            transition: all 0.2s;
+        }
+        .trash-row:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+        body.light-mode .trash-row:hover {
+            background: rgba(0, 0, 0, 0.02);
+        }
+
+        .theme-toggle {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-input);
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            color: var(--text-muted);
+        }
+
+        .chat-container::-webkit-scrollbar { width: 4px; }
+        .chat-container::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 10px; }
+    </style>
+</head>
+<body class="h-screen overflow-hidden flex flex-col">
+
+    <!-- 상단 헤더 -->
+    <header class="h-16 glass-nav flex items-center justify-between px-6 z-30 shrink-0">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-[#f07d18] rounded-xl flex items-center justify-center text-white shadow-lg">
+                <i class="fa-solid fa-cloud-bolt text-lg"></i>
+            </div>
+            <h1 class="text-xl font-black tracking-tighter text-[var(--text-main)]">CLOUDFLOW</h1>
+        </div>
+        
+        <div class="flex-1 max-w-2xl mx-10">
+            <div class="relative">
+                <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"></i>
+                <input type="text" placeholder="휴지통 내 항목 검색..." 
+                    class="w-full bg-[var(--bg-input)] border border-[var(--border-color)] rounded-xl py-2.5 pl-12 pr-4 outline-none text-sm text-[var(--text-main)]">
+            </div>
+        </div>
+
+        <div class="flex items-center gap-4">
+            <button onclick="toggleTheme()" class="theme-toggle" id="theme-btn">
+                <i class="fa-solid fa-moon"></i>
+            </button>
+            <div class="h-8 w-[1px] bg-[var(--border-color)]"></div>
+            <div class="flex items-center gap-3 cursor-pointer group">
+                <div class="text-right hidden md:block">
+                    <p class="text-sm font-bold text-[var(--text-main)]">Imran Khan</p>
+                    <a href="payment.html"><p class="text-[10px] text-[#f07d18] font-bold uppercase">유료 기능 구입하기</p></a>
+                </div>
+                <img src="https://ui-avatars.com/api/?name=IK&background=f07d18&color=fff" class="w-10 h-10 rounded-xl">
+            </div>
+        </div>
+    </header>
+
+    <div class="flex flex-1 overflow-hidden">
+        
+        <!-- 왼쪽 사이드바 -->
+        <aside class="w-64 bg-[var(--bg-sidebar)] border-r border-[var(--border-color)] flex flex-col shrink-0">
+            <div class="p-5">
+                <button class="w-full btn-orange py-3 rounded-xl font-bold flex items-center justify-center gap-2 mb-6 shadow-lg shadow-orange-900/20">
+                    <i class="fa-solid fa-cloud-arrow-up"></i> 새 파일 업로드
+                </button>
+                <button class="w-full btn-orange py-3 rounded-xl font-bold flex items-center justify-center gap-2 shadow-lg shadow-orange-900/20">
+                    <i class="fa-solid fa-chart-line"></i> 대시보드
+                </button>
+                </a>
+
+                <nav class="space-y-1">
+                    <p class="px-4 text-[10px] font-black text-[var(--text-muted)] uppercase tracking-widest mb-2">My Cloud</p>
+                    <a href="main.html" class="nav-link">
+                        <i class="fa-solid fa-folder-tree"></i> 모든 파일
+                    </a>
+                    <a href="recent.html" class="nav-link">
+                        <i class="fa-solid fa-clock-rotate-left"></i> 최근 사용 문서
+                    </a>
+                    <a href="important.html" class="nav-link">
+                        <i class="fa-solid fa-star"></i> 즐겨찾기
+                    </a>
+                    <a href="share.html" class="nav-link">
+                        <i class="fa-solid fa-share-nodes"></i> 공유된 항목
+                    </a>
+                    <a href="trash.html" class="nav-link active">
+                        <i class="fa-solid fa-trash-can"></i> 휴지통
+                    </a>
+                </nav>
+
+                <div class="mt-8">
+                    <p class="px-4 text-[10px] font-black text-[var(--text-muted)] uppercase tracking-widest mb-2">Categories</p>
+                    <a href="#" class="nav-link"><i class="fa-solid fa-image text-blue-500"></i> 이미지</a>
+                    <a href="#" class="nav-link"><i class="fa-solid fa-video text-purple-500"></i> 비디오</a>
+                    <a href="#" class="nav-link"><i class="fa-solid fa-file-lines text-orange-500"></i> 문서</a>
+                </div>
+            </div>
+            
+            <div class="mt-auto p-5 border-t border-[var(--border-color)]">
+                <div class="bg-[var(--bg-input)] rounded-2xl p-4">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-[11px] font-bold text-[var(--text-main)]">용량 사용량</span>
+                        <span class="text-[11px] text-[#f07d18] font-bold">75%</span>
+                    </div>
+                    <div class="w-full bg-gray-700/30 rounded-full h-1.5 mb-2">
+                        <div class="bg-[#f07d18] h-full rounded-full" style="width: 75%"></div>
+                    </div>
+                    <p class="text-[10px] text-[var(--text-muted)] text-center">37.5 GB / 50 GB 사용 중</p>
+                    <button class="w-full mt-3 py-2 bg-white/5 hover:bg-white/10 rounded-lg text-[10px] font-bold transition-all">용량 늘리기</button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- 메인 콘텐츠 (휴지통 리스트) -->
+        <main class="flex-1 overflow-y-auto p-8 bg-[var(--bg-deep)]">
+            <div class="max-w-5xl mx-auto">
+                <div class="flex items-center justify-between mb-8">
+                    <div>
+                        <h2 class="text-2xl font-black text-[var(--text-main)] mb-1">휴지통</h2>
+                        <p class="text-xs text-[var(--text-muted)]">삭제된 파일은 30일 동안 보관된 후 영구 삭제됩니다.</p>
+                    </div>
+                    <button class="px-5 py-2.5 bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white rounded-xl text-xs font-bold transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-circle-xmark"></i> 휴지통 비우기
+                    </button>
+                </div>
+
+                <div class="trash-container shadow-xl">
+                    <!-- Table Header -->
+                    <div class="grid grid-cols-12 px-6 py-4 bg-black/10 border-bottom border-[var(--border-color)] text-[11px] font-black text-[var(--text-muted)] uppercase tracking-widest">
+                        <div class="col-span-6">파일명</div>
+                        <div class="col-span-3">삭제 날짜</div>
+                        <div class="col-span-1">크기</div>
+                        <div class="col-span-2 text-right">관리</div>
+                    </div>
+
+                    <!-- Row 1 -->
+                    <div class="trash-row grid grid-cols-12 px-6 py-4 items-center">
+                        <div class="col-span-6 flex items-center gap-4">
+                            <div class="w-10 h-10 bg-orange-500/10 text-orange-500 rounded-lg flex items-center justify-center text-xl shrink-0">
+                                <i class="fa-solid fa-file-pdf"></i>
+                            </div>
+                            <span class="text-sm font-bold text-[var(--text-main)] truncate">Old_Project_Draft.pdf</span>
+                        </div>
+                        <div class="col-span-3 text-xs text-[var(--text-muted)]">2026.01.01</div>
+                        <div class="col-span-1 text-xs text-[var(--text-muted)]">2.4 MB</div>
+                        <div class="col-span-2 flex justify-end gap-2">
+                            <button title="복원" class="w-8 h-8 flex items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-500 hover:bg-emerald-500 hover:text-white transition-all"><i class="fa-solid fa-rotate-left text-xs"></i></button>
+                            <button title="영구 삭제" class="w-8 h-8 flex items-center justify-center rounded-lg bg-white/5 text-[var(--text-muted)] hover:bg-red-500 hover:text-white transition-all"><i class="fa-solid fa-trash text-xs"></i></button>
+                        </div>
+                    </div>
+
+                    <!-- Row 2 -->
+                    <div class="trash-row grid grid-cols-12 px-6 py-4 items-center">
+                        <div class="col-span-6 flex items-center gap-4">
+                            <div class="w-10 h-10 bg-blue-500/10 text-blue-500 rounded-lg flex items-center justify-center text-xl shrink-0">
+                                <i class="fa-solid fa-image"></i>
+                            </div>
+                            <span class="text-sm font-bold text-[var(--text-main)] truncate">Unused_Asset_04.png</span>
+                        </div>
+                        <div class="col-span-3 text-xs text-[var(--text-muted)]">2025.12.28</div>
+                        <div class="col-span-1 text-xs text-[var(--text-muted)]">1.2 MB</div>
+                        <div class="col-span-2 flex justify-end gap-2">
+                            <button class="w-8 h-8 flex items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-500 hover:bg-emerald-500 hover:text-white transition-all"><i class="fa-solid fa-rotate-left text-xs"></i></button>
+                            <button class="w-8 h-8 flex items-center justify-center rounded-lg bg-white/5 text-[var(--text-muted)] hover:bg-red-500 hover:text-white transition-all"><i class="fa-solid fa-trash text-xs"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- 오른쪽 채팅 사이드바 -->
+        <aside class="w-80 bg-[var(--bg-sidebar)] border-l border-[var(--border-color)] flex flex-col shrink-0">
+            <div class="p-5 border-b border-[var(--border-color)] flex items-center justify-between">
+                <div>
+                    <h3 class="font-bold text-sm text-[var(--text-main)]">팀 채팅</h3>
+                    <p class="text-[10px] text-[var(--text-muted)]">Design Unit (4명 참여 중)</p>
+                </div>
+                <div class="flex -space-x-2">
+                    <div class="w-6 h-6 rounded-full border-2 border-[var(--bg-sidebar)] bg-blue-500 text-[8px] flex items-center justify-center text-white">SJ</div>
+                    <div class="w-6 h-6 rounded-full border-2 border-[var(--bg-sidebar)] bg-orange-500 text-[8px] flex items-center justify-center text-white">ME</div>
+                </div>
+            </div>
+
+            <div id="chat-messages" class="flex-1 overflow-y-auto p-5 space-y-4 chat-container">
+                <div class="flex items-start gap-3">
+                    <div class="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-[10px] text-white font-bold shrink-0">SJ</div>
+                    <div class="flex flex-col gap-1">
+                        <span class="text-[10px] font-bold text-[var(--text-muted)]">Sarah Jenkins</span>
+                        <div class="bg-[var(--chat-other-bg)] border border-[var(--border-color)] p-3 rounded-2xl rounded-tl-none">
+                            <p class="text-xs text-[var(--text-main)]">삭제된 프로젝트 시안 다시 복구할 수 있을까요?</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-4 border-t border-[var(--border-color)]">
+                <form id="chat-form" class="relative">
+                    <input type="text" id="chat-input" placeholder="메시지를 입력하세요..." 
+                        class="w-full bg-[var(--bg-input)] border border-[var(--border-color)] rounded-xl py-3 pl-4 pr-12 outline-none text-xs text-[var(--text-main)] focus:border-[#f07d18]">
+                    <button type="submit" class="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 text-[#f07d18] hover:bg-orange-500/10 rounded-lg transition-all">
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
+        </aside>
+
+    </div>
+
+    <script>
+        function toggleTheme() {
+            const body = document.body;
+            const themeBtn = document.getElementById('theme-btn');
+            const icon = themeBtn.querySelector('i');
+            
+            body.classList.toggle('light-mode');
+            
+            if (body.classList.contains('light-mode')) {
+                icon.classList.replace('fa-moon', 'fa-sun');
+                localStorage.setItem('cloudflow-theme', 'light');
+            } else {
+                icon.classList.replace('fa-sun', 'fa-moon');
+                localStorage.setItem('cloudflow-theme', 'dark');
+            }
+        }
+
+        const chatForm = document.getElementById('chat-form');
+        const chatInput = document.getElementById('chat-input');
+        const chatMessages = document.getElementById('chat-messages');
+
+        chatForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const text = chatInput.value.trim();
+            if (text) {
+                appendMessage('나', text, true);
+                chatInput.value = '';
+                setTimeout(() => {
+                    appendMessage('Sarah', '확인했습니다! 휴지통에서 찾아볼게요.', false);
+                }, 1000);
+            }
+        });
+
+        function appendMessage(sender, text, isMe) {
+            const div = document.createElement('div');
+            if (isMe) {
+                div.className = 'flex flex-col gap-1 items-end';
+                div.innerHTML = `
+                    <div class="max-w-[85%] bg-[#f07d18] p-3 rounded-2xl rounded-tr-none shadow-lg shadow-orange-900/10">
+                        <p class="text-xs text-white">${text}</p>
+                    </div>
+                    <span class="text-[10px] font-bold text-[var(--text-muted)] mr-1">나</span>
+                `;
+            } else {
+                div.className = 'flex items-start gap-3';
+                div.innerHTML = `
+                    <div class="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-[10px] text-white font-bold shrink-0">${sender[0]}</div>
+                    <div class="flex flex-col gap-1">
+                        <span class="text-[10px] font-bold text-[var(--text-muted)]">${sender}</span>
+                        <div class="bg-[var(--chat-other-bg)] border border-[var(--border-color)] p-3 rounded-2xl rounded-tl-none">
+                            <p class="text-xs text-[var(--text-main)]">${text}</p>
+                        </div>
+                    </div>
+                `;
+            }
+            chatMessages.appendChild(div);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('cloudflow-theme');
+            if (savedTheme === 'light') toggleTheme();
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        });
+    </script>
+</body>
+</html>

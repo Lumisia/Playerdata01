@@ -1,0 +1,294 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLOUDFLOW | 파일, 협업, 채팅을 하나로</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        
+        :root {
+            --bg-black: #050505;
+            --bg-dark: #0b0f1a;
+            --accent-orange: #ae8663;
+            --card-border: rgba(255, 255, 255, 0.08);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-black);
+            color: #ffffff;
+            scroll-behavior: smooth;
+        }
+
+        .orange-gradient-text {
+            background: linear-gradient(to right, #f07d18, #ffaa45);
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .notion-btn {
+            transition: all 0.2s ease;
+            font-weight: 600;
+        }
+        .notion-btn-primary {
+            background-color: var(--accent-orange);
+            color: white;
+        }
+        .notion-btn-primary:hover {
+            background-color: #d66a12;
+            transform: translateY(-1px);
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+        }
+
+        /* Bento Grid Style */
+        .bento-item {
+            background: #111;
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            transition: border 0.3s ease;
+        }
+        .bento-item:hover {
+            border-color: var(--accent-orange);
+        }
+
+        .dashboard-preview {
+            box-shadow: 0 0 80px rgba(240, 125, 24, 0.15);
+        }
+    </style>
+</head>
+<body>
+
+    <header class="fixed w-full z-50 bg-black/80 backdrop-blur-md border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-8">
+                <div class="flex items-center gap-2">
+                    <div class="w-7 h-7 bg-[#f07d18] rounded flex items-center justify-center text-white">
+                        <i class="fa-solid fa-cloud-bolt text-sm"></i>
+                    </div>
+                    <span class="text-lg font-extrabold tracking-tighter">CLOUDFLOW</span>
+                </div>
+                <nav class="hidden lg:flex items-center gap-6 text-sm font-medium text-gray-400">
+                    <a href="faq.html" class="hover:text-white transition-colors">자주 묻는 질문 / 문의하기</a>
+                    <a href="sales.html" class="hover:text-white transition-colors">영업팀에 문의하기</a>
+                    <a href="../payment.html" class="hover:text-white transition-colors">요금제</a>
+                </nav>
+            </div>
+            <div class="flex items-center gap-4">
+                <button class="text-sm font-medium text-gray-400 hover:text-white"><a href="../user/login.html">로그인</a></button>
+                <button class="notion-btn notion-btn-primary px-4 py-1.5 rounded-md text-sm"><a href="../user/signup.html">무료로 시작하기</a></button>
+            </div>
+        </div>
+    </header>
+
+    <section class="pt-48 pb-32 px-6 text-center">
+        <div class="max-w-4xl mx-auto">
+            <h1 class="text-6xl md:text-8xl font-extrabold mb-8 tracking-tight leading-[1.1]">
+                모든 작업을 <br><span class="orange-gradient-text">하나의 흐름</span>으로.
+            </h1>
+            <p class="text-xl md:text-2xl text-gray-400 mb-10 font-medium leading-relaxed">
+                파일 저장, 팀 공유, 실시간 편집, 그리고 채팅까지. <br>
+                CLOUDFLOW는 흩어져 있는 업무 도구를 하나로 통합합니다.
+            </p>
+            <div class="flex flex-col sm:row items-center justify-center gap-4 mb-20">
+                <button class="notion-btn notion-btn-primary px-8 py-3 rounded-lg text-lg"><a href="../user/signup.html"> 무료 체험하기</a></button>
+                <button class="text-lg font-semibold text-gray-400 hover:text-white flex items-center gap-2"><a href="sales.html">
+                    영업팀에 문의하기 <i class="fa-solid fa-arrow-right text-sm"></i></a>
+                </button>
+            </div>
+            
+            <div class="dashboard-preview border border-white/10 rounded-2xl overflow-hidden bg-[#0b0f1a] relative">
+                <div class="h-10 bg-[#161b2c] border-b border-white/5 flex items-center px-4 justify-between">
+                    <div class="flex gap-2">
+                        <div class="w-3 h-3 rounded-full bg-white/10"></div>
+                        <div class="w-3 h-3 rounded-full bg-white/10"></div>
+                        <div class="w-3 h-3 rounded-full bg-white/10"></div>
+                    </div>
+                    <div class="text-[10px] text-gray-500 font-mono tracking-widest uppercase">Workspace / Design Unit</div>
+                    <div></div>
+                </div>
+                <img src="image.png" alt="CloudFlow Dashboard" class="w-full">
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 border-y border-white/5">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <p class="text-xs font-black text-gray-600 uppercase tracking-[0.3em] mb-12">Trusted by global innovators</p>
+            <div class="flex flex-wrap justify-center gap-12 md:gap-24 opacity-30 grayscale invert">
+                <i class="fa-brands fa-google text-4xl"></i>
+                <i class="fa-brands fa-amazon text-4xl"></i>
+                <i class="fa-brands fa-microsoft text-4xl"></i>
+                <i class="fa-brands fa-meta text-4xl"></i>
+                <i class="fa-brands fa-airbnb text-4xl"></i>
+            </div>
+        </div>
+    </section>
+
+    <section id="storage" class="py-32 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-12 gap-6">
+                
+                <div class="col-span-12 lg:col-span-7 bento-item p-12 flex flex-col justify-between overflow-hidden relative">
+                    <div>
+                        <h3 class="text-3xl font-bold mb-6 italic"><i class="fa-solid fa-hard-drive text-[#f07d18] mr-3"></i>워크스페이스 저장소</h3>
+                        <p class="text-gray-400 text-lg leading-relaxed max-w-md">
+                            구글 드라이브와 같은 익숙한 파일 관리 환경을 제공합니다. 그리드 뷰와 리스트 뷰를 자유롭게 오가며 대용량 자산을 관리하세요.
+                        </p>
+                    </div>
+                    <div class="mt-12 -mb-20 -mr-20 glass-panel p-6 self-end w-full transform rotate-2">
+                        <div class="flex items-center justify-between mb-4 border-b border-white/5 pb-2">
+                            <span class="text-xs font-bold text-gray-500">Project Assets</span>
+                            <div class="flex gap-2">
+                                <div class="w-6 h-6 bg-white/5 rounded text-[10px] flex items-center justify-center"><i class="fa-solid fa-list"></i></div>
+                                <div class="w-6 h-6 bg-[#f07d18]/20 rounded text-[10px] text-[#f07d18] flex items-center justify-center"><i class="fa-solid fa-table-cells"></i></div>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-[#161b2c] p-3 rounded-lg border border-white/10">
+                                <i class="fa-solid fa-file-pdf text-orange-500 mb-2"></i>
+                                <div class="text-[10px] font-bold truncate">Proposal_v2.pdf</div>
+                            </div>
+                            <div class="bg-[#161b2c] p-3 rounded-lg border border-white/10">
+                                <i class="fa-solid fa-image text-blue-400 mb-2"></i>
+                                <div class="text-[10px] font-bold truncate">Banner_final.png</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-span-12 lg:col-span-5 bento-item p-12 bg-gradient-to-br from-[#111] to-[#1a1a1a]">
+                    <div class="w-14 h-14 bg-[#f07d18]/10 text-[#f07d18] rounded-2xl flex items-center justify-center text-2xl mb-8">
+                        <i class="fa-solid fa-comment-dots"></i>
+                    </div>
+                    <h3 class="text-3xl font-bold mb-6 tracking-tight">끊김 없는 소통</h3>
+                    <p class="text-gray-400 text-lg leading-relaxed">
+                        화면을 전환할 필요가 없습니다. 파일 우측의 Discussion 패널에서 팀원들과 즉각적으로 피드백을 주고받으세요.
+                    </p>
+                    <div class="mt-10 space-y-4">
+                        <div class="flex gap-3">
+                            <div class="w-8 h-8 rounded-lg bg-indigo-500 shrink-0 flex items-center justify-center text-[10px] font-bold">IK</div>
+                            <div class="bg-[#1e2536] p-3 rounded-xl rounded-tl-none text-xs text-gray-300 border border-white/5">이 파일 확인 부탁드려요!</div>
+                        </div>
+                        <div class="flex gap-3 justify-end">
+                            <div class="bg-[#f07d18] p-3 rounded-xl rounded-tr-none text-xs text-white font-medium shadow-lg">수정 완료했습니다! 🧡</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-span-12 bento-item p-12 flex flex-col lg:flex-row items-center gap-16">
+                    <div class="flex-1">
+                        <h3 class="text-3xl font-bold mb-6 tracking-tight">팀과 함께하는 실시간 편집</h3>
+                        <p class="text-gray-400 text-lg leading-relaxed mb-8">
+                            누가 무엇을 수정했는지 'Recent Activities'를 통해 한눈에 파악하세요. 팀별 공간(Teams)을 분리하여 보안과 효율성을 동시에 잡았습니다.
+                        </p>
+                        <div class="flex gap-4">
+                            <div class="flex items-center gap-2 px-4 py-2 bg-white/5 rounded-full border border-white/10 text-xs font-bold">
+                                <span class="w-2 h-2 bg-blue-500 rounded-full"></span> Design Unit
+                            </div>
+                            <div class="flex items-center gap-2 px-4 py-2 bg-white/5 rounded-full border border-white/10 text-xs font-bold">
+                                <span class="w-2 h-2 bg-orange-500 rounded-full"></span> Marketing
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex-1 w-full glass-panel p-6 bg-black/40">
+                        <p class="text-[10px] font-black text-gray-600 uppercase mb-4 tracking-widest">Recent Activities</p>
+                        <div class="space-y-3">
+                            <div class="flex items-center gap-4 p-3 rounded-xl bg-white/[0.02] border-l-4 border-blue-500">
+                                <div class="w-8 h-8 rounded-lg bg-blue-500/20 text-blue-500 flex items-center justify-center text-[10px] font-bold">SA</div>
+                                <div class="text-[11px] text-gray-400"><span class="text-white font-bold">Sarah</span> updated <span class="text-blue-400">Campaign_Overview.pdf</span></div>
+                            </div>
+                            <div class="flex items-center gap-4 p-3 rounded-xl bg-white/[0.02] border-l-4 border-orange-500">
+                                <div class="w-8 h-8 rounded-lg bg-orange-500/20 text-orange-500 flex items-center justify-center text-[10px] font-bold">IK</div>
+                                <div class="text-[11px] text-gray-400"><span class="text-white font-bold">Imran</span> added a comment to Discussion</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="py-48 px-6 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-black via-[#f07d18]/5 to-black"></div>
+        <div class="max-w-4xl mx-auto text-center relative z-10">
+            <h2 class="text-5xl md:text-7xl font-extrabold mb-10 tracking-tight leading-tight">
+                지금 바로 팀원들과 <br>협업을 시작하세요.
+            </h2>
+            <p class="text-xl text-gray-400 mb-12">
+                간단한 가입만으로 50GB의 무료 저장 공간과 <br>무제한 실시간 채팅 기능을 제공합니다.
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-6">
+                <a href="login.html"><button class="notion-btn notion-btn-primary px-12 py-4 rounded-xl text-xl font-bold">무료로 시작하기</button></a>
+                <div class="flex items-center gap-4 text-gray-500 font-medium">
+                    <div class="flex -space-x-2">
+                        <img src="https://ui-avatars.com/api/?name=A&background=f07d18&color=fff" class="w-8 h-8 rounded-full border-2 border-black">
+                        <img src="https://ui-avatars.com/api/?name=B&background=4f46e5&color=fff" class="w-8 h-8 rounded-full border-2 border-black">
+                        <img src="https://ui-avatars.com/api/?name=C&background=059669&color=fff" class="w-8 h-8 rounded-full border-2 border-black">
+                    </div>
+                    <span>이미 10,000+ 팀이 사용 중</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-20 border-t border-white/5 px-6">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between gap-12">
+            <div class="max-w-xs">
+                <div class="flex items-center gap-2 mb-6">
+                    <div class="w-6 h-6 bg-[#f07d18] rounded flex items-center justify-center text-white">
+                        <i class="fa-solid fa-cloud-bolt text-[10px]"></i>
+                    </div>
+                    <span class="text-md font-extrabold tracking-tighter">CLOUDFLOW</span>
+                </div>
+                <p class="text-sm text-gray-500 leading-relaxed">
+                    단순한 파일 관리를 넘어, 당신의 창의성이 끊김 없이 흐르도록 돕습니다.
+                </p>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-16">
+                <div class="space-y-4">
+                    <h4 class="text-sm font-bold text-white uppercase tracking-widest">Product</h4>
+                    <ul class="text-sm text-gray-500 space-y-2">
+                        <li class="hover:text-white cursor-pointer transition-colors">기능 소개</li>
+                        <li class="hover:text-white cursor-pointer transition-colors">요금제</li>
+                        <li class="hover:text-white cursor-pointer transition-colors">엔터프라이즈</li>
+                    </ul>
+                </div>
+                <div class="space-y-4">
+                    <h4 class="text-sm font-bold text-white uppercase tracking-widest">Company</h4>
+                    <ul class="text-sm text-gray-500 space-y-2">
+                        <li class="hover:text-white cursor-pointer transition-colors">블로그</li>
+                        <li class="hover:text-white cursor-pointer transition-colors">채용</li>
+                        <li class="hover:text-white cursor-pointer transition-colors">문의하기</li>
+                    </ul>
+                </div>
+                <div class="space-y-4">
+                    <h4 class="text-sm font-bold text-white uppercase tracking-widest">Social</h4>
+                    <div class="flex gap-4 text-gray-500 text-lg">
+                        <i class="fa-brands fa-x-twitter hover:text-white cursor-pointer"></i>
+                        <i class="fa-brands fa-linkedin hover:text-whitex cursor-pointer"></i>
+                        <i class="fa-brands fa-github hover:text-white cursor-pointer"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto mt-20 pt-8 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <p class="text-xs text-gray-600">© 2026 CloudFlow Inc. Made for modern teams.</p>
+            <div class="flex gap-6 text-[10px] text-gray-600 font-bold uppercase tracking-widest">
+                <span class="hover:text-white cursor-pointer">Privacy Policy</span>
+                <span class="hover:text-white cursor-pointer">Terms of Service</span>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

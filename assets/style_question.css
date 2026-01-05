@@ -1,0 +1,138 @@
+/* 기본 초기화 및 배경 (이전과 동일) */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Pretendard', sans-serif;
+}
+
+body {
+    background-color: #000000;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 40px 0; /* 위아래 여백 */
+}
+
+.wrapper {
+    width: 100%;
+    max-width: 500px; /* 문의 페이지는 조금 더 넓게 설정 */
+    padding: 20px;
+}
+
+.logo {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    margin-bottom: 40px;
+}
+
+.card {
+    background-color: #1a1a1a;
+    padding: 40px;
+    border-radius: 12px;
+}
+
+.card-title {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.card-subtitle {
+    font-size: 14px;
+    color: #a0a0a0;
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+/* 입력 그룹 스타일 */
+.input-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.input-group label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 8px;
+}
+
+/* 모든 입력 요소 공통 스타일 */
+input[type="text"],
+input[type="email"],
+select,
+textarea {
+    width: 100%;
+    padding: 14px 16px;
+    background-color: #262626;
+    border: 1px solid #333333;
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+/* 포커스 효과 (오렌지색) */
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: #FF6B21;
+}
+
+/* Placeholder 색상 */
+::placeholder {
+    color: #666666;
+}
+
+/* Select 화살표 커스텀 느낌 */
+select {
+    appearance: none;
+    cursor: pointer;
+}
+
+/* 텍스트 영역 크기 조절 방지 */
+textarea {
+    resize: none;
+}
+
+/* 버튼 스타일 */
+.btn-primary {
+    width: 100%;
+    padding: 16px;
+    background-color: #FF6B21;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 700;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-primary:hover {
+    background-color: #e55a1a;
+}
+
+.footer-links {
+    margin-top: 25px;
+    text-align: center;
+}
+
+.back-link {
+    color: #a0a0a0;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.back-link:hover {
+    color: #ffffff;
+    text-decoration: underline;
+}

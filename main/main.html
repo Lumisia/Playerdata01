@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLOUDFLOW - Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="../assets/main.css">
+</head>
+<body class="h-screen overflow-hidden flex flex-col">
+
+    <header class="h-16 glass-nav flex items-center justify-between px-6 z-30 shrink-0">
+        <div class="flex items-center gap-8">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-[#f07d18] rounded-xl flex items-center justify-center text-white shadow-lg">
+                    <i class="fa-solid fa-cloud-bolt text-lg"></i>
+                </div>
+                <h1 class="text-xl font-black tracking-tighter text-[var(--text-main)]">CLOUDFLOW</h1>
+            </div>
+        </div>
+        
+        <div class="flex-1 max-w-xl mx-10">
+            <div class="relative">
+                <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"></i>
+                <input type="text" placeholder="파일, 폴더, 워크스페이스 검색..." 
+                    class="w-full bg-[var(--bg-input)] border border-[var(--border-color)] rounded-xl py-2 pl-12 pr-4 outline-none text-sm text-[var(--text-main)]">
+            </div>
+        </div>
+
+        <div class="flex items-center gap-4">
+            <button onclick="toggleTheme()" class="theme-toggle"><i class="fa-solid fa-moon"></i></button>
+            <div class="flex items-center gap-3 cursor-pointer group">
+                <div class="text-right hidden md:block">
+                    <p class="text-sm font-bold text-[var(--text-main)]">Imran Khan</p>
+                    <p class="text-[10px] text-[#f07d18] font-bold">PRO 유저</p>
+                </div>
+                <img src="https://ui-avatars.com/api/?name=IK&background=f07d18&color=fff" class="w-10 h-10 rounded-xl">
+            </div>
+        </div>
+    </header>
+
+    <div class="flex flex-1 overflow-hidden">
+        
+        <aside class="w-64 bg-[var(--bg-sidebar)] border-r border-[var(--border-color)] flex flex-col shrink-0 h-full">
+    <div class="p-5 overflow-y-auto custom-scrollbar">
+        
+        <div class="space-y-3 mb-8">
+            <button class="w-full btn-orange py-3 rounded-xl font-bold flex items-center justify-center gap-2 shadow-lg shadow-orange-900/20">
+                <i class="fa-solid fa-cloud-arrow-up"></i> 새 파일 업로드
+            </button>
+            <a href="dashboard.html" class="block">
+                <button class="w-full btn-orange py-3 rounded-xl font-bold flex items-center justify-center gap-2 shadow-lg shadow-orange-900/20">
+                    <i class="fa-solid fa-chart-line"></i> 대시보드
+                </button>
+            </a>
+        </div>
+
+        <div class="space-y-4">
+            
+            <details class="group nav-dropdown" open>
+                <summary class="nav-section-title">
+                    <span>MY CLOUD</span>
+                    <i class="fa-solid fa-chevron-down transition-transform group-open:rotate-180"></i>
+                </summary>
+                <nav class="mt-2 space-y-1">
+                    <a href="main.html" class="nav-link active">
+                        <i class="fa-solid fa-folder-tree"></i> 모든 파일
+                    </a>
+                    <a href="recent.html" class="nav-link">
+                        <i class="fa-solid fa-clock-rotate-left"></i> 최근 사용 문서
+                    </a>
+                    <a href="important.html" class="nav-link">
+                        <i class="fa-solid fa-star"></i> 즐겨찾기
+                    </a>
+                    <a href="share.html" class="nav-link">
+                        <i class="fa-solid fa-share-nodes"></i> 공유된 항목
+                    </a>
+                    <a href="trash.html" class="nav-link">
+                        <i class="fa-solid fa-trash-can"></i> 휴지통
+                    </a>
+                </nav>
+            </details>
+
+            <details class="group nav-dropdown">
+                <summary class="nav-section-title">
+                    <span>공유된 워크스페이스 문서</span>
+                    <i class="fa-solid fa-chevron-down transition-transform group-open:rotate-180"></i>
+                </summary>
+                <nav class="mt-2 space-y-1">
+                    <a href="#" class="nav-link">
+                        <i class="fa-solid fa-users-rectangle"></i> Design Unit
+                    </a>
+                    <a href="#" class="nav-link">
+                        <i class="fa-solid fa-users-rectangle"></i> Marketing Team
+                    </a>
+                    <a href="#" class="nav-link">
+                        <i class="fa-solid fa-users-rectangle"></i> Development Group
+                    </a>
+                </nav>
+            </details>
+
+            <details class="group nav-dropdown">
+                <summary class="nav-section-title">
+                    <span>CATEGORIES</span>
+                    <i class="fa-solid fa-chevron-down transition-transform group-open:rotate-180"></i>
+                </summary>
+                <nav class="mt-2 space-y-1">
+                    <a href="#" class="nav-link">
+                        <i class="fa-solid fa-image text-blue-500"></i> 이미지
+                    </a>
+                    <a href="#" class="nav-link">
+                        <i class="fa-solid fa-video text-purple-500"></i> 비디오
+                    </a>
+                    <a href="#" class="nav-link">
+                        <i class="fa-solid fa-file-lines text-orange-500"></i> 문서
+                    </a>
+                </nav>
+            </details>
+
+        </div>
+    </div>
+    
+    <div class="mt-auto p-5 border-t border-[var(--border-color)]">
+        <div class="bg-[var(--bg-input)] rounded-2xl p-4">
+            <div class="flex justify-between items-center mb-2">
+                <span class="text-[11px] font-bold">용량 사용량</span>
+                <span class="text-[11px] text-[#f07d18] font-bold">75%</span>
+            </div>
+            <div class="w-full bg-gray-700/30 rounded-full h-1.5 mb-2">
+                <div class="bg-[#f07d18] h-full rounded-full" style="width: 75%"></div>
+            </div>
+            <p class="text-[10px] text-[var(--text-muted)] text-center">37.5 GB / 50 GB</p>
+        </div>
+    </div>
+</aside>
+
+        <main class="flex-1 overflow-y-auto p-8 bg-[var(--bg-deep)]">
+            <div class="max-w-6xl mx-auto">
+                
+                <div class="mb-8">
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="text-2xl font-black text-[var(--text-main)]">내 프로젝트 파일</h2>
+                        <div class="flex gap-2">
+                            <button class="p-2 text-[#f07d18] bg-[#f07d18]/10 rounded-lg"><i class="fa-solid fa-table-cells-large"></i></button>
+                            <button class="p-2 text-gray-500 hover:text-white"><i class="fa-solid fa-list"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="filter-bar flex gap-4 p-4 bg-[var(--bg-sidebar)] rounded-2xl border border-[var(--border-color)]">
+                        <div class="flex flex-col gap-1">
+                            <span class="text-[10px] text-gray-500 font-bold uppercase">파일 형식</span>
+                            <select class="bg-transparent text-sm outline-none cursor-pointer">
+                                <option>전체 형식</option>
+                                <option>PDF 문서</option>
+                                <option>이미지</option>
+                            </select>
+                        </div>
+                        <div class="w-[1px] bg-[var(--border-color)]"></div>
+                        <div class="flex flex-col gap-1">
+                            <span class="text-[10px] text-gray-500 font-bold uppercase">수정 날짜</span>
+                            <select class="bg-transparent text-sm outline-none cursor-pointer">
+                                <option>전체 기간</option>
+                                <option>최근 7일</option>
+                                <option>이번 달</option>
+                            </select>
+                        </div>
+                        <div class="w-[1px] bg-[var(--border-color)]"></div>
+                        <div class="flex flex-col gap-1">
+                            <span class="text-[10px] text-gray-500 font-bold uppercase">출처</span>
+                            <select class="bg-transparent text-sm outline-none cursor-pointer">
+                                <option>모든 출처</option>
+                                <option>내 파일</option>
+                                <option>공유 파일</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="file-card p-6 rounded-2xl border border-[var(--border-color)] bg-[var(--bg-sidebar)] group cursor-pointer hover:border-[#f07d18] transition-all">
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="w-12 h-12 bg-[#f07d18]/10 text-[#f07d18] rounded-xl flex items-center justify-center text-2xl">
+                                <i class="fa-solid fa-file-pdf"></i>
+                            </div>
+                            <button class="text-gray-500 opacity-0 group-hover:opacity-100"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                        </div>
+                        <h3 class="font-bold text-[var(--text-main)] truncate"><a href="hyup.html">Br312dasdsal_v231.pdf</a></h3>
+                        <p class="text-[11px] text-gray-500 mt-1">15123분 전 수정 · 4.2 MB</p>
+                    </div>
+                    </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLOUDFLOW - 회원가입</title>
+    <link rel="stylesheet" href="../assets/style_signup.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="login-wrapper">
+        <header class="logo-area">
+            <a href = "../introduce/introd.html"><h1 class="logo">CLOUDFLOW</h1></a>
+        </header>
+        
+        <main class="login-card">
+            <h2>무료로 시작하기</h2>
+            <p class="subtitle">30일간 모든 기능을 무료로 체험해보세요.</p>
+            
+            <form>
+                <div class="input-group">
+                    <label for="name">이름</label>
+                    <input type="text" id="name" placeholder="홍길동" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="email">이메일 주소</label>
+                    <input type="email" id="email" placeholder="example@cloudflow.com" required>
+                </div>
+                
+                <div class="input-group">
+                    <label for="password">비밀번호</label>
+                    <input type="password" id="password" placeholder="8자 이상 입력하세요" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="password-confirm">비밀번호 확인</label>
+                    <input type="password" id="password-confirm" placeholder="비밀번호를 다시 입력하세요" required>
+                </div>
+
+                <div class="agreement-area">
+                    <label class="checkbox-container">
+                        <input type="checkbox" required>
+                        <span class="checkmark"></span>
+                        <span class="text"><a href="#">이용약관</a> 및 <a href="#">개인정보 처리방침</a>에 동의합니다.</span>
+                    </label>
+                </div>
+
+                <a href = "login.html"><button type="submit" class="btn-login">계정 생성하기</button></a>
+            </form>
+
+            <div class="divider">
+                <span>또는</span>
+            </div>
+
+            <button type="button" class="btn-google">
+                <img src="https://www.gstatic.com/images/branding/googleg/1x/googleg_standard_color_128dp.png" alt="Google Logo" width="18">
+                Google로 가입하기
+            </button>
+        </main>
+
+        <footer class="login-footer">
+            이미 계정이 있으신가요? <a href="login.html">로그인하기</a>
+        </footer>
+    </div>
+</body>
+</html>

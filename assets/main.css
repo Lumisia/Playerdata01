@@ -1,0 +1,159 @@
+:root {
+    --accent-orange: #f07d18;
+    --accent-glow: rgba(240, 125, 24, 0.3);
+    --bg-deep: #0b0f1a;
+    --bg-sidebar: #0d121f;
+    --bg-card: #161b2c;
+    --bg-input: #1e2536;
+    --text-main: #e2e8f0;
+    --text-muted: #94a3b8;
+    --border-color: rgba(255, 255, 255, 0.08);
+    --glass-bg: rgba(13, 18, 31, 0.8);
+    --chat-me-bg: var(--accent-orange);
+    --chat-other-bg: #161b2c;
+}
+
+body {
+    background-color: var(--bg-deep);
+    color: var(--text-main);
+}
+
+.glass-nav { 
+    background: rgba(13, 18, 31, 0.8); 
+    backdrop-filter: blur(12px); 
+    border-bottom: 1px solid var(--border-color); 
+}
+
+/* 드롭다운 타이틀 스타일 */
+.nav-section-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+    font-size: 11px;
+    font-weight: 900;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    list-style: none; /* 기본 화살표 제거 */
+}
+
+.nav-section-title::-webkit-details-marker {
+    display: none; /* Safari용 화살표 제거 */
+}
+
+.nav-section-title i {
+    font-size: 10px;
+    transition: transform 0.3s ease;
+}
+
+/* 사이드바 링크 스타일 */
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-size: 14px;
+    color: var(--text-muted);
+    transition: all 0.2s;
+}
+
+.nav-link i {
+    width: 18px; /* 아이콘 정렬 유지 */
+    text-align: center;
+}
+
+.nav-link:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-main);
+}
+
+.nav-link.active {
+    background: rgba(240, 125, 24, 0.15); /* 이미지 2번의 강조 스타일 반영 */
+    color: #f07d18;
+    font-weight: 700;
+}
+
+/* 오렌지 버튼 커스텀 (이미지 2번과 동일하게) */
+.btn-orange {
+    background-color: #f07d18;
+    color: white;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.btn-orange:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+}
+
+/* 커스텀 스크롤바 (사이드바 메뉴가 많아질 경우 대비) */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 10px;
+}
+
+/* 필터 그룹 스타일 */
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.filter-group label {
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    letter-spacing: 0.5px;
+}
+
+.filter-group select {
+    background: var(--bg-input);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    font-size: 13px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    outline: none;
+    min-width: 140px;
+    cursor: pointer;
+}
+
+.filter-group select:focus {
+    border-color: var(--accent-orange);
+}
+
+/* 파일 아이템 */
+.file-item {
+    background: var(--bg-sidebar);
+    border: 1px solid var(--border-color);
+    transition: transform 0.2s, border-color 0.2s;
+}
+
+.file-item:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent-orange);
+}
+
+.btn-orange {
+    background: var(--accent-orange);
+    color: white;
+    transition: opacity 0.2s;
+}
+
+.btn-orange:hover {
+    opacity: 0.9;
+}
+
+.badge {
+    font-size: 10px;
+    background: #f07d18;
+    color: white;
+    padding: 0px 6px;
+    border-radius: 10px;
+}

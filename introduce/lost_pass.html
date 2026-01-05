@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLOUDFLOW - 비밀번호 찾기</title>
+    <link rel="stylesheet" href="../assets/lost_pass.css">
+</head>
+<body>
+    <div class="wrapper">
+        <header class="logo">CLOUDFLOW</header>
+        
+        <main class="card">
+            <h2 class="card-title">비밀번호 찾기</h2>
+            <p class="card-subtitle">본인 확인을 위한 인증 방법을 선택해 주세요.</p>
+
+            <form id="find-password-form">
+                <label class="option-item">
+                    <input type="radio" name="auth-method" value="email" checked>
+                    <div class="option-content">
+                        <span class="icon">✉️</span>
+                        <div class="text-group">
+                            <span class="method-name">가입한 이메일로 받기</span>
+                            <span class="method-desc">ex****@cloudflow.com</span>
+                        </div>
+                    </div>
+                </label>
+
+                <label class="option-item">
+                    <input type="radio" name="auth-method" value="sms">
+                    <div class="option-content">
+                        <span class="icon">📱</span>
+                        <div class="text-group">
+                            <span class="method-name">가입한 전화번호로 받기</span>
+                            <span class="method-desc">010-****-5678</span>
+                        </div>
+                    </div>
+                </label>
+
+                <label class="option-item">
+                    <input type="radio" name="auth-method" value="otp">
+                    <div class="option-content">
+                        <span class="icon">🛡️</span>
+                        <div class="text-group">
+                            <span class="method-name">OTP 인증하기</span>
+                            <span class="method-desc">인증 앱에 표시된 코드를 입력합니다.</span>
+                        </div>
+                    </div>
+                </label>
+
+                <button type="submit" class="btn-primary">다음</button>
+            </form>
+
+            <div class="footer-links">
+                <a href="../user/login.html" class="back-link">로그인 페이지로 돌아가기</a>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

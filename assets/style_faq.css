@@ -1,0 +1,164 @@
+/* 공통 스타일 (로그인/문의하기 페이지와 동일) */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Pretendard', sans-serif;
+}
+
+body {
+    background-color: #000000;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 60px 0;
+}
+
+.wrapper {
+    width: 100%;
+    max-width: 600px; /* FAQ는 더 넓은 시야 확보 */
+    padding: 20px;
+}
+
+.logo {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 40px;
+    letter-spacing: 1px;
+}
+
+.card {
+    background-color: #1a1a1a;
+    padding: 40px;
+    border-radius: 12px;
+}
+
+.card-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    text-align: center;
+}
+
+.card-subtitle {
+    font-size: 14px;
+    color: #a0a0a0;
+    margin-bottom: 30px;
+    text-align: center;
+    line-height: 1.6;
+}
+
+/* 검색바 스타일 */
+.search-container {
+    position: relative;
+    margin-bottom: 40px;
+}
+
+.search-container input {
+    width: 100%;
+    padding: 16px 20px;
+    padding-right: 50px;
+    background-color: #262626;
+    border: 1px solid #333;
+    border-radius: 30px; /* 둥근 검색바 */
+    color: white;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.search-container input:focus {
+    border-color: #FF6B21;
+}
+
+.search-icon {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888;
+}
+
+/* FAQ 아코디언 스타일 */
+.faq-list {
+    border-top: 1px solid #333;
+}
+
+.faq-item {
+    border-bottom: 1px solid #333;
+}
+
+summary {
+    padding: 20px 0;
+    list-style: none; /* 기본 화살표 제거 */
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: color 0.2s;
+}
+
+summary::after {
+    content: '+';
+    font-size: 20px;
+    color: #FF6B21;
+    transition: transform 0.3s;
+}
+
+/* 열렸을 때 스타일 */
+details[open] summary {
+    color: #FF6B21;
+}
+
+details[open] summary::after {
+    content: '-';
+    transform: rotate(180deg);
+}
+
+.faq-content {
+    padding-bottom: 20px;
+    line-height: 1.7;
+    color: #cccccc;
+    font-size: 15px;
+    animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* 하단 문의 버튼 */
+.faq-footer {
+    margin-top: 50px;
+    text-align: center;
+    background-color: #262626;
+    padding: 30px;
+    border-radius: 12px;
+}
+
+.faq-footer p {
+    font-size: 14px;
+    color: #a0a0a0;
+    margin-bottom: 15px;
+}
+
+.contact-btn {
+    display: inline-block;
+    padding: 12px 30px;
+    background-color: #FF6B21;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 700;
+    transition: background-color 0.2s;
+}
+
+.contact-btn:hover {
+    background-color: #e55a1a;
+}

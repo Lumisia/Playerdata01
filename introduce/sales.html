@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLOUDFLOW - 영업팀에 문의하기</title>
+    <link rel="stylesheet" href="../assets/style_sales.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="header-inner">
+            <div class="header-left">
+                <a href = "introd.html"><div class="logo-group">
+                    <span class="logo-icon">⚡</span>
+                    <span class="logo-text">CLOUDFLOW</span>
+                </div></a>
+                <nav class="main-nav">
+                    <a href="faq.html">자주 묻는 질문 / 문의하기 </a>
+                    <a href="sales.html">영업팀에 문의하기</a>
+                    <a href="../payment.html">요금제</a>
+                </nav>
+            </div>
+            <div class="header-right">
+                <a href="../user/login.html" class="btn-login">로그인</a>
+                <a href="../user/signup.html" class="btn-cta-header">무료로 시작하기</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="contact-container">
+        <div class="contact-layout">
+            
+            <section class="info-section">
+                <h1 class="main-title">CLOUDFLOW 영업팀에<br>문의하기</h1>
+                <p class="main-desc">영업팀에 문의하여 CLOUDFLOW에서 제공하는 기업용 솔루션과 특별한 혜택에 대해 알아보세요.</p>
+                
+                <div class="client-info">
+                    <p class="client-label">매일 수백만 명이 업무에 활용하는 CLOUDFLOW</p>
+                    <div class="client-logos">
+                        <span>LG AI Research</span>
+                        <span>sendbird</span>
+                        <span>HYOSUNG</span>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="quote-content">
+                        "팀원들은 같은 팀 동료들과 공유할 지식을 저장하고 CLOUDFLOW의 빠른 속도에 발맞출 수 있는 애플리케이션을 필요로 합니다. 이 모든 작업을 하나의 플랫폼에서 처리할 수 있는 강력한 도구입니다."
+                    </div>
+                    <div class="quote-author">
+                        <strong>Nick Erdenberger</strong>
+                        <span>GTM, OpenAI</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="form-section">
+                <form class="sales-form">
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label>이름 *</label>
+                            <input type="text" placeholder="길동" required>
+                        </div>
+                        <div class="input-group">
+                            <label>성 *</label>
+                            <input type="text" placeholder="홍" required>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>업무용 이메일 *</label>
+                        <input type="email" placeholder="example@company.com" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label>직함 *</label>
+                        <input type="text" placeholder="직함을 입력하세요" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label>회사 이름 *</label>
+                        <input type="text" placeholder="회사명을 입력하세요" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label>회사 규모 *</label>
+                        <select required>
+                            <option value="">선택 항목</option>
+                            <option>1-50명</option>
+                            <option>51-200명</option>
+                            <option>201-500명</option>
+                            <option>500명 이상</option>
+                        </select>
+                    </div>
+
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label>국가 내 지역 *</label>
+                            <select>
+                                <option>대한민국</option>
+                                <option>미국</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label>전화번호 *</label>
+                            <input type="tel" placeholder="(010) 1234-5678" required>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>문의 이유 *</label>
+                        <select required>
+                            <option value="">선택 항목</option>
+                            <option>데모 요청</option>
+                            <option>가격 문의</option>
+                            <option>기능 문의</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label>세부 정보를 제공해 주세요. *</label>
+                        <textarea rows="4" placeholder="CLOUDFLOW를 어떻게 사용하고 싶으신지 적어주세요."></textarea>
+                    </div>
+
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="marketing">
+                        <label for="marketing">마케팅 메시지를 수신하는 데 동의합니다.</label>
+                    </div>
+
+                    <button type="submit" class="btn-submit">영업팀에 문의하기</button>
+                    <p class="form-footer-note">문의 시 개인정보 보호정책이 적용됩니다.</p>
+                </form>
+            </section>
+        </div>
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-inner">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <div class="footer-logo">CLOUDFLOW</div>
+                    <p class="brand-text">모든 작업을 하나의 흐름으로 이어주는 비즈니스 도구입니다.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="link-col">
+                        <h4>PRODUCT</h4>
+                        <a href="#">제품 정보</a>
+                        <a href="#">템플릿</a>
+                        <a href="#">새로운 소식</a>
+                    </div>
+                    <div class="link-col">
+                        <h4>COMPANY</h4>
+                        <a href="#">블로그</a>
+                        <a href="#">채용</a>
+                        <a href="#">고객센터</a>
+                    </div>
+                    <div class="link-col">
+                        <h4>SOCIAL</h4>
+                        <a href="#">Twitter</a>
+                        <a href="#">LinkedIn</a>
+                        <a href="#">GitHub</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 CLOUDFLOW, Inc. All rights reserved.</p>
+                <div class="legal-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
