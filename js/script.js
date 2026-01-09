@@ -10,7 +10,7 @@ let socket;
         }
 
         let cursor = document.getElementById("cursor");
-        let mouse;
+        let remoteMice = {};
 
         const senderId = Math.floor(Math.random() * 9) + 1; 
         const myColor = random(); // 내 색상을 미리 결정
@@ -103,24 +103,20 @@ let socket;
                         };
                     }
             } else {
+                const id = recvSenderId;
                 // 2. 만약 delta가 없다면 마우스 좌표 데이터일 확률이 높음
                 // 여기서 마우스 커서 업데이트 로직을 처리하면 좋습니다.
-                if (!mouse) {
-                    mouse = document.createElement("div");
-                    mouse.className = "mouse";
-                    cursor.appendChild(mouse);
-                    mouse.style.backgroundColor = payload.color;
-                    mouse.innerText = recvSenderId;
-                } else {
-                    let recv = JSON.parse(event.data);
-                    let payload = JSON.parse(recv.payload);
-                    // 수신부 로직 수정
-                    mouse.style.left = (payload.left - 10) + "px"; // 반지름만큼 이동
-                    mouse.style.top = (payload.top - 10) + "px";
-
-                    // mouse.style.left = payload.left + "px";
-                    // mouse.style.top = payload.top + "px";
+                if (!remoteMice[id]) {
+                    const newMouse = document.createElement("div");
+                    newMouse.className = "mouse";
+                    newMouse.style.backgroundColor = payload.color;
+                    newMouse.innerText = recvSenderId;
+                    cursor.appendChild(newMouse);
+                    remoteMice[id] = newMouse;
                 }
+                const targetMouse = remoteMice[id];
+                targetMouse.style.left = payload.left + "px";
+                targetMouse.style.top = payload.top + "px";
             }
         }
 
