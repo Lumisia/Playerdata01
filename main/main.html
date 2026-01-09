@@ -1,299 +1,59 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CLOUDFLOW - Unified Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <style>
-        :root {
-            --bg-deep: #0f172a;
-            --bg-sidebar: #1e293b;
-            --bg-input: #334155;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --border-color: #334155;
-            --accent: #f07d18;
-            --modal-overlay: rgba(15, 23, 42, 0.8);
-        }
-
-        body.light-theme {
-            --bg-deep: #f1f5f9;
-            --bg-sidebar: #ffffff;
-            --bg-input: #f8fafc;
-            --text-main: #0f172a;
-            --text-muted: #64748b;
-            --border-color: #e2e8f0;
-            --modal-overlay: rgba(241, 245, 249, 0.8);
-        }
-
-        body {
-            background-color: var(--bg-deep);
-            color: var(--text-main);
-            transition: all 0.3s ease;
-        }
-
-        .glass-nav {
-            background: rgba(30, 41, 59, 0.7);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .light-theme .glass-nav {
-            background: rgba(255, 255, 255, 0.7);
-        }
-
-        .nav-link {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 10px 16px;
-            border-radius: 12px;
-            font-size: 14px;
-            color: var(--text-muted);
-            transition: all 0.2s;
-            cursor: pointer;
-        }
-
-        .nav-link:hover, .nav-link.active {
-            background: var(--bg-input);
-            color: var(--text-main);
-        }
-
-        .nav-link.active {
-            color: var(--accent);
-            font-weight: bold;
-        }
-
-        .btn-orange {
-            background-color: var(--accent);
-            color: white;
-            transition: filter 0.2s;
-        }
-
-        .btn-orange:hover {
-            filter: brightness(1.1);
-        }
-
-        .nav-section-title {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 16px;
-            font-size: 11px;
-            font-weight: 800;
-            color: var(--text-muted);
-            margin-bottom: 8px;
-            cursor: pointer;
-        }
-
-        .custom-scrollbar::-webkit-scrollbar {
-            width: 4px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: var(--border-color);
-            border-radius: 10px;
-        }
-
-        .content-view {
-            display: none;
-            animation: fadeIn 0.3s ease-out;
-        }
-        .content-view.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        #chat-sidebar {
-            transition: transform 0.3s ease, width 0.3s ease;
-            width: 0;
-            overflow: hidden;
-        }
-        #chat-sidebar.open {
-            width: 320px;
-            border-left: 1px solid var(--border-color);
-        }
-
-        .dropdown-container {
-            display: none;
-            position: absolute;
-            top: calc(100% + 10px);
-            right: 0;
-            width: 280px;
-            background-color: var(--bg-sidebar);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
-            z-index: 50;
-            overflow: hidden;
-            animation: dropdownFade 0.2s ease-out;
-        }
-        .dropdown-container.active {
-            display: block;
-        }
-
-        @keyframes dropdownFade {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .dropdown-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 12px 16px;
-            font-size: 13px;
-            color: var(--text-main);
-            transition: background 0.2s;
-            cursor: pointer;
-        }
-        .dropdown-item:hover {
-            background-color: var(--bg-input);
-        }
-
-        .notif-badge {
-            position: absolute;
-            top: 6px;
-            right: 6px;
-            width: 8px;
-            height: 8px;
-            background-color: #ef4444;
-            border-radius: 50%;
-            border: 2px solid var(--bg-sidebar);
-        }
-
-        /* Modal Specific Styles */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: var(--modal-overlay);
-            backdrop-filter: blur(4px);
-            z-index: 100;
-            align-items: center;
-            justify-content: center;
-            animation: fadeIn 0.2s ease-out;
-        }
-        .modal-overlay.active {
-            display: flex;
-        }
-        .modal-content {
-            background-color: var(--bg-sidebar);
-            border: 1px solid var(--border-color);
-            width: 100%;
-            max-width: 850px; /* 창 크기 확장 */
-            border-radius: 24px;
-            overflow: hidden;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            display: flex;
-            flex-direction: column;
-            max-height: 90vh;
-        }
-
-        /* Profile Modal Tabs Style */
-        .modal-sidebar-btn {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 20px;
-            border-radius: 12px;
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--text-muted);
-            transition: all 0.2s;
-            cursor: pointer;
-        }
-        .modal-sidebar-btn:hover, .modal-sidebar-btn.active {
-            background: var(--bg-input);
-            color: var(--text-main);
-        }
-        .modal-sidebar-btn.active {
-            background: var(--accent);
-            color: white;
-        }
-
-        /* Modal Tab Content Visibility */
-        .modal-tab-pane {
-            display: none;
-            animation: fadeIn 0.3s ease-out;
-        }
-        .modal-tab-pane.active {
-            display: block;
-        }
-
-        /* Toggle Switch Style */
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 44px;
-            height: 24px;
-        }
-        .switch input { opacity: 0; width: 0; height: 0; }
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-color: var(--bg-input);
-            transition: .3s;
-            border-radius: 24px;
-        }
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 18px; width: 18px;
-            left: 3px; bottom: 3px;
-            background-color: white;
-            transition: .3s;
-            border-radius: 50%;
-        }
-        input:checked + .slider { background-color: var(--accent); }
-        input:checked + .slider:before { transform: translateX(20px); }
-
-    </style>
+    <link rel="stylesheet" href="./maincss.css">
 </head>
+
 <body class="h-screen overflow-hidden flex flex-col">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="./file_upload.js"></script>
     <header class="h-16 glass-nav flex items-center justify-between px-6 z-30 shrink-0">
         <div class="flex items-center gap-8">
             <div onclick="switchView('files')" class="flex items-center gap-3 cursor-pointer group">
-                <div class="w-10 h-10 bg-[#f07d18] rounded-xl flex items-center justify-center text-white shadow-lg group-hover:scale-105 transition-transform">
+                <div
+                    class="w-10 h-10 bg-[#f07d18] rounded-xl flex items-center justify-center text-white shadow-lg group-hover:scale-105 transition-transform">
                     <i class="fa-solid fa-cloud-bolt text-lg"></i>
                 </div>
                 <h1 class="text-xl font-black tracking-tighter text-[var(--text-main)]">CLOUDFLOW</h1>
             </div>
         </div>
-        
+
         <div class="flex-1 max-w-xl mx-10">
             <div class="relative">
                 <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"></i>
-                <input type="text" placeholder="파일, 폴더, 워크스페이스 검색..." 
+                <input type="text" placeholder="파일, 폴더, 워크스페이스 검색..."
                     class="w-full bg-[var(--bg-input)] border border-[var(--border-color)] rounded-xl py-2 pl-12 pr-4 outline-none text-sm text-[var(--text-main)]">
             </div>
         </div>
 
         <div class="flex items-center gap-4">
             <div class="relative" id="notif-container">
-                <button onclick="toggleNotifMenu()" class="w-10 h-10 rounded-xl bg-[var(--bg-input)] text-[var(--text-main)] flex items-center justify-center hover:text-[#f07d18] transition-colors relative">
+                <button onclick="toggleNotifMenu()"
+                    class="w-10 h-10 rounded-xl bg-[var(--bg-input)] text-[var(--text-main)] flex items-center justify-center hover:text-[#f07d18] transition-colors relative">
                     <i class="fa-solid fa-bell"></i>
                     <div class="notif-badge"></div>
                 </button>
-                
+
                 <div id="notif-dropdown" class="dropdown-container">
                     <div class="p-4 border-b border-[var(--border-color)] flex justify-between items-center">
                         <h3 class="text-sm font-bold">알림 센터</h3>
                         <span class="text-[10px] text-[#f07d18] font-bold">새로운 알림 3개</span>
                     </div>
                     <div class="max-h-[320px] overflow-y-auto custom-scrollbar">
-                        <div class="p-4 border-b border-[var(--border-color)] hover:bg-[var(--bg-input)] cursor-pointer transition-colors">
+                        <div
+                            class="p-4 border-b border-[var(--border-color)] hover:bg-[var(--bg-input)] cursor-pointer transition-colors">
                             <p class="text-xs font-bold">Sarah Jenkins</p>
                             <p class="text-[11px] text-[var(--text-muted)] mt-1">'디자인 가이드' 파일을 공유했습니다.</p>
                             <p class="text-[9px] text-gray-500 mt-2">방금 전</p>
                         </div>
-                        <div class="p-4 border-b border-[var(--border-color)] hover:bg-[var(--bg-input)] cursor-pointer transition-colors">
+                        <div
+                            class="p-4 border-b border-[var(--border-color)] hover:bg-[var(--bg-input)] cursor-pointer transition-colors">
                             <p class="text-xs font-bold text-red-400">저장 용량 경고</p>
                             <p class="text-[11px] text-[var(--text-muted)] mt-1">스토리지 사용량이 90%에 도달했습니다.</p>
                             <p class="text-[9px] text-gray-500 mt-2">15분 전</p>
@@ -302,20 +62,25 @@
                 </div>
             </div>
 
-            <button onclick="toggleChat()" class="w-10 h-10 rounded-xl bg-[var(--bg-input)] text-[var(--text-main)] flex items-center justify-center hover:text-[#f07d18]" title="협업 채팅">
+            <button onclick="toggleChat()"
+                class="w-10 h-10 rounded-xl bg-[var(--bg-input)] text-[var(--text-main)] flex items-center justify-center hover:text-[#f07d18]"
+                title="협업 채팅">
                 <i class="fa-solid fa-comments"></i>
             </button>
-            <button onclick="toggleTheme()" class="w-10 h-10 rounded-xl bg-[var(--bg-input)] text-[var(--text-main)] flex items-center justify-center">
+            <button onclick="toggleTheme()"
+                class="w-10 h-10 rounded-xl bg-[var(--bg-input)] text-[var(--text-main)] flex items-center justify-center">
                 <i class="fa-solid fa-moon" id="themeIcon"></i>
             </button>
-            
+
             <div class="relative" id="profile-container">
-                <div onclick="toggleProfileMenu()" id="profile-trigger" class="flex items-center gap-3 cursor-pointer group">
+                <div onclick="toggleProfileMenu()" id="profile-trigger"
+                    class="flex items-center gap-3 cursor-pointer group">
                     <div class="text-right hidden md:block">
                         <p class="text-sm font-bold text-[var(--text-main)]">Imran Khan</p>
                         <p class="text-[10px] text-[#f07d18] font-bold">PRO 유저</p>
                     </div>
-                    <img src="https://ui-avatars.com/api/?name=IK&background=f07d18&color=fff" class="w-10 h-10 rounded-xl ring-2 ring-transparent group-hover:ring-[#f07d18] transition-all">
+                    <img src="https://ui-avatars.com/api/?name=IK&background=f07d18&color=fff"
+                        class="w-10 h-10 rounded-xl ring-2 ring-transparent group-hover:ring-[#f07d18] transition-all">
                 </div>
 
                 <div id="profile-dropdown" class="dropdown-container">
@@ -328,11 +93,15 @@
                             <i class="fa-solid fa-user-gear text-[var(--text-muted)]"></i>
                             <span>개인 프로필 설정</span>
                         </div>
-                        <div class="dropdown-item"><i class="fa-solid fa-shield-halved text-[var(--text-muted)]"></i><span>보안 및 비밀번호</span></div>
-                        <div class="dropdown-item"><i class="fa-solid fa-language text-[var(--text-muted)]"></i><span>언어 설정 (KO)</span></div>
+                        <div class="dropdown-item"><i
+                                class="fa-solid fa-shield-halved text-[var(--text-muted)]"></i><span>보안 및 비밀번호</span>
+                        </div>
+                        <div class="dropdown-item"><i class="fa-solid fa-language text-[var(--text-muted)]"></i><span>언어
+                                설정 (KO)</span></div>
                     </div>
                     <div class="py-2 border-t border-[var(--border-color)] bg-[var(--bg-input)]/20">
-                        <div onclick="handleLogout()" class="dropdown-item text-red-500 font-bold"><i class="fa-solid fa-right-from-bracket"></i><span>로그아웃</span></div>
+                        <div onclick="handleLogout()" class="dropdown-item text-red-500 font-bold"><i
+                                class="fa-solid fa-right-from-bracket"></i><span>로그아웃</span></div>
                     </div>
                 </div>
             </div>
@@ -343,30 +112,45 @@
         <aside class="w-64 bg-[var(--bg-sidebar)] border-r border-[var(--border-color)] flex flex-col shrink-0 h-full">
             <div class="p-5 overflow-y-auto custom-scrollbar">
                 <div class="space-y-3 mb-8">
-                    <button class="w-full btn-orange py-3 rounded-xl font-bold flex items-center justify-center gap-2 shadow-lg shadow-orange-900/20">
+
+                    <input type="file" id="files" multiple hidden>
+                    <label for="files"
+                        class="w-full btn-orange py-3 rounded-xl font-bold flex items-center justify-center gap-2 shadow-lg shadow-orange-900/20 cursor-pointer">
                         <i class="fa-solid fa-cloud-arrow-up"></i> 새 파일 업로드
-                    </button>
-                    <button onclick="switchView('dashboard')" id="nav-dashboard" class="w-full bg-[var(--bg-input)] hover:bg-orange-500/10 hover:text-[#f07d18] text-[var(--text-main)] py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-colors">
+                    </label>
+                    <button onclick="switchView('dashboard')" id="nav-dashboard"
+                        class="w-full bg-[var(--bg-input)] hover:bg-orange-500/10 hover:text-[#f07d18] text-[var(--text-main)] py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-colors">
                         <i class="fa-solid fa-chart-line"></i> 대시보드
                     </button>
                 </div>
 
                 <div class="space-y-4">
                     <details class="group" open>
-                        <summary class="nav-section-title"><span>MY CLOUD</span><i class="fa-solid fa-chevron-down transition-transform group-open:rotate-180"></i></summary>
+                        <summary class="nav-section-title"><span>MY CLOUD</span><i
+                                class="fa-solid fa-chevron-down transition-transform group-open:rotate-180"></i>
+                        </summary>
                         <nav class="mt-2 space-y-1">
-                            <div onclick="switchView('files')" class="nav-link active" id="nav-files"><i class="fa-solid fa-folder-tree"></i> 모든 파일</div>
-                            <div onclick="switchView('recent')" class="nav-link" id="nav-recent"><i class="fa-solid fa-clock-rotate-left"></i> 최근 사용 문서</div>
-                            <div onclick="switchView('favorites')" class="nav-link" id="nav-favorites"><i class="fa-solid fa-star"></i> 즐겨찾기</div>
-                            <div onclick="switchView('shared')" class="nav-link" id="nav-shared"><i class="fa-solid fa-share-nodes"></i> 공유된 항목</div>
-                            <div onclick="switchView('trash')" class="nav-link" id="nav-trash"><i class="fa-solid fa-trash-can"></i> 휴지통</div>
+                            <div onclick="switchView('files')" class="nav-link active" id="nav-files"><i
+                                    class="fa-solid fa-folder-tree"></i> 모든 파일</div>
+                            <div onclick="switchView('recent')" class="nav-link" id="nav-recent"><i
+                                    class="fa-solid fa-clock-rotate-left"></i> 최근 사용 문서</div>
+                            <div onclick="switchView('favorites')" class="nav-link" id="nav-favorites"><i
+                                    class="fa-solid fa-star"></i> 즐겨찾기</div>
+                            <div onclick="switchView('shared')" class="nav-link" id="nav-shared"><i
+                                    class="fa-solid fa-share-nodes"></i> 공유된 항목</div>
+                            <div onclick="switchView('trash')" class="nav-link" id="nav-trash"><i
+                                    class="fa-solid fa-trash-can"></i> 휴지통</div>
                         </nav>
                     </details>
                     <details class="group" open>
-                        <summary class="nav-section-title"><span>공유된 워크스페이스</span><i class="fa-solid fa-chevron-down transition-transform group-open:rotate-180"></i></summary>
+                        <summary class="nav-section-title"><span>공유된 워크스페이스</span><i
+                                class="fa-solid fa-chevron-down transition-transform group-open:rotate-180"></i>
+                        </summary>
                         <nav class="mt-2 space-y-1">
-                            <div onclick="switchView('ws-design')" class="nav-link" id="nav-ws-design"><i class="fa-solid fa-layer-group"></i> 디자인 팀</div>
-                            <div onclick="switchView('ws-dev')" class="nav-link" id="nav-ws-dev"><i class="fa-solid fa-layer-group"></i> 개발 프로젝트</div>
+                            <div onclick="switchView('ws-design')" class="nav-link" id="nav-ws-design"><i
+                                    class="fa-solid fa-layer-group"></i> 디자인 팀</div>
+                            <div onclick="switchView('ws-dev')" class="nav-link" id="nav-ws-dev"><i
+                                    class="fa-solid fa-layer-group"></i> 개발 프로젝트</div>
                         </nav>
                     </details>
                 </div>
@@ -388,34 +172,41 @@
 
         <main class="flex-1 overflow-y-auto p-8 bg-[var(--bg-deep)]">
             <div class="max-w-6xl mx-auto">
-                
+
                 <!-- VIEW: Dashboard -->
                 <div id="view-dashboard" class="content-view">
                     <h2 class="text-2xl font-black text-[var(--text-main)] mb-6">대시보드 분석</h2>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                         <div class="p-6 rounded-2xl bg-[var(--bg-sidebar)] border border-[var(--border-color)]">
-                            <div class="w-10 h-10 rounded-lg bg-blue-500/10 text-blue-500 flex items-center justify-center mb-4">
+                            <div
+                                class="w-10 h-10 rounded-lg bg-blue-500/10 text-blue-500 flex items-center justify-center mb-4">
                                 <i class="fa-solid fa-file"></i>
                             </div>
                             <p class="text-[11px] font-bold text-[var(--text-muted)]">전체 파일</p>
                             <h4 class="text-2xl font-black">1,769 개</h4>
                         </div>
                         <div class="p-6 rounded-2xl bg-[var(--bg-sidebar)] border border-[var(--border-color)]">
-                            <div class="w-10 h-10 rounded-lg bg-orange-500/10 text-orange-500 flex items-center justify-center mb-4">
+                            <div
+                                class="w-10 h-10 rounded-lg bg-orange-500/10 text-orange-500 flex items-center justify-center mb-4">
                                 <i class="fa-solid fa-database"></i>
                             </div>
                             <p class="text-[11px] font-bold text-[var(--text-muted)]">총 사용 용량</p>
-                            <h4 class="text-2xl font-black">46.1 GB <span class="text-sm text-[var(--text-muted)] font-normal">/ 80GB</span></h4>
+                            <h4 class="text-2xl font-black">46.1 GB <span
+                                    class="text-sm text-[var(--text-muted)] font-normal">/ 80GB</span></h4>
                         </div>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div class="md:col-span-1 p-6 rounded-3xl bg-[var(--bg-sidebar)] border border-[var(--border-color)] flex flex-col items-center justify-center">
+                        <div
+                            class="md:col-span-1 p-6 rounded-3xl bg-[var(--bg-sidebar)] border border-[var(--border-color)] flex flex-col items-center justify-center">
                             <div class="relative w-48 h-48">
                                 <svg viewBox="0 0 36 36" class="w-full h-full transform -rotate-90">
-                                    <circle cx="18" cy="18" r="16" fill="none" stroke="var(--bg-input)" stroke-width="3"></circle>
-                                    <circle cx="18" cy="18" r="16" fill="none" stroke="#2dd4bf" stroke-width="3" stroke-dasharray="88, 100"></circle>
-                                    <circle cx="18" cy="18" r="16" fill="none" stroke="#fbbf24" stroke-width="3" stroke-dasharray="7, 100" stroke-dashoffset="-88"></circle>
+                                    <circle cx="18" cy="18" r="16" fill="none" stroke="var(--bg-input)"
+                                        stroke-width="3"></circle>
+                                    <circle cx="18" cy="18" r="16" fill="none" stroke="#2dd4bf" stroke-width="3"
+                                        stroke-dasharray="88, 100"></circle>
+                                    <circle cx="18" cy="18" r="16" fill="none" stroke="#fbbf24" stroke-width="3"
+                                        stroke-dasharray="7, 100" stroke-dashoffset="-88"></circle>
                                 </svg>
                                 <div class="absolute inset-0 flex flex-col items-center justify-center">
                                     <span class="text-3xl font-black text-[var(--text-main)]">57%</span>
@@ -423,27 +214,47 @@
                                 </div>
                             </div>
                             <div class="mt-6 w-full space-y-2">
-                                <button class="w-full py-2 bg-[var(--bg-input)] rounded-xl text-xs font-bold hover:bg-[var(--border-color)] transition-colors">메일 용량 관리</button>
-                                <button class="w-full py-2 bg-[var(--bg-input)] rounded-xl text-xs font-bold hover:bg-[var(--border-color)] transition-colors">파일 정리</button>
+                                <button
+                                    class="w-full py-2 bg-[var(--bg-input)] rounded-xl text-xs font-bold hover:bg-[var(--border-color)] transition-colors">메일
+                                    용량 관리</button>
+                                <button
+                                    class="w-full py-2 bg-[var(--bg-input)] rounded-xl text-xs font-bold hover:bg-[var(--border-color)] transition-colors">파일
+                                    정리</button>
                             </div>
                         </div>
 
                         <div class="md:col-span-2 grid grid-cols-2 gap-4">
-                            <div class="p-4 rounded-2xl bg-[var(--bg-sidebar)] border border-[var(--border-color)] flex items-center gap-4">
+                            <div
+                                class="p-4 rounded-2xl bg-[var(--bg-sidebar)] border border-[var(--border-color)] flex items-center gap-4">
                                 <div class="w-3 h-3 rounded-full bg-[#2dd4bf]"></div>
-                                <div><p class="text-[11px] font-bold text-[var(--text-muted)]">동영상 (122)</p><p class="text-lg font-black text-[var(--text-main)]">40.7 GB</p></div>
+                                <div>
+                                    <p class="text-[11px] font-bold text-[var(--text-muted)]">동영상 (122)</p>
+                                    <p class="text-lg font-black text-[var(--text-main)]">40.7 GB</p>
+                                </div>
                             </div>
-                            <div class="p-4 rounded-2xl bg-[var(--bg-sidebar)] border border-[var(--border-color)] flex items-center gap-4">
+                            <div
+                                class="p-4 rounded-2xl bg-[var(--bg-sidebar)] border border-[var(--border-color)] flex items-center gap-4">
                                 <div class="w-3 h-3 rounded-full bg-[#fbbf24]"></div>
-                                <div><p class="text-[11px] font-bold text-[var(--text-muted)]">사진 (1,601)</p><p class="text-lg font-black text-[var(--text-main)]">3.1 GB</p></div>
+                                <div>
+                                    <p class="text-[11px] font-bold text-[var(--text-muted)]">사진 (1,601)</p>
+                                    <p class="text-lg font-black text-[var(--text-main)]">3.1 GB</p>
+                                </div>
                             </div>
-                            <div class="p-4 rounded-2xl bg-[var(--bg-sidebar)] border border-[var(--border-color)] flex items-center gap-4">
+                            <div
+                                class="p-4 rounded-2xl bg-[var(--bg-sidebar)] border border-[var(--border-color)] flex items-center gap-4">
                                 <div class="w-3 h-3 rounded-full bg-[#fb7185]"></div>
-                                <div><p class="text-[11px] font-bold text-[var(--text-muted)]">문서 (10)</p><p class="text-lg font-black text-[var(--text-main)]">1.1 GB</p></div>
+                                <div>
+                                    <p class="text-[11px] font-bold text-[var(--text-muted)]">문서 (10)</p>
+                                    <p class="text-lg font-black text-[var(--text-main)]">1.1 GB</p>
+                                </div>
                             </div>
-                            <div class="p-4 rounded-2xl bg-[var(--bg-sidebar)] border border-[var(--border-color)] flex items-center gap-4">
+                            <div
+                                class="p-4 rounded-2xl bg-[var(--bg-sidebar)] border border-[var(--border-color)] flex items-center gap-4">
                                 <div class="w-3 h-3 rounded-full bg-[#818cf8]"></div>
-                                <div><p class="text-[11px] font-bold text-[var(--text-muted)]">오디오 (35)</p><p class="text-lg font-black text-[var(--text-main)]">660.8 MB</p></div>
+                                <div>
+                                    <p class="text-[11px] font-bold text-[var(--text-muted)]">오디오 (35)</p>
+                                    <p class="text-lg font-black text-[var(--text-main)]">660.8 MB</p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -453,9 +264,13 @@
                 <div id="view-files" class="content-view active">
                     <h2 class="text-2xl font-black text-[var(--text-main)] mb-6">모든 파일</h2>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div class="p-6 rounded-2xl border border-[var(--border-color)] bg-[var(--bg-sidebar)] group cursor-pointer hover:border-[#f07d18] transition-all">
+                        <div
+                            class="p-6 rounded-2xl border border-[var(--border-color)] bg-[var(--bg-sidebar)] group cursor-pointer hover:border-[#f07d18] transition-all">
                             <div class="flex justify-between items-start mb-4">
-                                <div class="w-12 h-12 bg-[#f07d18]/10 text-[#f07d18] rounded-xl flex items-center justify-center text-2xl"><i class="fa-solid fa-file-pdf"></i></div>
+                                <div
+                                    class="w-12 h-12 bg-[#f07d18]/10 text-[#f07d18] rounded-xl flex items-center justify-center text-2xl">
+                                    <i class="fa-solid fa-file-pdf"></i>
+                                </div>
                                 <i class="fa-regular fa-star text-gray-500 hover:text-yellow-500"></i>
                             </div>
                             <h3 class="font-bold text-[var(--text-main)] truncate">Project_Proposal.pdf</h3>
@@ -467,16 +282,20 @@
                 <!-- VIEW: Recent -->
                 <div id="view-recent" class="content-view">
                     <h2 class="text-2xl font-black text-[var(--text-main)] mb-6">최근 사용 문서</h2>
-                    <div class="bg-[var(--bg-sidebar)] rounded-2xl border border-[var(--border-color)] overflow-hidden shadow-sm">
+                    <div
+                        class="bg-[var(--bg-sidebar)] rounded-2xl border border-[var(--border-color)] overflow-hidden shadow-sm">
                         <table class="w-full text-left text-sm">
                             <thead class="bg-[var(--bg-input)] text-[var(--text-muted)] font-bold">
                                 <tr>
-                                    <th class="px-6 py-4">이름</th><th class="px-6 py-4">마지막 접근</th><th class="px-6 py-4">크기</th>
+                                    <th class="px-6 py-4">이름</th>
+                                    <th class="px-6 py-4">마지막 접근</th>
+                                    <th class="px-6 py-4">크기</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-[var(--border-color)]">
                                 <tr class="hover:bg-[var(--bg-input)] cursor-pointer transition-colors">
-                                    <td class="px-6 py-4 flex items-center gap-3"><i class="fa-solid fa-file-lines text-orange-500"></i> Meeting_Notes.docx</td>
+                                    <td class="px-6 py-4 flex items-center gap-3"><i
+                                            class="fa-solid fa-file-lines text-orange-500"></i> Meeting_Notes.docx</td>
                                     <td class="px-6 py-4">방금 전</td>
                                     <td class="px-6 py-4">120 KB</td>
                                 </tr>
@@ -489,9 +308,13 @@
                 <div id="view-favorites" class="content-view">
                     <h2 class="text-2xl font-black text-[var(--text-main)] mb-6">즐겨찾기</h2>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div class="p-6 rounded-2xl border border-yellow-500/50 bg-[var(--bg-sidebar)] group cursor-pointer transition-all">
+                        <div
+                            class="p-6 rounded-2xl border border-yellow-500/50 bg-[var(--bg-sidebar)] group cursor-pointer transition-all">
                             <div class="flex justify-between items-start mb-4">
-                                <div class="w-12 h-12 bg-yellow-500/10 text-yellow-500 rounded-xl flex items-center justify-center text-2xl"><i class="fa-solid fa-star"></i></div>
+                                <div
+                                    class="w-12 h-12 bg-yellow-500/10 text-yellow-500 rounded-xl flex items-center justify-center text-2xl">
+                                    <i class="fa-solid fa-star"></i>
+                                </div>
                                 <button class="text-yellow-500"><i class="fa-solid fa-star"></i></button>
                             </div>
                             <h3 class="font-bold text-[var(--text-main)] truncate">Brand_Identity_v1.zip</h3>
@@ -503,7 +326,8 @@
                 <!-- VIEW: Shared -->
                 <div id="view-shared" class="content-view">
                     <h2 class="text-2xl font-black text-[var(--text-main)] mb-6">공유된 항목</h2>
-                    <div class="bg-[var(--bg-sidebar)] rounded-2xl border border-[var(--border-color)] overflow-hidden shadow-sm">
+                    <div
+                        class="bg-[var(--bg-sidebar)] rounded-2xl border border-[var(--border-color)] overflow-hidden shadow-sm">
                         <table class="w-full text-left text-sm">
                             <thead class="bg-[var(--bg-input)] text-[var(--text-muted)] font-bold">
                                 <tr>
@@ -515,10 +339,15 @@
                             </thead>
                             <tbody class="divide-y divide-[var(--border-color)]">
                                 <tr class="hover:bg-[var(--bg-input)] transition-colors">
-                                    <td class="px-6 py-4 flex items-center gap-3"><i class="fa-solid fa-folder text-blue-400"></i> Marketing_Assets</td>
+                                    <td class="px-6 py-4 flex items-center gap-3"><i
+                                            class="fa-solid fa-folder text-blue-400"></i> Marketing_Assets</td>
                                     <td class="px-6 py-4 flex items-center gap-2 text-xs">Sarah Jenkins (소유자)</td>
-                                    <td class="px-6 py-4"><span class="px-2 py-1 bg-green-500/10 text-green-500 text-[10px] font-bold rounded">편집자</span></td>
-                                    <td class="px-6 py-4"><button class="text-[var(--text-muted)] hover:text-[#f07d18]"><i class="fa-solid fa-gear"></i></button></td>
+                                    <td class="px-6 py-4"><span
+                                            class="px-2 py-1 bg-green-500/10 text-green-500 text-[10px] font-bold rounded">편집자</span>
+                                    </td>
+                                    <td class="px-6 py-4"><button
+                                            class="text-[var(--text-muted)] hover:text-[#f07d18]"><i
+                                                class="fa-solid fa-gear"></i></button></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -530,22 +359,32 @@
                     <div class="flex justify-between items-center mb-6">
                         <div>
                             <h2 class="text-2xl font-black text-[var(--text-main)]">휴지통</h2>
-                            <p class="text-xs text-[var(--text-muted)] mt-1 font-bold">파일은 휴지통에 들어온 지 30일 후에 영구적으로 삭제됩니다.</p>
+                            <p class="text-xs text-[var(--text-muted)] mt-1 font-bold">파일은 휴지통에 들어온 지 30일 후에 영구적으로
+                                삭제됩니다.</p>
                         </div>
-                        <button class="px-4 py-2 bg-red-500/10 text-red-500 rounded-xl text-xs font-bold hover:bg-red-500 hover:text-white transition-all">전체 비우기</button>
+                        <button
+                            class="px-4 py-2 bg-red-500/10 text-red-500 rounded-xl text-xs font-bold hover:bg-red-500 hover:text-white transition-all">전체
+                            비우기</button>
                     </div>
                     <div class="space-y-3">
-                        <div class="p-4 bg-[var(--bg-sidebar)] border border-[var(--border-color)] rounded-2xl flex items-center justify-between group">
+                        <div
+                            class="p-4 bg-[var(--bg-sidebar)] border border-[var(--border-color)] rounded-2xl flex items-center justify-between group">
                             <div class="flex items-center gap-4">
-                                <div class="w-10 h-10 bg-gray-500/10 text-gray-500 rounded-lg flex items-center justify-center"><i class="fa-solid fa-file-circle-xmark"></i></div>
+                                <div
+                                    class="w-10 h-10 bg-gray-500/10 text-gray-500 rounded-lg flex items-center justify-center">
+                                    <i class="fa-solid fa-file-circle-xmark"></i>
+                                </div>
                                 <div>
                                     <p class="text-sm font-bold">Old_Draft_Backup.docx</p>
                                     <p class="text-[10px] text-red-500 font-bold">24일 후 영구 삭제</p>
                                 </div>
                             </div>
                             <div class="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                <button class="px-3 py-1.5 bg-[var(--bg-input)] rounded-lg text-[10px] font-bold hover:text-green-500">복구</button>
-                                <button class="px-3 py-1.5 bg-[var(--bg-input)] rounded-lg text-[10px] font-bold hover:text-red-500">영구 삭제</button>
+                                <button
+                                    class="px-3 py-1.5 bg-[var(--bg-input)] rounded-lg text-[10px] font-bold hover:text-green-500">복구</button>
+                                <button
+                                    class="px-3 py-1.5 bg-[var(--bg-input)] rounded-lg text-[10px] font-bold hover:text-red-500">영구
+                                    삭제</button>
                             </div>
                         </div>
                     </div>
@@ -559,24 +398,34 @@
                             <p class="text-sm text-[var(--text-muted)] mt-1 tracking-tight">UX/UI 파트 협업 공간입니다.</p>
                         </div>
                         <div class="flex -space-x-2">
-                            <img src="https://ui-avatars.com/api/?name=User1&background=random" class="w-8 h-8 rounded-full border-2 border-[var(--bg-deep)]">
-                            <img src="https://ui-avatars.com/api/?name=User2&background=random" class="w-8 h-8 rounded-full border-2 border-[var(--bg-deep)]">
-                            <div class="w-8 h-8 rounded-full bg-[var(--bg-input)] border-2 border-[var(--bg-deep)] flex items-center justify-center text-[10px] font-bold">+10</div>
+                            <img src="https://ui-avatars.com/api/?name=User1&background=random"
+                                class="w-8 h-8 rounded-full border-2 border-[var(--bg-deep)]">
+                            <img src="https://ui-avatars.com/api/?name=User2&background=random"
+                                class="w-8 h-8 rounded-full border-2 border-[var(--bg-deep)]">
+                            <div
+                                class="w-8 h-8 rounded-full bg-[var(--bg-input)] border-2 border-[var(--bg-deep)] flex items-center justify-center text-[10px] font-bold">
+                                +10</div>
                         </div>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                         <div class="p-6 rounded-2xl bg-[var(--bg-sidebar)] border border-[var(--border-color)]">
-                            <h3 class="text-xs font-black text-[var(--text-muted)] uppercase mb-4 tracking-widest">주요 진행 상황</h3>
+                            <h3 class="text-xs font-black text-[var(--text-muted)] uppercase mb-4 tracking-widest">주요 진행
+                                상황</h3>
                             <div class="space-y-4">
                                 <div>
-                                    <div class="flex justify-between text-xs mb-2"><span>모바일 앱 리뉴얼</span><span class="text-[#f07d18]">85%</span></div>
-                                    <div class="w-full bg-[var(--bg-input)] h-1.5 rounded-full overflow-hidden"><div class="bg-[#f07d18] h-full" style="width: 85%"></div></div>
+                                    <div class="flex justify-between text-xs mb-2"><span>모바일 앱 리뉴얼</span><span
+                                            class="text-[#f07d18]">85%</span></div>
+                                    <div class="w-full bg-[var(--bg-input)] h-1.5 rounded-full overflow-hidden">
+                                        <div class="bg-[#f07d18] h-full" style="width: 85%"></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="p-6 rounded-2xl bg-[var(--bg-sidebar)] border border-[var(--border-color)]">
-                            <h3 class="text-xs font-black text-[var(--text-muted)] uppercase mb-4 tracking-widest">공지사항</h3>
-                            <div class="p-4 bg-[var(--bg-input)] rounded-xl text-xs leading-relaxed">금요일 오후 3시 디자인 피드백 세션이 예정되어 있습니다.</div>
+                            <h3 class="text-xs font-black text-[var(--text-muted)] uppercase mb-4 tracking-widest">공지사항
+                            </h3>
+                            <div class="p-4 bg-[var(--bg-input)] rounded-xl text-xs leading-relaxed">금요일 오후 3시 디자인 피드백
+                                세션이 예정되어 있습니다.</div>
                         </div>
                     </div>
                 </div>
@@ -594,22 +443,33 @@
                                 </div>
                             </div>
                             <div class="p-6 rounded-2xl bg-[var(--bg-sidebar)] border border-[var(--border-color)]">
-                                <h3 class="text-xs font-black text-[var(--text-muted)] uppercase mb-4 tracking-wider">최근 활동</h3>
+                                <h3 class="text-xs font-black text-[var(--text-muted)] uppercase mb-4 tracking-wider">최근
+                                    활동</h3>
                                 <div class="space-y-3">
                                     <div class="flex gap-3 text-xs">
                                         <div class="w-1 bg-green-500 rounded-full"></div>
-                                        <div><p class="font-bold">fix: dashboard svg resize bug</p><p class="text-[10px] text-[var(--text-muted)]">dev_user · 1시간 전</p></div>
+                                        <div>
+                                            <p class="font-bold">fix: dashboard svg resize bug</p>
+                                            <p class="text-[10px] text-[var(--text-muted)]">dev_user · 1시간 전</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="lg:col-span-1">
-                            <div class="p-6 rounded-2xl bg-[var(--bg-sidebar)] border border-[var(--border-color)] h-full">
+                            <div
+                                class="p-6 rounded-2xl bg-[var(--bg-sidebar)] border border-[var(--border-color)] h-full">
                                 <h3 class="text-xs font-black text-[var(--text-muted)] uppercase mb-4">참여 멤버</h3>
                                 <div class="space-y-4">
                                     <div class="flex items-center gap-3">
-                                        <div class="w-8 h-8 rounded-lg bg-green-500/20 text-green-500 flex items-center justify-center"><i class="fa-solid fa-code"></i></div>
-                                        <div><p class="text-xs font-bold">John Doe</p><p class="text-[9px] text-green-500">Online</p></div>
+                                        <div
+                                            class="w-8 h-8 rounded-lg bg-green-500/20 text-green-500 flex items-center justify-center">
+                                            <i class="fa-solid fa-code"></i>
+                                        </div>
+                                        <div>
+                                            <p class="text-xs font-bold">John Doe</p>
+                                            <p class="text-[9px] text-green-500">Online</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -623,19 +483,30 @@
         <aside id="chat-sidebar" class="bg-[var(--bg-sidebar)] flex flex-col h-full shrink-0">
             <div class="h-16 border-b border-[var(--border-color)] flex items-center justify-between px-5 shrink-0">
                 <span class="font-black text-sm uppercase tracking-wider">협업 채팅</span>
-                <button onclick="toggleChat()" class="text-gray-500 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+                <button onclick="toggleChat()" class="text-gray-500 hover:text-white"><i
+                        class="fa-solid fa-xmark"></i></button>
             </div>
             <div class="flex-1 overflow-y-auto p-5 space-y-4 custom-scrollbar">
-                <div class="text-center"><span class="text-[10px] bg-[var(--bg-input)] px-3 py-1 rounded-full text-gray-400 font-bold">오후 2:20 - 세션 시작</span></div>
+                <div class="text-center"><span
+                        class="text-[10px] bg-[var(--bg-input)] px-3 py-1 rounded-full text-gray-400 font-bold">오후 2:20
+                        - 세션 시작</span></div>
                 <div class="flex gap-3">
-                    <img src="https://ui-avatars.com/api/?name=SJ&background=3b82f6&color=fff" class="w-8 h-8 rounded-lg">
-                    <div class="space-y-1"><p class="text-[10px] font-bold">Sarah Jenkins</p><div class="bg-[var(--bg-input)] p-3 rounded-2xl rounded-tl-none text-xs leading-relaxed">안녕하세요! 새로운 기획서 업로드 확인 부탁드립니다.</div></div>
+                    <img src="https://ui-avatars.com/api/?name=SJ&background=3b82f6&color=fff"
+                        class="w-8 h-8 rounded-lg">
+                    <div class="space-y-1">
+                        <p class="text-[10px] font-bold">Sarah Jenkins</p>
+                        <div class="bg-[var(--bg-input)] p-3 rounded-2xl rounded-tl-none text-xs leading-relaxed">안녕하세요!
+                            새로운 기획서 업로드 확인 부탁드립니다.</div>
+                    </div>
                 </div>
             </div>
             <div class="p-4 border-t border-[var(--border-color)]">
                 <div class="relative">
-                    <input type="text" placeholder="메시지를 입력하세요..." class="w-full bg-[var(--bg-input)] border border-[var(--border-color)] rounded-xl py-3 pl-4 pr-12 outline-none text-xs focus:border-[var(--accent)] transition-all">
-                    <button class="absolute right-3 top-1/2 -translate-y-1/2 text-[#f07d18] hover:scale-110 transition-transform"><i class="fa-solid fa-paper-plane"></i></button>
+                    <input type="text" placeholder="메시지를 입력하세요..."
+                        class="w-full bg-[var(--bg-input)] border border-[var(--border-color)] rounded-xl py-3 pl-4 pr-12 outline-none text-xs focus:border-[var(--accent)] transition-all">
+                    <button
+                        class="absolute right-3 top-1/2 -translate-y-1/2 text-[#f07d18] hover:scale-110 transition-transform"><i
+                            class="fa-solid fa-paper-plane"></i></button>
                 </div>
             </div>
         </aside>
@@ -645,26 +516,33 @@
     <div id="profile-modal" class="modal-overlay">
         <div class="modal-content">
             <!-- Modal Header -->
-            <div class="p-6 border-b border-[var(--border-color)] flex justify-between items-center bg-[var(--bg-input)]/10">
+            <div
+                class="p-6 border-b border-[var(--border-color)] flex justify-between items-center bg-[var(--bg-input)]/10">
                 <div class="flex items-center gap-3">
                     <div class="w-8 h-8 bg-[#f07d18] rounded-lg flex items-center justify-center text-white">
                         <i class="fa-solid fa-user-gear text-sm"></i>
                     </div>
                     <h2 class="text-lg font-black tracking-tight">설정</h2>
                 </div>
-                <button onclick="closeProfileModal()" class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-[var(--bg-input)] text-[var(--text-muted)] hover:text-[var(--text-main)] transition-colors">
+                <button onclick="closeProfileModal()"
+                    class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-[var(--bg-input)] text-[var(--text-muted)] hover:text-[var(--text-main)] transition-colors">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
-            
+
             <div class="flex flex-1 overflow-hidden">
                 <!-- Modal Sidebar -->
                 <aside class="w-56 border-r border-[var(--border-color)] p-4 space-y-1 shrink-0 bg-[var(--bg-input)]/5">
-                    <div onclick="switchModalTab('profile')" id="modal-nav-profile" class="modal-sidebar-btn active"><i class="fa-solid fa-circle-user"></i> 기본 프로필</div>
-                    <div onclick="switchModalTab('security')" id="modal-nav-security" class="modal-sidebar-btn"><i class="fa-solid fa-shield-halved"></i> 계정 및 보안</div>
-                    <div onclick="switchModalTab('notif')" id="modal-nav-notif" class="modal-sidebar-btn"><i class="fa-solid fa-bell"></i> 알림 설정</div>
-                    <div onclick="switchModalTab('region')" id="modal-nav-region" class="modal-sidebar-btn"><i class="fa-solid fa-globe"></i> 언어 및 지역</div>
-                    <div onclick="switchModalTab('billing')" id="modal-nav-billing" class="modal-sidebar-btn"><i class="fa-solid fa-wallet"></i> 구독 및 결제</div>
+                    <div onclick="switchModalTab('profile')" id="modal-nav-profile" class="modal-sidebar-btn active"><i
+                            class="fa-solid fa-circle-user"></i> 기본 프로필</div>
+                    <div onclick="switchModalTab('security')" id="modal-nav-security" class="modal-sidebar-btn"><i
+                            class="fa-solid fa-shield-halved"></i> 계정 및 보안</div>
+                    <div onclick="switchModalTab('notif')" id="modal-nav-notif" class="modal-sidebar-btn"><i
+                            class="fa-solid fa-bell"></i> 알림 설정</div>
+                    <div onclick="switchModalTab('region')" id="modal-nav-region" class="modal-sidebar-btn"><i
+                            class="fa-solid fa-globe"></i> 언어 및 지역</div>
+                    <div onclick="switchModalTab('billing')" id="modal-nav-billing" class="modal-sidebar-btn"><i
+                            class="fa-solid fa-wallet"></i> 구독 및 결제</div>
                 </aside>
 
                 <!-- Modal Content Area -->
@@ -673,23 +551,33 @@
                     <div id="modal-tab-profile" class="modal-tab-pane active max-w-2xl mx-auto space-y-10">
                         <!-- Section: Profile Image & Status -->
                         <section>
-                            <h3 class="text-sm font-black text-[var(--text-muted)] uppercase tracking-widest mb-6">프로필 이미지</h3>
+                            <h3 class="text-sm font-black text-[var(--text-muted)] uppercase tracking-widest mb-6">프로필
+                                이미지</h3>
                             <div class="flex items-center gap-8">
                                 <div class="relative group cursor-pointer">
-                                    <img id="modal-profile-img" src="https://ui-avatars.com/api/?name=IK&background=f07d18&color=fff" class="w-28 h-28 rounded-3xl shadow-2xl border-2 border-[var(--border-color)] transition-transform group-hover:scale-[1.02]">
-                                    <div class="absolute inset-0 bg-black/40 rounded-3xl flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <img id="modal-profile-img"
+                                        src="https://ui-avatars.com/api/?name=IK&background=f07d18&color=fff"
+                                        class="w-28 h-28 rounded-3xl shadow-2xl border-2 border-[var(--border-color)] transition-transform group-hover:scale-[1.02]">
+                                    <div
+                                        class="absolute inset-0 bg-black/40 rounded-3xl flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                                         <i class="fa-solid fa-camera text-white text-xl"></i>
                                     </div>
                                 </div>
                                 <div class="space-y-3">
                                     <div class="flex items-center gap-2">
-                                        <span class="px-2 py-1 bg-orange-500/20 text-orange-500 text-[10px] font-black rounded uppercase">PRO 멤버십</span>
+                                        <span
+                                            class="px-2 py-1 bg-orange-500/20 text-orange-500 text-[10px] font-black rounded uppercase">PRO
+                                            멤버십</span>
                                         <span class="text-[11px] text-[var(--text-muted)]">가입일: 2023.10.15</span>
                                     </div>
                                     <p class="text-sm text-[var(--text-muted)]">정사각형 이미지를 권장합니다. (JPG, PNG)</p>
                                     <div class="flex gap-2">
-                                        <button class="px-4 py-2 bg-[var(--bg-input)] rounded-xl text-xs font-bold hover:bg-[var(--border-color)] transition-colors">이미지 업로드</button>
-                                        <button class="px-4 py-2 bg-red-500/10 text-red-500 rounded-xl text-xs font-bold hover:bg-red-500 hover:text-white transition-colors">기본값으로 변경</button>
+                                        <button
+                                            class="px-4 py-2 bg-[var(--bg-input)] rounded-xl text-xs font-bold hover:bg-[var(--border-color)] transition-colors">이미지
+                                            업로드</button>
+                                        <button
+                                            class="px-4 py-2 bg-red-500/10 text-red-500 rounded-xl text-xs font-bold hover:bg-red-500 hover:text-white transition-colors">기본값으로
+                                            변경</button>
                                     </div>
                                 </div>
                             </div>
@@ -699,21 +587,29 @@
 
                         <!-- Section: Form Fields -->
                         <section class="space-y-6">
-                            <h3 class="text-sm font-black text-[var(--text-muted)] uppercase tracking-widest mb-4">상세 정보</h3>
+                            <h3 class="text-sm font-black text-[var(--text-muted)] uppercase tracking-widest mb-4">상세 정보
+                            </h3>
                             <div class="grid grid-cols-2 gap-6">
                                 <div class="space-y-2">
-                                    <label class="text-[11px] font-bold text-[var(--text-muted)] uppercase ml-1">사용자 성함</label>
-                                    <input type="text" value="Imran Khan" class="w-full bg-[var(--bg-input)] border border-[var(--border-color)] rounded-xl py-3 px-4 outline-none text-sm focus:border-[var(--accent)] transition-all">
+                                    <label class="text-[11px] font-bold text-[var(--text-muted)] uppercase ml-1">사용자
+                                        성함</label>
+                                    <input type="text" value="Imran Khan"
+                                        class="w-full bg-[var(--bg-input)] border border-[var(--border-color)] rounded-xl py-3 px-4 outline-none text-sm focus:border-[var(--accent)] transition-all">
                                 </div>
                                 <div class="space-y-2">
-                                    <label class="text-[11px] font-bold text-[var(--text-muted)] uppercase ml-1">직함 / 역할</label>
-                                    <input type="text" value="Senior Product Designer" class="w-full bg-[var(--bg-input)] border border-[var(--border-color)] rounded-xl py-3 px-4 outline-none text-sm focus:border-[var(--accent)] transition-all">
+                                    <label class="text-[11px] font-bold text-[var(--text-muted)] uppercase ml-1">직함 /
+                                        역할</label>
+                                    <input type="text" value="Senior Product Designer"
+                                        class="w-full bg-[var(--bg-input)] border border-[var(--border-color)] rounded-xl py-3 px-4 outline-none text-sm focus:border-[var(--accent)] transition-all">
                                 </div>
                                 <div class="space-y-2 col-span-2">
-                                    <label class="text-[11px] font-bold text-[var(--text-muted)] uppercase ml-1">연락처 (이메일)</label>
+                                    <label class="text-[11px] font-bold text-[var(--text-muted)] uppercase ml-1">연락처
+                                        (이메일)</label>
                                     <div class="relative">
-                                        <input type="email" value="imran_khan@cloudflow.com" class="w-full bg-[var(--bg-input)] border border-[var(--border-color)] rounded-xl py-3 px-4 outline-none text-sm focus:border-[var(--accent)] transition-all pr-24">
-                                        <button class="absolute right-2 top-1/2 -translate-y-1/2 text-[10px] font-bold text-green-500 bg-green-500/10 px-2 py-1.5 rounded-lg">인증됨</button>
+                                        <input type="email" value="imran_khan@cloudflow.com"
+                                            class="w-full bg-[var(--bg-input)] border border-[var(--border-color)] rounded-xl py-3 px-4 outline-none text-sm focus:border-[var(--accent)] transition-all pr-24">
+                                        <button
+                                            class="absolute right-2 top-1/2 -translate-y-1/2 text-[10px] font-bold text-green-500 bg-green-500/10 px-2 py-1.5 rounded-lg">인증됨</button>
                                     </div>
                                 </div>
                             </div>
@@ -723,14 +619,17 @@
 
                         <!-- Section: Preference Toggles -->
                         <section class="space-y-4">
-                            <h3 class="text-sm font-black text-[var(--text-muted)] uppercase tracking-widest mb-4">선호 설정</h3>
-                            <div class="space-y-4 bg-[var(--bg-input)]/20 p-5 rounded-2xl border border-[var(--border-color)]">
+                            <h3 class="text-sm font-black text-[var(--text-muted)] uppercase tracking-widest mb-4">선호 설정
+                            </h3>
+                            <div
+                                class="space-y-4 bg-[var(--bg-input)]/20 p-5 rounded-2xl border border-[var(--border-color)]">
                                 <div class="flex items-center justify-between">
                                     <div>
                                         <p class="text-sm font-bold">마케팅 정보 수신</p>
                                         <p class="text-[11px] text-[var(--text-muted)]">새로운 기능 및 혜택 정보를 받아봅니다.</p>
                                     </div>
-                                    <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+                                    <label class="switch"><input type="checkbox" checked><span
+                                            class="slider"></span></label>
                                 </div>
                                 <div class="flex items-center justify-between">
                                     <div>
@@ -747,19 +646,28 @@
                     <div id="modal-tab-billing" class="modal-tab-pane max-w-2xl mx-auto space-y-10">
                         <!-- Current Plan Summary -->
                         <section>
-                            <h3 class="text-sm font-black text-[var(--text-muted)] uppercase tracking-widest mb-6">현재 플랜 정보</h3>
-                            <div class="bg-gradient-to-br from-orange-500 to-orange-700 rounded-3xl p-8 text-white shadow-xl">
+                            <h3 class="text-sm font-black text-[var(--text-muted)] uppercase tracking-widest mb-6">현재 플랜
+                                정보</h3>
+                            <div
+                                class="bg-gradient-to-br from-orange-500 to-orange-700 rounded-3xl p-8 text-white shadow-xl">
                                 <div class="flex justify-between items-start mb-6">
                                     <div>
-                                        <p class="text-xs font-bold opacity-80 uppercase tracking-widest">Active Plan</p>
+                                        <p class="text-xs font-bold opacity-80 uppercase tracking-widest">Active Plan
+                                        </p>
                                         <h4 class="text-3xl font-black mt-1">Professional</h4>
                                     </div>
-                                    <span class="px-3 py-1 bg-white/20 rounded-full text-[10px] font-bold">Annual Billing</span>
+                                    <span class="px-3 py-1 bg-white/20 rounded-full text-[10px] font-bold">Annual
+                                        Billing</span>
                                 </div>
-                                <p class="text-sm opacity-90 leading-relaxed mb-6">귀하의 플랜은 2024년 10월 15일에 갱신됩니다. 연간 구독으로 20% 할인 혜택을 받고 계십니다.</p>
+                                <p class="text-sm opacity-90 leading-relaxed mb-6">귀하의 플랜은 2024년 10월 15일에 갱신됩니다. 연간 구독으로
+                                    20% 할인 혜택을 받고 계십니다.</p>
                                 <div class="flex gap-3">
-                                    <button class="bg-white text-orange-600 px-6 py-2.5 rounded-xl text-xs font-black hover:bg-orange-50 transition-colors"onclick="location.href='../payment.html'">플랜 업그레이드</button>
-                                    <button class="bg-orange-400/30 text-white px-6 py-2.5 rounded-xl text-xs font-bold hover:bg-orange-400/50 transition-colors">구독 취소</button>
+                                    <button
+                                        class="bg-white text-orange-600 px-6 py-2.5 rounded-xl text-xs font-black hover:bg-orange-50 transition-colors"
+                                        onclick="location.href='../payment.html'">플랜 업그레이드</button>
+                                    <button
+                                        class="bg-orange-400/30 text-white px-6 py-2.5 rounded-xl text-xs font-bold hover:bg-orange-400/50 transition-colors">구독
+                                        취소</button>
                                 </div>
                             </div>
                         </section>
@@ -768,9 +676,11 @@
 
                         <!-- Usage Stats -->
                         <section class="space-y-4">
-                            <h3 class="text-sm font-black text-[var(--text-muted)] uppercase tracking-widest mb-4">리소스 사용량</h3>
+                            <h3 class="text-sm font-black text-[var(--text-muted)] uppercase tracking-widest mb-4">리소스
+                                사용량</h3>
                             <div class="grid grid-cols-2 gap-4">
-                                <div class="p-5 bg-[var(--bg-input)]/20 border border-[var(--border-color)] rounded-2xl">
+                                <div
+                                    class="p-5 bg-[var(--bg-input)]/20 border border-[var(--border-color)] rounded-2xl">
                                     <div class="flex justify-between items-center mb-3">
                                         <span class="text-xs font-bold">Cloud Storage</span>
                                         <span class="text-xs text-[var(--accent)] font-bold">75%</span>
@@ -780,7 +690,8 @@
                                     </div>
                                     <p class="text-[10px] text-[var(--text-muted)] mt-2">37.5 GB / 50 GB 사용 중</p>
                                 </div>
-                                <div class="p-5 bg-[var(--bg-input)]/20 border border-[var(--border-color)] rounded-2xl">
+                                <div
+                                    class="p-5 bg-[var(--bg-input)]/20 border border-[var(--border-color)] rounded-2xl">
                                     <div class="flex justify-between items-center mb-3">
                                         <span class="text-xs font-bold">API Requests</span>
                                         <span class="text-xs text-blue-400 font-bold">12%</span>
@@ -798,20 +709,25 @@
                         <!-- Payment Methods -->
                         <section class="space-y-4">
                             <div class="flex justify-between items-center mb-4">
-                                <h3 class="text-sm font-black text-[var(--text-muted)] uppercase tracking-widest">결제 수단</h3>
+                                <h3 class="text-sm font-black text-[var(--text-muted)] uppercase tracking-widest">결제 수단
+                                </h3>
                                 <button class="text-xs text-[var(--accent)] font-bold hover:underline">+ 카드 추가</button>
                             </div>
-                            <div class="p-4 bg-[var(--bg-input)]/20 border border-[var(--border-color)] rounded-2xl flex items-center justify-between">
+                            <div
+                                class="p-4 bg-[var(--bg-input)]/20 border border-[var(--border-color)] rounded-2xl flex items-center justify-between">
                                 <div class="flex items-center gap-4">
-                                    <div class="w-12 h-8 bg-white/5 rounded flex items-center justify-center border border-white/10">
+                                    <div
+                                        class="w-12 h-8 bg-white/5 rounded flex items-center justify-center border border-white/10">
                                         <i class="fa-brands fa-cc-visa text-blue-500 text-xl"></i>
                                     </div>
                                     <div>
                                         <p class="text-sm font-bold">Visa •••• 4242</p>
-                                        <p class="text-[10px] text-[var(--text-muted)] uppercase tracking-wider">Expires 12/26</p>
+                                        <p class="text-[10px] text-[var(--text-muted)] uppercase tracking-wider">Expires
+                                            12/26</p>
                                     </div>
                                 </div>
-                                <span class="px-2 py-1 bg-green-500/10 text-green-500 text-[9px] font-black rounded uppercase">Default</span>
+                                <span
+                                    class="px-2 py-1 bg-green-500/10 text-green-500 text-[9px] font-black rounded uppercase">Default</span>
                             </div>
                         </section>
 
@@ -819,7 +735,8 @@
 
                         <!-- Billing History -->
                         <section class="space-y-4">
-                            <h3 class="text-sm font-black text-[var(--text-muted)] uppercase tracking-widest mb-4">최근 결제 내역</h3>
+                            <h3 class="text-sm font-black text-[var(--text-muted)] uppercase tracking-widest mb-4">최근 결제
+                                내역</h3>
                             <div class="overflow-hidden border border-[var(--border-color)] rounded-2xl">
                                 <table class="w-full text-left text-xs">
                                     <thead class="bg-[var(--bg-input)]/40 text-[var(--text-muted)] font-bold">
@@ -845,7 +762,7 @@
                             </div>
                         </section>
                     </div>
-                    
+
                     <!-- Other Taps Placeholder -->
                     <div id="modal-tab-security" class="modal-tab-pane max-w-2xl mx-auto py-20 text-center">
                         <i class="fa-solid fa-shield-halved text-4xl text-[var(--text-muted)] mb-4"></i>
@@ -866,9 +783,13 @@
             </div>
 
             <!-- Modal Footer -->
-            <div class="p-6 bg-[var(--bg-input)]/10 border-t border-[var(--border-color)] flex justify-end gap-3 shrink-0">
-                <button onclick="closeProfileModal()" class="px-6 py-2.5 rounded-xl text-sm font-bold text-[var(--text-muted)] hover:text-[var(--text-main)] transition-colors">취소</button>
-                <button onclick="saveProfile()" class="btn-orange px-10 py-2.5 rounded-xl text-sm font-black shadow-lg shadow-orange-500/20 active:scale-95 transition-transform">모든 변경사항 저장</button>
+            <div
+                class="p-6 bg-[var(--bg-input)]/10 border-t border-[var(--border-color)] flex justify-end gap-3 shrink-0">
+                <button onclick="closeProfileModal()"
+                    class="px-6 py-2.5 rounded-xl text-sm font-bold text-[var(--text-muted)] hover:text-[var(--text-main)] transition-colors">취소</button>
+                <button onclick="saveProfile()"
+                    class="btn-orange px-10 py-2.5 rounded-xl text-sm font-black shadow-lg shadow-orange-500/20 active:scale-95 transition-transform">모든
+                    변경사항 저장</button>
             </div>
         </div>
     </div>
@@ -878,7 +799,7 @@
             document.querySelectorAll('.content-view').forEach(view => {
                 view.classList.remove('active');
             });
-            
+
             const targetView = document.getElementById('view-' + viewId);
             if (targetView) {
                 targetView.classList.add('active');
@@ -886,7 +807,7 @@
 
             document.querySelectorAll('.nav-link, #nav-dashboard').forEach(link => {
                 link.classList.remove('active');
-                if(link.id === 'nav-dashboard') {
+                if (link.id === 'nav-dashboard') {
                     link.classList.remove('bg-orange-500/10', 'text-[#f07d18]');
                 }
             });
@@ -894,7 +815,7 @@
             const activeNav = document.getElementById('nav-' + viewId);
             if (activeNav) {
                 activeNav.classList.add('active');
-                if(viewId === 'dashboard') {
+                if (viewId === 'dashboard') {
                     activeNav.classList.add('bg-orange-500/10', 'text-[#f07d18]');
                 }
             }
@@ -957,7 +878,7 @@
             const originalText = btn.innerHTML;
             btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> 저장 중...';
             btn.disabled = true;
-            
+
             setTimeout(() => {
                 btn.innerHTML = originalText;
                 btn.disabled = false;
@@ -966,12 +887,12 @@
         }
 
         function handleLogout() {
-            if(confirm("로그아웃 하시겠습니까?")) {
+            if (confirm("로그아웃 하시겠습니까?")) {
                 location.reload();
             }
         }
 
-        window.onclick = function(event) {
+        window.onclick = function (event) {
             if (!event.target.closest('#profile-container') && !event.target.closest('#notif-container')) {
                 document.getElementById('profile-dropdown').classList.remove('active');
                 document.getElementById('notif-dropdown').classList.remove('active');
@@ -983,4 +904,5 @@
         }
     </script>
 </body>
+
 </html>
