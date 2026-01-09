@@ -1,0 +1,54 @@
+/* 기존 디자인 변수 유지 */
+:root {
+    --accent-orange: #f07d18;
+    --bg-deep: #0b0f1a;
+    --bg-sidebar: #0d121f;
+    --text-main: #e2e8f0;
+    --text-muted: #94a3b8;
+    --border-color: rgba(255, 255, 255, 0.08);
+}
+
+body { font-family: 'Inter', sans-serif; background: var(--bg-deep); color: var(--text-main); }
+
+.glass-header { background: rgba(13, 18, 31, 0.8); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border-color); }
+
+/* 사이드바 스타일 */
+.sidebar-item { display: flex; align-items: center; gap: 12px; padding: 10px 16px; border-radius: 10px; font-size: 14px; color: var(--text-muted); transition: all 0.2s; }
+.sidebar-item.active { background: rgba(240, 125, 24, 0.1); color: var(--accent-orange); font-weight: 600; }
+
+.btn-orange { background: var(--accent-orange); color: white; }
+
+/* Quill 에디터 스타일 커스텀 */
+.ql-toolbar.ql-snow { border: none !important; border-bottom: 1px solid var(--border-color) !important; background: var(--bg-sidebar); position: sticky; top: 0; z-index: 10; }
+.ql-container.ql-snow { border: none !important; font-size: 16px; }
+.ql-editor { min-height: 1000px; padding: 60px !important; }
+
+/* 마우스 커서 스타일 */
+/* 마우스 커서 레이어를 브라우저 전체 창에 고정 */
+#cursor{
+    position: fixed; /* absolute 대신 fixed 사용 */
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none; /* 마우스 클릭이 에디터에 전달되도록 함 */
+    z-index: 9999; /* 최상단에 위치 */
+}
+
+.mouse {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+    pointer-events: none;
+    /* 중심축 보정: 커서의 정중앙이 좌표에 오도록 함 */
+    transform: translate(-50%, -50%); 
+    transition: transform 0.05s linear; /* 반응 속도를 더 빠르게 */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
