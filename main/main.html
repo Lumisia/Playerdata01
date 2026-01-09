@@ -480,34 +480,27 @@
 
             </div>
         </main>
-
         <aside id="chat-sidebar" class="bg-[var(--bg-sidebar)] flex flex-col h-full shrink-0">
             <div class="h-16 border-b border-[var(--border-color)] flex items-center justify-between px-5 shrink-0">
-                <span class="font-black text-sm uppercase tracking-wider">협업 채팅</span>
+                <div class="flex items-center gap-2">
+                    <span class="font-black text-sm uppercase tracking-wider">협업 채팅</span>
+                    <div id="connection-dot" class="w-2 h-2 rounded-full bg-red-500"></div>
+                </div>
                 <button onclick="toggleChat()" class="text-gray-500 hover:text-white"><i
                         class="fa-solid fa-xmark"></i></button>
             </div>
-            <div class="flex-1 overflow-y-auto p-5 space-y-4 custom-scrollbar">
-                <div class="text-center"><span
-                        class="text-[10px] bg-[var(--bg-input)] px-3 py-1 rounded-full text-gray-400 font-bold">오후 2:20
-                        - 세션 시작</span></div>
-                <div class="flex gap-3">
-                    <img src="https://ui-avatars.com/api/?name=SJ&background=3b82f6&color=fff"
-                        class="w-8 h-8 rounded-lg">
-                    <div class="space-y-1">
-                        <p class="text-[10px] font-bold">Sarah Jenkins</p>
-                        <div class="bg-[var(--bg-input)] p-3 rounded-2xl rounded-tl-none text-xs leading-relaxed">안녕하세요!
-                            새로운 기획서 업로드 확인 부탁드립니다.</div>
-                    </div>
-                </div>
+
+            <div id="chat-messages" class="flex-1 overflow-y-auto p-5 space-y-4 custom-scrollbar">
             </div>
+
             <div class="p-4 border-t border-[var(--border-color)]">
                 <div class="relative">
-                    <input type="text" placeholder="메시지를 입력하세요..."
+                    <input type="text" id="chat-input" placeholder="서버 연결 중..."
                         class="w-full bg-[var(--bg-input)] border border-[var(--border-color)] rounded-xl py-3 pl-4 pr-12 outline-none text-xs focus:border-[var(--accent)] transition-all">
-                    <button
-                        class="absolute right-3 top-1/2 -translate-y-1/2 text-[#f07d18] hover:scale-110 transition-transform"><i
-                            class="fa-solid fa-paper-plane"></i></button>
+                    <button id="btn-send-message"
+                        class="absolute right-3 top-1/2 -translate-y-1/2 text-[#f07d18] transition-transform">
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </button>
                 </div>
             </div>
         </aside>
