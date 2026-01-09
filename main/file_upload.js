@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         const img = document.createElement("img");
                         img.src = `http://localhost:8080${fileInfo.url}`;
                         img.style.width = "200px";
-                        //imagesDiv.appendChild(img);
+                        //imagesDiv.appendChild(img); 연습 예제 때 사용한 코드 : 이미지를 디스플레이 하는 용도
                     }
                     // 비디오
                     else if (fileInfo.type && fileInfo.type.startsWith("video/")) {
@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         video.src = `http://localhost:8080${fileInfo.url}`;
                         video.controls = true;
                         video.width = 300;
-                        //imagesDiv.appendChild(video);
+                        //imagesDiv.appendChild(video); 연습 예제 때 사용한 코드 : 동영상을 디스플레이 하는 용도
                     }
                     // 기타 파일
                     else {
