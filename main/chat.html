@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+<aside id="chat-sidebar" class="bg-[var(--bg-sidebar)] flex flex-col h-full shrink-0">
+    <div class="h-16 border-b border-[var(--border-color)] flex items-center justify-between px-5 shrink-0">
+        <div class="flex items-center gap-2">
+            <span class="font-black text-sm uppercase tracking-wider">협업 채팅</span>
+            <div id="connection-dot" class="w-2 h-2 rounded-full bg-red-500"></div>
+        </div>
+        <button onclick="toggleChat()" class="text-gray-500 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+
+    <div id="chat-messages" class="flex-1 overflow-y-auto p-5 space-y-4 custom-scrollbar">
+        </div>
+
+    <div class="p-4 border-t border-[var(--border-color)]">
+        <div class="relative">
+            <input type="text" id="chat-input" placeholder="서버 연결 중..." 
+                class="w-full bg-[var(--bg-input)] border border-[var(--border-color)] rounded-xl py-3 pl-4 pr-12 outline-none text-xs focus:border-[var(--accent)] transition-all">
+            <button id="btn-send-message" class="absolute right-3 top-1/2 -translate-y-1/2 text-[#f07d18] transition-transform">
+                <i class="fa-solid fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+</aside>
+
+
+</body>
+</html>
